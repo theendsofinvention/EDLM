@@ -1,0 +1,9 @@
+certifi==2017.7.27.1
+chardet==3.0.4            # via requests
+click-log==0.1.8
+click==6.7                # via click-log
+idna==2.6                 # via requests
+jinja2==2.9.6
+markupsafe==1.0           # via jinja2
+requests==2.18.4
+urllib3==1.22
