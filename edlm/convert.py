@@ -121,7 +121,7 @@ def convert_source_folder(source_folder: str):
             '-V', 'lot',
             '-V', 'lof',
             '-V', 'colorlinks=true',
-            '-V', f'title={title}',
+            # '-V', f'title={title}',
             '-N',
         ]
     )
