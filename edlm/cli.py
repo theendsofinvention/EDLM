@@ -84,8 +84,7 @@ def _setup_file_logger():
 
 @click.group()
 @click.version_option(version=__version__)
-@click_log.simple_verbosity_option(default='INFO')
-@click_log.init('EDLM')
+@click_log.simple_verbosity_option(LOGGER, default='INFO')
 def cli():
     LOGGER.info(f'EDLM {__version__}')
     _setup_file_logger()
