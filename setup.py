@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from setuptools import setup  # type: ignore
+from setuptools import setup, find_packages
 
 install_requires = [
     'Click',
@@ -52,6 +52,7 @@ def main():
         tests_require=test_requires,
         setup_requires=setup_requires,
         test_suite='pytest',
+        packages=find_packages('.'),
     )
 
 
