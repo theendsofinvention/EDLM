@@ -123,7 +123,7 @@ def convert_source_folder(source_folder: str):
             '-V', 'colorlinks=true',
             # '-V', f'title={title}',
             '-N',
-        ]
+        ],
     )
 
     shutil.rmtree(temp_dir)
@@ -211,7 +211,7 @@ class Convert:
                 '-V', 'lof',
                 '-V', f'title={title}',
                 '-N',
-            ]
+            ],
         )
 
         self._clean_pdf_latex_working_folders()

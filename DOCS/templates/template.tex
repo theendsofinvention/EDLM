@@ -226,8 +226,8 @@ $if(institute)$
 \institute{$for(institute)$$institute$$sep$ \and $endfor$}
 $endif$
 \date{$date$}
-
-\graphicspath{{\VAR{media_folder}/}{\VAR{media_folder_main}/}}
+\usepackage{grffile}
+\graphicspath{{\VAR{media_folder_main}/}{\VAR{media_folder}/}}
 \newcommand{\wing}{132\textsuperscript{nd} Virtual Wing}
 
 \usepackage{lastpage}
