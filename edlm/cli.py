@@ -23,6 +23,7 @@ LOGGER.setLevel(logging.DEBUG)
 
 
 def _check_miktex() -> bool:
+    return True
     logging.info('Checking for MikTex installation')
     if not os.path.exists(MIKTEX.pdflatex_path):
         logging.error(f'PDFLatex not found at location: {MIKTEX.pdflatex_path}')
@@ -38,6 +39,7 @@ def _check_miktex() -> bool:
 
 
 def _setup_miktex() -> bool:
+    return True
     if not _check_miktex():
         logging.info('Installing MikTex')
         result = MIKTEX.setup()
@@ -82,58 +84,11 @@ def _setup_file_logger():
 
 @click.group()
 @click.version_option(version=__version__)
-@click.option('--miktex-path', type=click.Path(exists=True, file_okay=False, readable=True, resolve_path=True),
-              help='Manually sets the path to "pdflatex.exe"')
 @click_log.simple_verbosity_option(default='INFO')
 @click_log.init('EDLM')
-def cli(miktex_path):
+def cli():
     LOGGER.info(f'EDLM {__version__}')
     _setup_file_logger()
-    if miktex_path:
-        LOGGER.info(f'Setting custom miktex path to: {miktex_path}')
-        MIKTEX.miktex_path = miktex_path
-
-
-@cli.command()
-def test():
-    # miktex.download()
-    MIKTEX.setup_initexmf()
-
-
-@cli.group()
-def miktex():
-    """
-    Commands relative to MikTex installation
-    """
-    pass
-
-
-@miktex.command()
-def check():
-    """
-    Check availability of MikTex on this system
-    """
-    if _check_miktex():
-        LOGGER.info('MikTex is installed')
-        exit_code = 0
-    else:
-        LOGGER.error('MikTex *not* installed')
-        exit_code = 1
-    exit(exit_code)
-
-
-@miktex.command()
-def setup():
-    """
-    Install MikTex on this system
-    """
-    if _setup_miktex():
-        LOGGER.info(f'Installation of MikTex successful')
-        exit_code = 0
-    else:
-        LOGGER.error(f'Installation of MikTex failed')
-        exit_code = 1
-    exit(exit_code)
 
 
 @cli.command()
@@ -182,13 +137,13 @@ def convert():
 def pdf(in_dir):
     """
     Converts to PDF
-    """
-    if not MIKTEX.setup():
-        click.secho('MIKTEX setup failed', err=True, fg='red')
-    else:
-        if _check_miktex():
-            from edlm.convert import convert_source_folder
-            convert_source_folder(in_dir)
+    # """
+    # if not MIKTEX.setup():
+    #     click.secho('MIKTEX setup failed', err=True, fg='red')
+    # else:
+    #     if _check_miktex():
+    from edlm.convert import convert_source_folder
+    convert_source_folder(in_dir)
 
 
 # noinspection SpellCheckingInspection
