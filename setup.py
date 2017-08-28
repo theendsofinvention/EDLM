@@ -3,12 +3,14 @@
 from setuptools import setup, find_packages
 
 install_requires = [
-    'Click',
+    'click',
     'certifi',
     'urllib3',
     'requests',
     'click_log',
     'jinja2',
+    'pyyaml',
+    'setuptools-scm',
 ]
 
 test_requires = [
