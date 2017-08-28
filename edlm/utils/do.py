@@ -136,10 +136,13 @@ def do(cmd, cwd: str = '.', exit_on_fail=True) -> str:  # pylint: disable=invali
     out, err, ret = do_ex(cmd, cwd)
     if out:
         LOGGER.debug(out)
+        click.secho(out, fg='green')
     if err:
         LOGGER.error(err)
+        click.secho(err, fg='red', err=True)
     if ret:
         LOGGER.error(f'command failed: {cmd}')
+        click.secho(f'command failed: {cmd}', fg='red', err=True)
         if exit_on_fail:
             exit(ret)
     return out
