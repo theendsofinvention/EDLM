@@ -65,25 +65,53 @@ $endif$
 $if(colorlinks)$
 \PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
 $endif$
+
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \hypersetup{
 $if(title-meta)$
-            pdftitle={$title-meta$},
+            pdftitle=$title-meta$,
 $endif$
 $if(author-meta)$
-            pdfauthor={$author-meta$},
+            pdfauthor=$author-meta$,
+$endif$
+            pdfcreator=EDLM,
+            pdfproducer=EDLM,
+$if(subtitle)$
+            pdfsubject=$subtitle$,
 $endif$
 $if(keywords)$
             pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
 $endif$
 $if(colorlinks)$
             colorlinks=true,
-            linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
-            citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
-            urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$Gray$endif$,
+            citecolor=$if(citecolor)$$citecolor$$else$Gray$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$Gray$endif$,
 $else$
             pdfborder={0 0 0},
 $endif$
-            breaklinks=true}
+%               colorlinks=true,
+%               linkcolor=Blue,
+%               urlcolor=Blue,
+%               citecolor=Blue,
+%               anchorcolor=blue
+%               linkcolor=red,
+%               citecolor=green,
+%               filecolor=magenta,
+%               urlcolor=cyan
+%               pdfborderstyle={/S/U/W 1},
+%               pdfborder={0 0 0},
+%               linkbordercolor=red,
+%               citebordercolor=red,
+%               urlbordercolor=red
+}
+% \makeatletter
+% \Hy@AtBeginDocument{%
+%   \def\@pdfborder{0 0 1}% Overrides border definition set with colorlinks=true
+%   \def\@pdfborderstyle{/S/U/W 1}% Overrides border style set with colorlinks=true
+%                                 % Hyperlink border style will be underline of width 1pt
+% }
+% \makeatother
 \urlstyle{same}  % don't use monospace font for urls
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
@@ -226,8 +254,8 @@ $if(institute)$
 \institute{$for(institute)$$institute$$sep$ \and $endfor$}
 $endif$
 \date{$date$}
-\usepackage{grffile}
-\graphicspath{{\VAR{media_folder_main}/}{\VAR{media_folder}/}}
+
+\graphicspath{\VAR{media_folders}}
 \newcommand{\wing}{132\textsuperscript{nd} Virtual Wing}
 
 \usepackage{lastpage}
@@ -243,9 +271,8 @@ $endif$
 
 \usepackage{adjustbox}
 
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
-
 \begin{document}
+
 \thispagestyle{empty}
 \newgeometry{margin=1cm}
 
@@ -286,13 +313,24 @@ $endif$
 
     \vspace{2cm}
 
-    \underline{\href{http://132virtualwing.org}{\wing}}, \the\year \\
+    {\href{http://132virtualwing.org}{\wing}}, \the\year \\
     \vspace{0.3cm}
-    This work is licensed under a \underline{\href{https://creativecommons.org/licenses/by-sa/3.0/}{Creative Commons Attribution-ShareAlike 3.0 Unported License}}.
+    This work is licensed under a {\href{https://creativecommons.org/licenses/by-sa/3.0/}{Creative Commons Attribution-ShareAlike 3.0 Unported License}}.
 
     \vfill
 \end{center}
 \restoregeometry
+\newpage
+\thispagestyle{empty}
+\clearpage
+\vspace*{\fill}
+\begin{center}
+\begin{minipage}{.6\textwidth}
+\centering PAGE INTENTIONNALY LEFT BLANK
+\end{minipage}
+\end{center}
+\vfill % equivalent to \vspace{\fill}
+\clearpage
 \newpage
 \thispagestyle{empty}
 
@@ -310,6 +348,10 @@ $if(applies)$
 
             $if(version)$
             {\color{gray}VERSION:}                  & \parbox[t]{8cm}{$version$} \\
+            $endif$
+
+            $if(audience)$
+            {\color{gray}INTENDED AUDIENCE:}           & \parbox[t]{8cm}{$audience$} \\
             $endif$
 
             $if(published_date)$
@@ -392,5 +434,15 @@ $for(include-after)$
     $include-after$
     \newpage
 $endfor$
-
+\newpage
+\thispagestyle{empty}
+\clearpage
+\vspace*{\fill}
+\begin{center}
+\begin{minipage}{.6\textwidth}
+\centering PAGE INTENTIONNALY LEFT BLANK
+\end{minipage}
+\end{center}
+\vfill % equivalent to \vspace{\fill}
+\clearpage
 \end{document}
