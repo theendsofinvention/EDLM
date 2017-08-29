@@ -30,7 +30,7 @@ class CustomTimedRotatingFileHandler(logging.handlers.TimedRotatingFileHandler):
         super(CustomTimedRotatingFileHandler, self).emit(record)
 
 
-def _setup_logging(level=logging.INFO):
+def _setup_logging(debug: bool):
     """
     Setup up logging module to output to the "logs" folder
     """
@@ -44,7 +44,7 @@ def _setup_logging(level=logging.INFO):
     handler = CustomTimedRotatingFileHandler(f'./logs/main.log', when='midnight', backupCount=7)
     handler.setFormatter(formatter)
     LOGGER.addHandler(handler)
-    install_click_logger(LOGGER, formatter, level)
+    install_click_logger(LOGGER, formatter, logging.DEBUG if debug else logging.INFO)
 
 
 @click.group()
@@ -53,10 +53,7 @@ def _setup_logging(level=logging.INFO):
 def cli(verbose):
     LOGGER.info(f'EDLM {__version__}')
     print(CFG.debug)
-    if verbose:
-        _setup_logging(logging.DEBUG)
-    else:
-        _setup_logging()
+    _setup_logging(verbose or CFG.debug)
 
 
 @cli.command()

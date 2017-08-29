@@ -1,9 +1,11 @@
 # coding=utf-8
 import glob
 import os
+import yaml
 import pprint
 import shutil
 import tempfile
+import re
 
 from edlm import MAIN_LOGGER
 from edlm.preprocessor import process_markdown, process_template
@@ -36,43 +38,54 @@ def _get_index_file(source_folder: str) -> str:
 
 
 def _get_settings(source_folder: str) -> dict:
-    root_settings_file = os.path.join(
-        os.path.dirname(source_folder),
-        './settings.yml'
-    )
-    root_settings_file = ensure_file_exists(root_settings_file)
-    LOGGER.debug(f'root settings file: {root_settings_file}')
-    root_settings = read_settings(root_settings_file)
+    LOGGER.info('reading settings')
 
-    settings_file = ensure_file_exists(os.path.join(source_folder, 'settings.yml'))
-    LOGGER.debug(f'settings file: {settings_file}')
-    settings = read_settings(settings_file)
+    settings = {}
+    settings_files = []
 
-    LOGGER.debug(f'settings:\n{pprint.pformat(settings)}')
-    return update_settings(root_settings, settings)
+    while True:
+        LOGGER.debug(f'traversing: {source_folder}')
+        file = os.path.join(source_folder, 'settings.yml')
+        if os.path.exists(file) and os.path.isfile(file):
+            LOGGER.info(f'settings file found: {file}')
+            settings_files.append(file)
+        if os.path.ismount(source_folder):
+            LOGGER.debug('hit mount point, breaking')
+            break
+        source_folder = os.path.dirname(source_folder)
+
+    for file in reversed(settings_files):
+        with open(file) as stream:
+            settings.update(yaml.load(stream))
+    LOGGER.info(f'settings:\n{pprint.pformat(settings)}')
+    return settings
 
 
-def _get_media_folders(source_folder: str) -> tuple:
-    media_folder_main = ensure_folder_exists(
-        os.path.join(
-            os.path.dirname(source_folder),
-            'media'
-        )
-    )
-    LOGGER.debug(f'main media folder: {media_folder_main}')
+def _get_media_folders(source_folder: str) -> list:
+    LOGGER.info('gathering media folders')
 
-    media_folder = ensure_folder_exists(
-        os.path.join(source_folder, 'media')
-    )
-    LOGGER.debug(f'media folder: {media_folder}')
+    media_folders = []
 
-    return media_folder_main.replace('\\', '/'), media_folder.replace('\\', '/')
+    while True:
+        LOGGER.debug(f'traversing: {source_folder}')
+        folder = os.path.join(source_folder, 'media')
+        if os.path.exists(folder) and os.path.isdir(folder):
+            LOGGER.info(f'media folder found: {folder}')
+            media_folders.append(folder.replace('\\', '/'))
+        if os.path.ismount(source_folder):
+            LOGGER.debug('hit mount point, breaking')
+            break
+        source_folder = os.path.dirname(source_folder)
+
+    LOGGER.info(f'media folders:\n{pprint.pformat(media_folders)}')
+    return media_folders
 
 
 def convert_source_folder(
         source_folder: str,
         keep_temp_dir: bool = False,
 ):
+
     LOGGER.info(f'converting to PDF: {source_folder}')
 
     temp_dir = _get_temp_folder()
@@ -86,14 +99,14 @@ def convert_source_folder(
 
     settings = _get_settings(source_folder)
 
-    media_folder_main, media_folder = _get_media_folders(source_folder)
+    media_folders = _get_media_folders(source_folder)
 
-    markdown = process_markdown(index_file, settings)
+    markdown = process_markdown(index_file, settings, media_folders)
+
     tex_template = process_template(
-        template_file='template.tex',
-        template_folder=template_folder,
-        media_folder=media_folder,
-        media_folder_main=media_folder_main
+        template_file_='template.tex',
+        template_folder_=template_folder,
+        media_folders_=media_folders,
     )
 
     source_file = os.path.join(temp_dir, 'source.md')
@@ -111,6 +124,7 @@ def convert_source_folder(
 
     out_file = os.path.join(out_folder, title + '.PDF')
 
+
     do(
         [
             'pandoc',
@@ -124,6 +138,7 @@ def convert_source_folder(
             '-V', 'lot',
             '-V', 'lof',
             '-V', 'colorlinks=true',
+            '-V', 'papersize:a4',
             # '-V', f'title={title}',
             '-N',
         ],
