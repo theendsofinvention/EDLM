@@ -17,7 +17,6 @@ RE_PICTURE_LINE = re.compile(r'\!\['
                              r'\)'
                              r'(?P<extras>.*)')
 
-
 def _process_aliases(content: str, settings: dict) -> str:
     LOGGER.debug('processing aliases')
     for alias, value in settings.get('aliases', {}).items():
@@ -42,13 +41,18 @@ def _process_images(content: str, settings: dict, media_folders: list):
         match = RE_PICTURE_LINE.match(line)
         if match:
             caption = match.group('caption')
-            picture = _get_image_full_path(match.group('picture'), media_folders)
+            picture = match.group('picture')
             extras = match.group('extras')
 
-            if not extras:
-                extras = f'{{width="{settings.get("default_pic_width", "10cm")}"}}'
+            if picture.startswith('http'):
+                output.append(line)
+            else:
+                picture = _get_image_full_path(picture, media_folders)
 
-            output.append(f'![{caption}]({picture}){extras}')
+                if not extras:
+                    extras = f'{{width="{settings.get("default_pic_width", "10cm")}"}}'
+
+                output.append(f'![{caption}]({picture}){extras}')
 
         else:
             output.append(line)
