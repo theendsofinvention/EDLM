@@ -11,6 +11,7 @@ install_requires = [
     'jinja2',
     'pyyaml',
     'setuptools-scm',
+    'everett',
 ]
 
 test_requires = [
