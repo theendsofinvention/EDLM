@@ -82,14 +82,18 @@ def convert():
 @click.argument(
     'source_folder',
     type=click.Path(exists=True, file_okay=False, resolve_path=True, readable=True),
+    nargs=-1,
 )
-@click.option('-k', '--keep-temp-dir', default=False, help='Keep temporary folder')
+@click.option('--keep-temp-dir', default=False, help='Keep temporary folder', is_flag=True)
 def pdf(source_folder, keep_temp_dir):
     """
-    Converts content of SOURCE_FOLDER to PDF
+    Converts content of SOURCE_FOLDER(s) to PDF
     """
     from edlm.convert import convert_source_folder
-    convert_source_folder(source_folder, keep_temp_dir)
+    if isinstance(source_folder, str):
+        source_folder = (source_folder,)
+    for folder in source_folder:
+        convert_source_folder(folder, keep_temp_dir)
 
 
 # noinspection SpellCheckingInspection
