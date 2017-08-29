@@ -4,14 +4,24 @@ Manages ESST configuration
 """
 
 import os
-import yaml
 
 import everett
 import everett.manager
+import yaml
 
+import collections
+
+
+def update_nested_dict(d, u):
+    for k, v in u.items():
+        if isinstance(v, collections.Mapping):
+            r = update_nested_dict(d.get(k, {}), v)
+            d[k] = r
+        else:
+            d[k] = u[k]
+    return d
 
 class YAMLConfig:
-
     def __init__(self, possible_paths):
         self.cfg = {}
         possible_paths = everett.manager.listify(possible_paths)
@@ -22,9 +32,7 @@ class YAMLConfig:
 
             path = os.path.abspath(os.path.expanduser(path.strip()))
             if path and os.path.isfile(path):
-                self.cfg.update(self.parse_yaml_file(path))
-
-        print(self.cfg)
+                self.cfg = update_nested_dict(self.cfg, self.parse_yaml_file(path))
 
     @staticmethod
     def parse_yaml_file(path: str):
@@ -32,12 +40,14 @@ class YAMLConfig:
             return yaml.load(stream)
 
     def get(self, key, namespace=None):
-        return str(everett.manager.get_key_from_envs(self.cfg, key, namespace))
-
+        value = everett.manager.get_key_from_envs(self.cfg, key, namespace)
+        if value is everett.NO_VALUE:
+            return value
+        else:
+            return str(value)
 
 
 class EverettConfig:
-
     def __init__(self, package_name: str, default_dict: dict = None):
         if default_dict is None:
             default_dict = {}
@@ -70,6 +80,7 @@ class Config(EverettConfig):  # pylint: disable=too-many-instance-attributes,too
     """
     Singleton configuration class for EDLM.
     """
+
     def __init__(self):
         default_dict = {
             'DEBUG': 'false',
@@ -83,6 +94,7 @@ class Config(EverettConfig):  # pylint: disable=too-many-instance-attributes,too
 try:
     CFG = Config()
 except everett.InvalidValueError as exception:
+    raise
     KEY = exception.key
     if exception.namespace:
         KEY = f'{exception.namespace}_{KEY}'

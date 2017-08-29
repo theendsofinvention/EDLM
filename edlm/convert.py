@@ -14,6 +14,18 @@ from edlm.utils import do, ensure_file_exists, ensure_folder_exists
 
 LOGGER = MAIN_LOGGER.getChild(__name__)
 
+import collections
+
+
+def update_nested_dict(d, u):
+    for k, v in u.items():
+        if isinstance(v, collections.Mapping):
+            r = update_nested_dict(d.get(k, {}), v)
+            d[k] = r
+        else:
+            d[k] = u[k]
+    return d
+
 
 def _get_temp_folder():
     temp_dir = ensure_folder_exists(tempfile.mkdtemp(dir='.'))
@@ -56,7 +68,7 @@ def _get_settings(source_folder: str) -> dict:
 
     for file in reversed(settings_files):
         with open(file) as stream:
-            settings.update(yaml.load(stream))
+            settings = update_nested_dict(settings, yaml.load(stream))
     LOGGER.info(f'settings:\n{pprint.pformat(settings)}')
     return settings
 
