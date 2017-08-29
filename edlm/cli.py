@@ -49,10 +49,9 @@ def _setup_logging(debug: bool):
 
 @click.group()
 @click.version_option(version=__version__)
-@click.option('-v', '--verbose', default=False, help='Outputs DEBUG message on console')
+@click.option('--verbose', default=False, help='Outputs DEBUG message on console', is_flag=True)
 def cli(verbose):
     LOGGER.info(f'EDLM {__version__}')
-    print(CFG.debug)
     _setup_logging(verbose or CFG.debug)
 
 
