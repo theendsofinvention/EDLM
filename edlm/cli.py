@@ -5,13 +5,11 @@ import os
 import re
 
 import click
-import click_log
 from pkg_resources import DistributionNotFound, get_distribution
 
 from edlm.convert import Convert
-from edlm.miktex import MIKTEX
-
-# FIXME: ;C:\Users\bob\AppData\Local\Pandoc\
+from edlm.config import CFG
+from edlm.utils.click_logger import install_click_logger
 
 try:
     __version__ = get_distribution('edlm').version
@@ -20,39 +18,6 @@ except DistributionNotFound:
 
 LOGGER = logging.getLogger('EDLM')
 LOGGER.setLevel(logging.DEBUG)
-
-
-def _check_miktex() -> bool:
-    return True
-    logging.info('Checking for MikTex installation')
-    if not os.path.exists(MIKTEX.pdflatex_path):
-        logging.error(f'PDFLatex not found at location: {MIKTEX.pdflatex_path}')
-        return False
-    else:
-        pdflatex_version = MIKTEX.pdflatex_version
-        if not pdflatex_version:
-            logging.error(f'PDFLatex call failed: {MIKTEX.pdflatex_path}')
-            return False
-
-        logging.info(f'PDFLatex version installed: {pdflatex_version}')
-        return True
-
-
-def _setup_miktex() -> bool:
-    return True
-    if not _check_miktex():
-        logging.info('Installing MikTex')
-        result = MIKTEX.setup()
-
-        if result:
-            logging.info(f'MikTex successfully installed')
-            return True
-
-        logging.error(f'Installation of MikTex failed')
-        return False
-
-    logging.info(f'MikTex already installed')
-    return True
 
 
 class CustomTimedRotatingFileHandler(logging.handlers.TimedRotatingFileHandler):
@@ -65,7 +30,7 @@ class CustomTimedRotatingFileHandler(logging.handlers.TimedRotatingFileHandler):
         super(CustomTimedRotatingFileHandler, self).emit(record)
 
 
-def _setup_file_logger():
+def _setup_logging(level=logging.INFO):
     """
     Setup up logging module to output to the "logs" folder
     """
@@ -73,41 +38,25 @@ def _setup_file_logger():
         os.makedirs('./logs')
     except FileExistsError:
         pass
-    handler = CustomTimedRotatingFileHandler(f'./logs/main.log', when='midnight', backupCount=7)
-    handler.setFormatter(
-        logging.Formatter(
-            '%(asctime)s - %(levelname)12s - %(name)30s - %(message)s'
-        )
+    formatter = logging.Formatter(
+        '%(asctime)s - %(levelname)12s - %(name)s.%(funcName)s[%(lineno)s] - %(message)s'
     )
+    handler = CustomTimedRotatingFileHandler(f'./logs/main.log', when='midnight', backupCount=7)
+    handler.setFormatter(formatter)
     LOGGER.addHandler(handler)
+    install_click_logger(LOGGER, formatter, level)
 
 
 @click.group()
 @click.version_option(version=__version__)
-@click_log.simple_verbosity_option('EDLM', default='INFO')
-def cli():
+@click.option('-v', '--verbose', default=False, help='Outputs DEBUG message on console')
+def cli(verbose):
     LOGGER.info(f'EDLM {__version__}')
-    _setup_file_logger()
-
-
-@cli.command()
-@click.argument('infile', type=click.Path(exists=True, dir_okay=False, resolve_path=True, readable=True))
-@click.option('-o', '--outfile', help='Output PDF file (defaults to the input file name)')
-@click.option('-t', '--title', help='Title of the PDF document (defaults to the input file name)')
-def makepdf(infile, outfile, title):
-    """
-    Converts a Markdown document to PDF
-    """
-    if not os.path.splitext(infile)[1] == '.md':
-        LOGGER.error(f'Invalid value for "infile": Path "{infile}" is not a Markdown file')
+    print(CFG.debug)
+    if verbose:
+        _setup_logging(logging.DEBUG)
     else:
-        if not MIKTEX.setup():
-            click.secho('MIKTEX setup failed', err=True, fg='red')
-        else:
-            if _check_miktex():
-                click.echo(f'Converting: "{infile}" to PDF')
-                convert = Convert()
-                convert.make_pdf(infile, outfile, title)
+        _setup_logging()
 
 
 @cli.command()
@@ -119,9 +68,11 @@ def extractdocx(infile, outfile, outdir):
     Converts a Word (docx) document to markdown.
     """
     if not os.path.splitext(infile) == 'md':
-        click.echo(f'Error: Invalid value for "infile": Path "{infile}" is not a docx file')
-        convert = Convert()
-        convert.make_md(infile, outfile, outdir)
+        LOGGER.error(f'Invalid value for "infile": Path "{infile}" is not a docx file')
+        return
+
+    converter = Convert()
+    converter.make_md(infile, outfile, outdir)
 
 
 @cli.group()
@@ -132,17 +83,17 @@ def convert():
 
 
 @convert.command()
-@click.argument('in_dir', type=click.Path(exists=True, file_okay=False, resolve_path=True, readable=True))
-def pdf(in_dir):
+@click.argument(
+    'source_folder',
+    type=click.Path(exists=True, file_okay=False, resolve_path=True, readable=True),
+)
+@click.option('-k', '--keep-temp-dir', default=False, help='Keep temporary folder')
+def pdf(source_folder, keep_temp_dir):
     """
-    Converts to PDF
-    # """
-    # if not MIKTEX.setup():
-    #     click.secho('MIKTEX setup failed', err=True, fg='red')
-    # else:
-    #     if _check_miktex():
+    Converts content of SOURCE_FOLDER to PDF
+    """
     from edlm.convert import convert_source_folder
-    convert_source_folder(in_dir)
+    convert_source_folder(source_folder, keep_temp_dir)
 
 
 # noinspection SpellCheckingInspection

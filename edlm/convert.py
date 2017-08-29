@@ -69,7 +69,10 @@ def _get_media_folders(source_folder: str) -> tuple:
     return media_folder_main.replace('\\', '/'), media_folder.replace('\\', '/')
 
 
-def convert_source_folder(source_folder: str):
+def convert_source_folder(
+        source_folder: str,
+        keep_temp_dir: bool = False,
+):
     LOGGER.info(f'converting to PDF: {source_folder}')
 
     temp_dir = _get_temp_folder()
@@ -126,7 +129,8 @@ def convert_source_folder(source_folder: str):
         ],
     )
 
-    shutil.rmtree(temp_dir)
+    if not keep_temp_dir:
+        shutil.rmtree(temp_dir)
 
 
 CONVERT = {
