@@ -87,13 +87,21 @@ def convert():
 @click.option('--keep-temp-dir', default=False, help='Keep temporary folder', is_flag=True)
 def pdf(source_folder, keep_temp_dir):
     """
-    Converts content of SOURCE_FOLDER(s) to PDF
+    Converts content of SOURCE_FOLDER(s) recursively for folders containing "index.md" files and convert them to PDF
     """
+
+    def _scan(folder_):
+        children = os.listdir(folder_)
+        if 'index.md' in children:
+            convert_source_folder(folder_, keep_temp_dir)
+        else:
+            for child in children:
+                if os.path.isdir(child):
+                    _scan(child)
+
     from edlm.convert import convert_source_folder
-    if isinstance(source_folder, str):
-        source_folder = (source_folder,)
     for folder in source_folder:
-        convert_source_folder(folder, keep_temp_dir)
+        _scan(folder)
 
 
 # noinspection SpellCheckingInspection
