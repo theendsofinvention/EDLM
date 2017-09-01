@@ -62,9 +62,7 @@ $if(verbatim-in-note)$
 \usepackage{fancyvrb}
 $endif$
 \usepackage[unicode=true, bookmarks=true]{hyperref}
-$if(colorlinks)$
 \PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
-$endif$
 
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \hypersetup{
@@ -82,36 +80,11 @@ $endif$
 $if(keywords)$
             pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
 $endif$
-$if(colorlinks)$
-            colorlinks=true,
-            linkcolor=$if(linkcolor)$$linkcolor$$else$Gray$endif$,
-            citecolor=$if(citecolor)$$citecolor$$else$Gray$endif$,
-            urlcolor=$if(urlcolor)$$urlcolor$$else$Gray$endif$,
-$else$
-            pdfborder={0 0 0},
-$endif$
-%               colorlinks=true,
-%               linkcolor=Blue,
-%               urlcolor=Blue,
-%               citecolor=Blue,
-%               anchorcolor=blue
-%               linkcolor=red,
-%               citecolor=green,
-%               filecolor=magenta,
-%               urlcolor=cyan
-%               pdfborderstyle={/S/U/W 1},
-%               pdfborder={0 0 0},
-%               linkbordercolor=red,
-%               citebordercolor=red,
-%               urlbordercolor=red
+colorlinks=true,
+linkcolor=$if(linkcolor)$$linkcolor$$else$Gray$endif$,
+citecolor=$if(citecolor)$$citecolor$$else$Gray$endif$,
+urlcolor=$if(urlcolor)$$urlcolor$$else$Gray$endif$,
 }
-% \makeatletter
-% \Hy@AtBeginDocument{%
-%   \def\@pdfborder{0 0 1}% Overrides border definition set with colorlinks=true
-%   \def\@pdfborderstyle{/S/U/W 1}% Overrides border style set with colorlinks=true
-%                                 % Hyperlink border style will be underline of width 1pt
-% }
-% \makeatother
 \urlstyle{same}  % don't use monospace font for urls
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
@@ -385,9 +358,7 @@ $endfor$
 
 $if(toc)$
     {
-        $if(colorlinks)$
-            \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
-        $endif$
+        \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
         \setcounter{tocdepth}{$toc-depth$}
         \pdfbookmark[section]{\contentsname}{toc}
         \tableofcontents
