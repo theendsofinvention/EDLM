@@ -136,25 +136,25 @@ def convert_source_folder(
 
     out_file = os.path.join(out_folder, title + '.PDF')
 
-
-    do(
-        [
-            'pandoc',
-            '-s',
-            '--toc',
-            '--template', template_file,
-            source_file,
-            '-o',
-            out_file,
-            '-V', 'geometry:margin=2.5cm',
-            '-V', 'lot',
-            '-V', 'lof',
-            '-V', 'colorlinks=true',
-            '-V', 'papersize:a4',
-            # '-V', f'title={title}',
-            '-N',
-        ],
-    )
+    for papersize in settings['papersize']:
+        LOGGER.info(f'building "{source_folder}" in format: {papersize}')
+        do(
+            [
+                'pandoc',
+                '-s',
+                '--toc',
+                '--template', template_file,
+                source_file,
+                '-o',
+                out_file,
+                '-V', 'geometry:margin=2.5cm',
+                '-V', 'lot',
+                '-V', 'lof',
+                '-V', f'papersize:{papersize}',
+                # '-V', f'title={title}',
+                '-N',
+            ],
+        )
 
     if not keep_temp_dir:
         shutil.rmtree(temp_dir)
