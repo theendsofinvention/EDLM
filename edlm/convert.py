@@ -151,12 +151,12 @@ def convert_source_folder(
                 '-V', 'lot',
                 '-V', 'lof',
                 '-V', f'papersize:{papersize}',
-                # '-V', f'title={title}',
                 '-N',
             ],
         )
 
     if not keep_temp_dir:
+        LOGGER.debug('removing temp dir')
         shutil.rmtree(temp_dir)
 
 

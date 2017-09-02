@@ -244,6 +244,8 @@ $endif$
 
 \usepackage{adjustbox}
 
+\usepackage[figure,table]{totalcount}
+
 \begin{document}
 
 \thispagestyle{empty}
@@ -384,17 +386,20 @@ $if(natbib)$
     $endif$
 $endif$
 
-$if(lot)$
-    \pdfbookmark[section]{List of tables}{lot}
-    \listoftables
-    \newpage
-$endif$
+\iftotalfigures\pdfbookmark[section]{List of figures}{lof}\listoffigures\newpage\fi
+\iftotaltables\pdfbookmark[section]{List of tables}{lot}\listoftables\newpage\fi
 
-$if(lof)$
-    \pdfbookmark[section]{List of figures}{lof}
-    \listoffigures
-    \newpage
-$endif$
+%$if(lot)$
+%    \pdfbookmark[section]{List of tables}{lot}
+%    \listoftables
+%    \newpage
+%$endif$
+%
+%$if(lof)$
+%    \pdfbookmark[section]{List of figures}{lof}
+%    \listoffigures
+%    \newpage
+%$endif$
 
 $if(biblatex)$
     \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
