@@ -1,15 +1,14 @@
 # coding=utf-8
 import glob
 import os
-import yaml
 import pprint
 import shutil
 import tempfile
-import re
+
+import yaml
 
 from edlm import MAIN_LOGGER
 from edlm.preprocessor import process_markdown, process_template
-from edlm.settings import read_settings, update_settings
 from edlm.utils import do, ensure_file_exists, ensure_folder_exists
 
 LOGGER = MAIN_LOGGER.getChild(__name__)
@@ -59,7 +58,7 @@ def _get_settings(source_folder: str) -> dict:
         LOGGER.debug(f'traversing: {source_folder}')
         file = os.path.join(source_folder, 'settings.yml')
         if os.path.exists(file) and os.path.isfile(file):
-            LOGGER.info(f'settings file found: {file}')
+            LOGGER.debug(f'settings file found: {file}')
             settings_files.append(file)
         if os.path.ismount(source_folder):
             LOGGER.debug('hit mount point, breaking')
@@ -69,7 +68,7 @@ def _get_settings(source_folder: str) -> dict:
     for file in reversed(settings_files):
         with open(file) as stream:
             settings = update_nested_dict(settings, yaml.load(stream))
-    LOGGER.info(f'settings:\n{pprint.pformat(settings)}')
+    LOGGER.debug(f'settings:\n{pprint.pformat(settings)}')
     return settings
 
 
@@ -82,7 +81,7 @@ def _get_media_folders(source_folder: str) -> list:
         LOGGER.debug(f'traversing: {source_folder}')
         folder = os.path.join(source_folder, 'media')
         if os.path.exists(folder) and os.path.isdir(folder):
-            LOGGER.info(f'media folder found: {folder}')
+            LOGGER.debug(f'media folder found: {folder}')
             media_folders.append(folder.replace('\\', '/'))
         if os.path.ismount(source_folder):
             LOGGER.debug('hit mount point, breaking')
@@ -97,7 +96,6 @@ def convert_source_folder(
         source_folder: str,
         keep_temp_dir: bool = False,
 ):
-
     LOGGER.info(f'converting to PDF: {source_folder}')
 
     temp_dir = _get_temp_folder()
@@ -128,7 +126,7 @@ def convert_source_folder(
     template_file = os.path.join(temp_dir, 'template.tex')
     with open(template_file, 'w', encoding='utf8') as stream:
         stream.write(tex_template)
-        
+
     title = os.path.basename(source_folder)
     out_folder = './OUTPUT/PDF'
     if not os.path.exists(out_folder):
@@ -144,10 +142,15 @@ def convert_source_folder(
                 '-s',
                 '--toc',
                 '--template', template_file,
+                '--listings',
                 source_file,
                 '-o',
                 out_file,
-                '-V', 'geometry:margin=2.5cm',
+                '-V', 'geometry:margin=1.5cm',
+                '-V', 'geometry:headheight=17pt',
+                '-V', 'geometry:includehead',
+                '-V', 'geometry:includefoot',
+                '-V', 'geometry:heightrounded',
                 '-V', 'lot',
                 '-V', 'lof',
                 '-V', f'papersize:{papersize}',

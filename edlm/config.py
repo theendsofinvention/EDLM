@@ -94,7 +94,6 @@ class Config(EverettConfig):  # pylint: disable=too-many-instance-attributes,too
 try:
     CFG = Config()
 except everett.InvalidValueError as exception:
-    raise
     KEY = exception.key
     if exception.namespace:
         KEY = f'{exception.namespace}_{KEY}'

@@ -41,7 +41,6 @@ def conda_install(package_name: str) -> CondaInstallResult:
         'success': '',
     }
     result.update(json.loads(do(f'conda install {conda_env()} --json {package_name}', exit_on_fail=False)))
-    print(result.keys())
     return CondaInstallResult(**result)
     # return CondaInstallResult(**result)
 
