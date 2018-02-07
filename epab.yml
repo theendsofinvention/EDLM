@@ -5,5 +5,5 @@ doc:
   folder: './doc'
 
 test:
-  runner: 'pytest'
-  av_runner: 'pytest'
+  runner: ''
+  av_runner: ''
