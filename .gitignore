@@ -327,3 +327,4 @@ tex2pdf.*
 /*.gv
 /DOCS/
 /tmp*/
+/Pipfile.lock
