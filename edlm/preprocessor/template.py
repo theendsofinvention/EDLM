@@ -1,10 +1,10 @@
 # coding=utf-8
 from jinja2 import Environment, FileSystemLoader
 
-from edlm import MAIN_LOGGER
+from edlm import LOGGER
 from edlm.utils import ensure_folder_exists
 
-LOGGER = MAIN_LOGGER.getChild(__name__)
+LOGGER = LOGGER.getChild(__name__)
 
 
 def _get_jinja_env(template_dir: str):
