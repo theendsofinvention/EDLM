@@ -7,11 +7,10 @@ import tempfile
 
 import yaml
 
-from edlm import MAIN_LOGGER
+from edlm import LOGGER
 from edlm.preprocessor import process_markdown, process_template
 from edlm.utils import do, ensure_file_exists, ensure_folder_exists
-
-LOGGER = MAIN_LOGGER.getChild(__name__)
+from edlm.external_tools import pandoc
 
 import collections
 
@@ -128,7 +127,7 @@ def convert_source_folder(
         stream.write(tex_template)
 
     title = os.path.basename(source_folder)
-    out_folder = './OUTPUT/PDF'
+    out_folder = '.'
     if not os.path.exists(out_folder):
         os.makedirs(out_folder)
 
@@ -136,26 +135,20 @@ def convert_source_folder(
 
     for papersize in settings['papersize']:
         LOGGER.info(f'building "{source_folder}" in format: {papersize}')
-        do(
-            [
-                'pandoc',
-                '-s',
-                '--toc',
-                '--template', template_file,
-                '--listings',
-                source_file,
-                '-o',
-                out_file,
-                '-V', 'geometry:margin=1.5cm',
-                '-V', 'geometry:headheight=17pt',
-                '-V', 'geometry:includehead',
-                '-V', 'geometry:includefoot',
-                '-V', 'geometry:heightrounded',
-                '-V', 'lot',
-                '-V', 'lof',
-                '-V', f'papersize:{papersize}',
-                '-N',
-            ],
+        pandoc(
+            f'-s --toc '
+            f'--template "{template_file}" '
+            f'--listings "{source_file}" '
+            f'-o "{out_file}" '
+            f'-V geometry:margin=1.5cm '
+            f'-V geometry:headheight=17pt '
+            f'-V geometry:includehead '
+            f'-V geometry:includefoot '
+            f'-V geometry:heightrounded '
+            f'-V lot '
+            f'-V lof '
+            f'-V papersize:{papersize} '
+            f'-N',
         )
 
     if not keep_temp_dir:

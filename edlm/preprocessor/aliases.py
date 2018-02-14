@@ -1,7 +1,7 @@
 # coding=utf-8
-from edlm import MAIN_LOGGER
+from edlm import LOGGER
 
-LOGGER = MAIN_LOGGER.getChild(__name__)
+LOGGER = LOGGER.getChild(__name__)
 
 
 def process_aliases(content: str, settings: dict) -> str:
