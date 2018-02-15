@@ -19,16 +19,21 @@ STR_OR_PATH = typing.Union[str, Path]
 
 
 def _find_patool() -> Path:
+    LOGGER.debug('looking for Patool')
     python_exe = Path(sys.executable).absolute()
     LOGGER.debug(f'python_exe: {python_exe}')
     patool_path = Path(python_exe.parent, 'patool')
+    LOGGER.debug(f'looking at {patool_path}')
     if patool_path.exists():
+        LOGGER.debug(f'patool found: {patool_path}')
         return patool_path.absolute()
 
-    scripts_path = Path(python_exe, 'scripts')
+    scripts_path = Path(python_exe.parent, 'scripts')
     if scripts_path.exists() and scripts_path.is_dir():
         patool_path = Path(scripts_path, 'patool')
+        LOGGER.debug(f'looking at {patool_path}')
         if patool_path.exists():
+            LOGGER.debug(f'patool found: {patool_path}')
             return patool_path.absolute()
 
     raise FileNotFoundError('patool not found')
