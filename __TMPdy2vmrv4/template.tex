@@ -1,0 +1,509 @@
+% !TeX program    = pdflatex
+% !TeX encoding   = utf8
+% !TeX spellcheck = en_US
+
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+$if(beamerarticle)$
+\usepackage{beamerarticle} % needs to be loaded first
+$endif$
+$if(fontfamily)$
+\usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
+$else$
+\usepackage{lmodern}
+$endif$
+$if(linestretch)$
+\usepackage{setspace}
+\setstretch{$linestretch$}
+$endif$
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
+  \usepackage[utf8]{inputenc}
+$if(euro)$
+  \usepackage{eurosym}
+$endif$
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+$for(fontfamilies)$
+  \newfontfamily{$fontfamilies.name$}[$fontfamilies.options$]{$fontfamilies.font$}
+$endfor$
+$if(mainfont)$
+    \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+$endif$
+$if(sansfont)$
+    \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+$endif$
+$if(monofont)$
+    \setmonofont[Mapping=tex-ansi$if(monofontoptions)$,$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$endif$]{$monofont$}
+$endif$
+$if(mathfont)$
+    \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+$endif$
+$if(CJKmainfont)$
+    \usepackage{xeCJK}
+    \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
+$endif$
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+\usepackage[unicode=true, bookmarks=true]{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\hypersetup{
+$if(title)$
+            pdftitle=$title$,
+$endif$
+$if(author-meta)$
+            pdfauthor=$author-meta$,
+$endif$
+            pdfcreator=EDLM,
+            pdfproducer=EDLM,
+$if(subtitle)$
+            pdfsubject=$subtitle$,
+$endif$
+$if(keywords)$
+            pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
+$endif$
+colorlinks=true,
+linkcolor=$if(linkcolor)$$linkcolor$$else$Gray$endif$,
+citecolor=$if(citecolor)$$citecolor$$else$Gray$endif$,
+urlcolor=$if(urlcolor)$$urlcolor$$else$Gray$endif$,
+}
+\urlstyle{same}  % don't use monospace font for urls
+$if(verbatim-in-note)$
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+$if(lang)$
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
+$if(babel-newcommands)$
+  $babel-newcommands$
+$endif$
+\else
+  \usepackage{polyglossia}
+  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
+$for(polyglossia-otherlangs)$
+  \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
+$endfor$
+\fi
+$endif$
+$if(natbib)$
+\usepackage{natbib}
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+$endif$
+$if(biblatex)$
+\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
+$endif$
+$if(listings)$
+\usepackage{listings}
+$endif$
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+$if(tables)$
+\usepackage{longtable,booktabs}
+% Fix footnotes in tables (requires footnote package)
+\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{long table}}{}
+$endif$
+
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+$if(indent)$
+$else$
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+$endif$
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+$if(numbersections)$
+\setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+$if(subparagraph)$
+$else$
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+$endif$
+$if(dir)$
+\ifxetex
+  % load bidi as late as possible as it modifies e.g. graphicx
+  $if(latex-dir-rtl)$
+  \usepackage[RTLdocument]{bidi}
+  $else$
+  \usepackage{bidi}
+  $endif$
+\fi
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \TeXXeTstate=1
+  \newcommand{\RL}[1]{\beginR #1\endR}
+  \newcommand{\LR}[1]{\beginL #1\endL}
+  \newenvironment{RTL}{\beginR}{\endR}
+  \newenvironment{LTR}{\beginL}{\endL}
+\fi
+$endif$
+
+\newcommand{\passthrough}[1]{#1}
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{bookmark}
+\bookmarksetup{
+  numbered,
+  open,
+}
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+$if(title)$
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+$if(subtitle)$
+\providecommand{\subtitle}[1]{}
+\subtitle{$subtitle$}
+$endif$
+$if(author)$
+\author{$for(author)$$author$$sep$ \and $endfor$}
+$endif$
+$if(institute)$
+\providecommand{\institute}[1]{}
+\institute{$for(institute)$$institute$$sep$ \and $endfor$}
+$endif$
+\date{$date$}
+
+\graphicspath{{F:/DEV/docs/EDLM proposal/media/}{F:/DEV/docs/media/}}
+\newcommand{\wing}{132\textsuperscript{nd} Virtual Wing}
+
+\usepackage{lastpage}
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{$title$}
+%\rhead{
+%    $if(title_pictures)$$for(title_pictures)$\includegraphics[height=1cm]{$title_pictures$}$endfor$$endif$
+%}
+
+\lhead{\includegraphics[height=1.5cm]{logo132.png}\wing}
+\rfoot{\thepage}
+
+
+\usepackage{adjustbox}
+
+\usepackage[figure,table]{totalcount}
+
+% Keep footnotes on the same pages they were declared
+\interfootnotelinepenalty=10000
+
+% Increase spacing of tables rows
+\renewcommand{\arraystretch}{1.3}
+
+\lstset{
+    basicstyle=\ttfamily,
+    numbers=none,
+    numberstyle=\footnotesize,
+    stepnumber=2,
+    numbersep=5pt,
+    backgroundcolor=\color{black!3},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=true,
+    breakautoindent=true,
+    linewidth=\textwidth
+}
+
+\usepackage{framed}
+\let\oldquote=\quote
+\let\endoldquote=\endquote
+\colorlet{shadecolor}{gray!30}
+\renewenvironment{quote}{\begin{shaded*}\begin{oldquote}}{\end{oldquote}\end{shaded*}}
+
+% \usepackage{float}
+% \floatstyle{plaintop}
+% \restylefloat{table}
+% \restylefloat{figure}
+
+% \setlength{\belowcaptionskip}{10pt} % Chosen fairly arbitrarily
+
+% \usepackage{makeidx}
+% \makeindex
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{center}
+    \vspace*{\fill}
+
+    \begin{figure}[h]
+      \centering
+      \includegraphics[height=6cm]{logo132.png}
+    \end{figure}
+
+    \vspace{2cm}
+
+    \noindent\rule{\textwidth}{0.4pt}
+%    \vspace{0.1cm}
+
+    {\fontsize{2cm}{2.3cm}\selectfont $title$\par}
+
+    \noindent\rule{\textwidth}{0.4pt}
+
+%    $for(applies)$
+%        $applies$ \\
+%    $endfor$
+
+    $subtitle$
+
+    $if(title_pictures)$
+%        \vspace{1cm}
+        \begin{figure}[h]
+            \begin{minipage}[c]{\linewidth}
+                \centering
+                $for(title_pictures)$
+                      \includegraphics[height=3cm]{$title_pictures$}
+                $endfor$
+            \end{minipage}
+        \end{figure}
+    $endif$
+
+%    \vspace{2cm}
+    \vfill
+
+    {\href{http://132virtualwing.org}{\wing}}, \the\year \\
+    \vspace{0.3cm}
+    This work is licensed under a {\href{https://creativecommons.org/licenses/by-sa/3.0/}{Creative Commons Attribution-ShareAlike 3.0 Unported License}}.
+
+%    \vfill
+\end{center}
+
+
+\newpage
+    \clearpage
+    \thispagestyle{empty}
+    \null
+    \vfill
+    \begin{center}
+    \begin{minipage}{.6\textwidth}
+    \centering PAGE INTENTIONNALY LEFT BLANK
+    \end{minipage}
+    \end{center}
+    \vfill % equivalent to \vspace{\fill}
+\clearpage
+\newpage
+
+$if(applies)$
+    \thispagestyle{empty}
+    \null
+    \vfill
+    \begin{minipage}{\textwidth}
+        \begin{center}
+            \begin{tabular}{ r l }
+
+                {\color{gray}APPLIES TO:}                   & \parbox[t]{8cm}{$for(applies)$ \textbf{$applies$} \\ $endfor$} \\
+
+                \null & \null \\
+
+                $if(type)$
+                {\color{gray}TYPE:}                         & \parbox[t]{8cm}{\textbf{$type$}} \\
+
+                \null & \null \\
+                $endif$
+
+                $if(version)$
+                {\color{gray}VERSION:}                      & \parbox[t]{8cm}{$version$} \\
+
+                \null & \null \\
+                $endif$
+
+                $if(audience)$
+                {\color{gray}INTENDED AUDIENCE:}            & \parbox[t]{8cm}{$audience$} \\
+
+                \null & \null \\
+                $endif$
+
+                $if(status)$
+                {\color{gray}STATUS:}            & \parbox[t]{8cm}{$status$} \\
+
+                \null & \null \\
+                $endif$
+
+                $if(published_date)$
+                {\color{gray}PUBLISHED DATE:}               & \parbox[t]{8cm}{$published_date$} \\
+
+                \null & \null \\
+                $endif$
+
+                $if(responsible)$
+                {\color{gray}DOCUMENT RESPONSIBLE:}         & \parbox[t]{8cm}{$responsible$} \\
+
+                \null & \null \\
+                $endif$
+
+                $if(summary_of_changes)$
+                {\color{gray}SUMMARY OF CHANGES:}           & \parbox[t]{8cm}{$for(summary_of_changes)$ $summary_of_changes$ \\ $endfor$} \\
+
+                \null & \null \\
+                $endif$
+
+                % $if(refs)$
+                % {\color{gray}REFERENCES:}                   & \parbox[t]{8cm}{$for(refs)$ $refs$ \\ $endfor$} \\
+                % $endif$
+
+            \end{tabular}
+        \end{center}
+    \end{minipage}
+    \vfill
+    \newpage
+$endif$
+
+%$for(include-before)$
+%    $include-before$
+%    \newpage
+%$endfor$
+
+\vspace*{1cm}
+
+$if(toc)$
+    {
+        \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+        \setcounter{tocdepth}{$toc-depth$}
+        \pdfbookmark[section]{\contentsname}{toc}
+        \tableofcontents
+        \clearpage
+        \newpage
+    }
+$endif$
+
+$if(refs)$
+    $refs$
+	\clearpage
+	\newpage
+$endif$
+
+\pagestyle{fancy}
+$body$
+\newpage
+
+$if(natbib)$
+    $if(bibliography)$
+        $if(biblio-title)$
+            $if(book-class)$
+                \renewcommand\bibname{$biblio-title$}
+            $else$
+                \renewcommand\refname{$biblio-title$}
+            $endif$
+        $endif$
+        \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+        \newpage
+    $endif$
+$endif$
+
+\iftotalfigures\pdfbookmark[section]{List of figures}{lof}\listoffigures\newpage\fi
+\iftotaltables\pdfbookmark[section]{List of tables}{lot}\listoftables\newpage\fi
+
+$if(refs)$
+	\pdfbookmark[section]{List of references}{refs}
+	\section*{List of references}
+	\begin{itemize}
+		$for(refs)$ \item $refs$ \\ $endfor$
+	\end{itemize}
+	
+	\newpage
+$endif$
+
+
+% \pdfbookmark[section]{Index}{index}
+% \section*{Index}
+% \printindex
+% \newpage
+
+
+$if(biblatex)$
+    \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+    \newpage
+$endif$
+
+$for(include-after)$
+    $include-after$
+    \newpage
+$endfor$
+
+\newpage
+\thispagestyle{empty}
+\clearpage
+\vspace*{\fill}
+\begin{center}
+\begin{minipage}{.6\textwidth}
+\centering PAGE INTENTIONNALY LEFT BLANK
+\end{minipage}
+\end{center}
+\vfill % equivalent to \vspace{\fill}
+\clearpage
+
+\end{document}

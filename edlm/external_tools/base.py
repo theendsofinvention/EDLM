@@ -1,4 +1,5 @@
 # coding=utf-8
+import sys
 import os
 import typing
 from pathlib import Path
@@ -12,6 +13,24 @@ from edlm.utils import download, get_hash
 LOGGER = LOGGER
 
 STR_OR_PATH = typing.Union[str, Path]
+
+
+def _find_patool() -> Path:
+    python_exe = Path(sys.executable).absolute()
+    LOGGER.debug(f'python_exe: {python_exe}')
+    patool_path = Path(python_exe.parent, 'patool')
+    if patool_path.exists():
+        return patool_path.absolute()
+
+    scripts_path = Path(python_exe, 'scripts')
+    if scripts_path.exists() and scripts_path.is_dir():
+        patool_path = Path(scripts_path, 'patool')
+        if patool_path.exists():
+            return patool_path.absolute()
+
+    raise FileNotFoundError('patool not found')
+
+
 
 
 class BaseExternalTool:
@@ -103,7 +122,8 @@ class BaseExternalTool:
     def _extract(self):
         LOGGER.info(f'{self.__class__.__name__}: extracting (this may take a while)')
         archive = pyunpack.Archive(self.archive)
-        archive.extractall(directory=self.install_dir, auto_create_dir=True)
+        patool = _find_patool()
+        archive.extractall(directory=self.install_dir, auto_create_dir=True, patool_path=str(patool))
         LOGGER.info(f'{self.__class__.__name__}: successfully extracted')
 
     def setup(self):

@@ -66,6 +66,9 @@ def _build_folder(ctx: Context):
 
     ctx.info(f'making PDF')
 
+    # TODO: remove
+    ctx.keep_temp_dir = True
+
     with TempDir(ctx):
 
         get_media_folders(ctx)
@@ -104,21 +107,47 @@ def _build_folder(ctx: Context):
 
             ctx.debug(f'context:\n{elib.pretty_format(ctx.__repr__())}')
 
-            pandoc(
-                f'-s --toc '
-                f'--template "{ctx.template_file}" '
-                f'--listings "{ctx.source_file}" '
-                f'-o "{ctx.out_file}" '
-                f'-V geometry:margin=1.5cm '
-                f'-V geometry:headheight=17pt '
-                f'-V geometry:includehead '
-                f'-V geometry:includefoot '
-                f'-V geometry:heightrounded '
-                f'-V lot '
-                f'-V lof '
-                f'-V papersize:{ctx.paper_size} '
-                f'-N',
-            )
+            pandoc_cmd = [
+                '-s',
+                '--toc',
+                f'--template "{ctx.template_file}"',
+                f'--listings "{ctx.source_file}"',
+                f'-o "{ctx.out_file}"',
+                '-V geometry:margin=1.5cm',
+                '-V test',
+                '-V geometry:headheight=17pt',
+                '-V geometry:includehead',
+                '-V geometry:includefoot',
+                '-V geometry:heightrounded',
+                '-V lot',
+                '-V lof',
+                f'-V papersize:{ctx.paper_size}',
+                '-N',
+            ]
+
+            for ref in sorted(ctx.latex_refs):
+                pandoc_cmd.append(f'-V refs="{ref}"')
+
+            pandoc(' '.join(pandoc_cmd))
+
+            # pandoc(
+            #     f'-s --toc '
+            #     f'--template "{ctx.template_file}" '
+            #     f'--listings "{ctx.source_file}" '
+            #     # '--filter pandoc-citeproc '
+            #     f'-o "{ctx.out_file}" '
+            #     f'-V geometry:margin=1.5cm '
+            #     f'-V refs={ctx.references} '
+            #     f'-V test '
+            #     f'-V geometry:headheight=17pt '
+            #     f'-V geometry:includehead '
+            #     f'-V geometry:includefoot '
+            #     f'-V geometry:heightrounded '
+            #     f'-V lot '
+            #     f'-V lof '
+            #     f'-V papersize:{ctx.paper_size} '
+            #     f'-N',
+            # )
 
 
 def _is_source_folder(folder: Path) -> bool:

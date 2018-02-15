@@ -31,6 +31,9 @@ class Context:
     width: int = None
     width_str: str = None
 
+    used_references = set()
+    latex_refs: list = None
+
     def debug(self, text):
         LOGGER.debug(f'"{self.source_folder}": {text}')
 
