@@ -91,9 +91,12 @@ class BaseExternalTool:
         return self.archive.exists()
 
     def _archive_is_correct(self) -> bool:
-        if not self._archive_exists():
+        try:
+            if not self._archive_exists():
+                return False
+            return get_hash(self.archive.read_bytes()) == self.hash
+        except IndexError:
             return False
-        return get_hash(self.archive.read_bytes()) == self.hash
 
     def _is_installed(self) -> bool:
         LOGGER.debug(f'{self.__class__.__name__}: checking installation')
