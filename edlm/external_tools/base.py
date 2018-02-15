@@ -100,8 +100,11 @@ class BaseExternalTool:
 
     def _is_installed(self) -> bool:
         LOGGER.debug(f'{self.__class__.__name__}: checking installation')
-        if not self.exe.exists():
-            LOGGER.debug(f'{self.__class__.__name__}: executable not found')
+        try:
+            if not self.exe.exists():
+                LOGGER.debug(f'{self.__class__.__name__}: executable not found')
+                return False
+        except IndexError:
             return False
         if not self.version == self.expected_version:
             LOGGER.debug(f'{self.__class__.__name__}: wrong version: '
@@ -110,6 +113,7 @@ class BaseExternalTool:
             return False
         return True
 
+    # pylint: disable=inconsistent-return-statements
     def _download(self) -> bool:
         if self._archive_is_correct():
             LOGGER.debug('{self.__class__.__name__}: archive already downloaded')
