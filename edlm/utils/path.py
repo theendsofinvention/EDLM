@@ -2,10 +2,10 @@
 
 import os
 
-from edlm import MAIN_LOGGER
+from edlm import LOGGER
 
 
-LOGGER = MAIN_LOGGER.getChild(__name__)
+LOGGER = LOGGER.getChild(__name__)
 
 
 def ensure_file_exists(path: str) -> str:

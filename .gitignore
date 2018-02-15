@@ -328,3 +328,7 @@ tex2pdf.*
 /DOCS/
 /tmp*/
 /Pipfile.lock
+/pandoc/
+/OUTPUT/
+*.7z
+edlm.yml

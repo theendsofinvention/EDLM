@@ -1,74 +1,44 @@
 # coding=utf-8
-import logging
-import logging.handlers
 import os
-import re
 
 import click
-from pkg_resources import DistributionNotFound, get_distribution
+import elib
 
-from edlm.convert import Convert
-from edlm.config import CFG
-from edlm.utils.click_logger import install_click_logger
+from edlm import LOGGER, __version__
+from edlm.config import config
+from edlm.external_tools import miktex, pandoc
 
-try:
-    __version__ = get_distribution('edlm').version
-except DistributionNotFound:
-    __version__ = 'not installed'
-
-LOGGER = logging.getLogger('EDLM')
-LOGGER.setLevel(logging.DEBUG)
-
-
-class CustomTimedRotatingFileHandler(logging.handlers.TimedRotatingFileHandler):
-    ansi_escape = re.compile(r'\x1b[^m]*m')
-    level_remove = re.compile(r'^(debug|warning|info|critical|error): ')
-
-    def emit(self, record: logging.LogRecord):
-        record.msg = self.ansi_escape.sub('', record.msg)
-        record.msg = self.level_remove.sub('', record.msg)
-        super(CustomTimedRotatingFileHandler, self).emit(record)
-
-
-def _setup_logging(debug: bool):
-    """
-    Setup up logging module to output to the "logs" folder
-    """
-    try:
-        os.makedirs('./logs')
-    except FileExistsError:
-        pass
-    formatter = logging.Formatter(
-        '%(asctime)s - %(levelname)12s - %(name)s.%(funcName)s[%(lineno)s] - %(message)s'
-    )
-    handler = CustomTimedRotatingFileHandler(f'./logs/main.log', when='midnight', backupCount=7)
-    handler.setFormatter(formatter)
-    LOGGER.addHandler(handler)
-    install_click_logger(LOGGER, formatter, logging.DEBUG if debug else logging.INFO)
+LOGGER = LOGGER.getChild(__name__)
 
 
 @click.group()
 @click.version_option(version=__version__)
-@click.option('--verbose', default=False, help='Outputs DEBUG message on console', is_flag=True)
-def cli(verbose):
+@click.option('--debug', default=False, help='Outputs DEBUG message on console', is_flag=True)
+def cli(debug):
     LOGGER.info(f'EDLM {__version__}')
-    _setup_logging(verbose or CFG.debug)
+    debug = debug or config.debug
+    if debug:
+        elib.custom_logging.set_handler_level('EDLM', 'ch', 'debug')
+    else:
+        elib.custom_logging.set_handler_level('EDLM', 'ch', 'info')
+    pandoc.setup()
+    miktex.setup()
 
 
-@cli.command()
-@click.argument('infile', type=click.Path(exists=True, dir_okay=False, resolve_path=True, readable=True))
-@click.option('-o', '--outfile', help='Output Markdown file (defaults to the input file name)')
-@click.option('-d', '--outdir', help='Output directory (defaults to the input file name)')
-def extractdocx(infile, outfile, outdir):
-    """
-    Converts a Word (docx) document to markdown.
-    """
-    if not os.path.splitext(infile) == 'md':
-        LOGGER.error(f'Invalid value for "infile": Path "{infile}" is not a docx file')
-        return
-
-    converter = Convert()
-    converter.make_md(infile, outfile, outdir)
+# @cli.command()
+# @click.argument('infile', type=click.Path(exists=True, dir_okay=False, resolve_path=True, readable=True))
+# @click.option('-o', '--outfile', help='Output Markdown file (defaults to the input file name)')
+# @click.option('-d', '--outdir', help='Output directory (defaults to the input file name)')
+# def extractdocx(infile, outfile, outdir):
+#     """
+#     Converts a Word (docx) document to markdown.
+#     """
+#     if not os.path.splitext(infile) == 'md':
+#         LOGGER.error(f'Invalid value for "infile": Path "{infile}" is not a docx file')
+#         return
+#
+#     converter = Convert()
+#     converter.make_md(infile, outfile, outdir)
 
 
 @cli.group()
@@ -90,18 +60,10 @@ def pdf(source_folder, keep_temp_dir):
     Converts content of SOURCE_FOLDER(s) recursively for folders containing "index.md" files and convert them to PDF
     """
 
-    def _scan(folder_):
-        children = os.listdir(folder_)
-        if 'index.md' in children:
-            convert_source_folder(folder_, keep_temp_dir)
-        else:
-            for child in children:
-                if os.path.isdir(child):
-                    _scan(child)
+    from edlm.convert import make_pdf
 
-    from edlm.convert import convert_source_folder
     for folder in source_folder:
-        _scan(folder)
+        make_pdf(folder)
 
 
 # noinspection SpellCheckingInspection

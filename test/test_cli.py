@@ -3,7 +3,7 @@
 import pytest
 import click
 from click.testing import CliRunner
-from convert.main import cli
+from old_convert.main import cli
 
 
 def test_basic(runner):

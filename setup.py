@@ -38,6 +38,7 @@ edlm=edlm.cli:cli
 
 setup(
     name='edlm',
+    package_dir={'edlm': 'edlm'},
     use_scm_version=True,
     install_requires=requirements,
     tests_require=test_requirements,

@@ -2,9 +2,9 @@
 
 import hashlib
 
-from edlm import MAIN_LOGGER
+from edlm import LOGGER
 
-LOGGER = MAIN_LOGGER.getChild(__name__)
+LOGGER = LOGGER.getChild(__name__)
 
 
 def get_hash(data, method: str = 'md5'):

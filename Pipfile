@@ -5,17 +5,26 @@ verify_ssl = true
 name = "pypi"
 
 
+[requires]
+
+python_version = "3.6"
+
+
 [packages]
 
-certifi = "==2017.7.27.1"
-chardet = "==3.0.4"
-click-log = "==0.1.8"
-click = "==6.7"
-idna = "==2.6"
-"jinja2" = "==2.9.6"
-markupsafe = "==1.0"
-requests = "==2.18.4"
-"urllib3" = "==1.22"
+certifi = "*"
+chardet = "*"
+click-log = "*"
+click = "*"
+idna = "*"
+"jinja2" = "*"
+markupsafe = "*"
+requests = "*"
+"urllib3" = "*"
+elib = "*"
+tqdm = "*"
+pyunpack = "*"
+patool = "*"
 
 
 [dev-packages]

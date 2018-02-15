@@ -9,9 +9,9 @@ import typing
 
 import click
 
-from edlm import MAIN_LOGGER
+from edlm import LOGGER
 
-LOGGER = MAIN_LOGGER.getChild(__name__)
+LOGGER = LOGGER.getChild(__name__)
 
 
 def find_executable(executable: str, path: str = None) -> typing.Union[str, None]:  # noqa: C901

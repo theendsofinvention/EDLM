@@ -1,10 +1,16 @@
 # coding=utf-8
-from pkg_resources import get_distribution, DistributionNotFound
-import logging
+from pathlib import Path
 
-MAIN_LOGGER = logging.getLogger('EDLM')
+import elib
+from pkg_resources import DistributionNotFound, get_distribution
+
+LOGGER = elib.custom_logging.get_logger('EDLM',)
+
+HERE = Path(__file__).parent.parent.absolute()
 
 try:
     __version__ = get_distribution(__name__).version
 except DistributionNotFound:
-    __version__ = '"convert" package not installed'
+    __version__ = '"EDLM" package not installed'
+
+LOGGER.info(f'EDLM version {__version__}')
