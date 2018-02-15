@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Download content from the Web
+"""
 import os
 import time
 
@@ -15,13 +18,17 @@ REQUESTS_HEADERS = {'User-agent': 'Mozilla/5.0'}
 LOGGER = LOGGER.getChild(__name__)
 
 
-def get_http_pool():
+def _get_http_pool():
     return urllib3.PoolManager(cert_reqs=str('CERT_REQUIRED'),
                                ca_certs=certifi.where())
 
 
-class Downloader:  # pylint: disable=too-many-instance-attributes
-    def __init__(  # type: ignore # pylint: disable=too-many-arguments
+class Downloader:  # pylint: disable=too-many-instance-attributes,too-many-arguments
+    """
+    Downloads files
+    """
+
+    def __init__(
             self,
             url: str,
             filename: str,
@@ -37,7 +44,7 @@ class Downloader:  # pylint: disable=too-many-instance-attributes
         self.content_length = content_length or None
         self.max_download_retries = download_retries
         self.block_size = block_size
-        self.http_pool = get_http_pool()
+        self.http_pool = _get_http_pool()
         self.hexdigest = hexdigest
         self.file_binary_data = None
 
@@ -156,6 +163,9 @@ class Downloader:  # pylint: disable=too-many-instance-attributes
         return data
 
     def download_to_memory(self):
+        """
+        Download bytes to memory
+        """
 
         data = self._create_response()
 
@@ -178,21 +188,17 @@ class Downloader:  # pylint: disable=too-many-instance-attributes
         percent = self._calc_progress_percent(0, self.content_length)
 
         # with click.progressbar(length=self.content_length, label=f'Downloading {self.url}') as progress:
-        with tqdm.tqdm(
-                total=self.content_length,
-                unit_scale=True,
-                unit='B',
-                desc=f'Downloading {self.url}'
-        ) as progress:
+        with tqdm.tqdm(total=self.content_length, unit_scale=True, unit='B',
+                       desc=f'Downloading {self.url}') as progress:
 
             # progress.show_eta = True  # type: ignore
             # progress.show_percent = True
             current = 0
 
-            def progress_hook(data):
+            def _progress_hook(data_):
                 nonlocal current
-                progress.update(data['downloaded'] - current)
-                current = data['downloaded']
+                progress.update(data_['downloaded'] - current)
+                current = data_['downloaded']
                 # progress.label = data['time']
 
             while 1:
@@ -225,7 +231,7 @@ class Downloader:  # pylint: disable=too-many-instance-attributes
                           'percent_complete': percent,
                           'time': time_left}
 
-                progress_hook(status)
+                _progress_hook(status)
 
             status = {'total': self.content_length,
                       'downloaded': received_data,
@@ -233,11 +239,16 @@ class Downloader:  # pylint: disable=too-many-instance-attributes
                       'percent_complete': percent,
                       'time': '00:00'}
 
-            progress_hook(status)
+            _progress_hook(status)
         LOGGER.debug('Download Complete')
 
-    def download(self):
+    def download(self) -> bool:
+        """
+        Download content to file
 
+        Returns: success of the operation
+
+        """
         LOGGER.debug('downloading to memory')
         self.download_to_memory()
 
@@ -258,21 +269,33 @@ class Downloader:  # pylint: disable=too-many-instance-attributes
             return False
 
 
+# TODO: move to elib
 def download(
         url: str,
         outfile: str,
         hexdigest=None,
 ) -> bool:
+    """
+    Download file
+
+    Args:
+        url: source
+        outfile: local file to save the content to
+        hexdigest: optional hexdigest to check the download
+
+    Returns: success of the operation
+
+    """
     LOGGER.info('Downloading MikTex portable installation')
     req = requests.head(url, headers=REQUESTS_HEADERS, timeout=5)
     if not req.ok:
         LOGGER.error(f'Download failed: {req.reason}')
         return False
-    else:
-        LOGGER.debug('Processing download request')
 
-        return Downloader(
-            url=url,
-            filename=outfile,
-            hexdigest=hexdigest,
-        ).download()
+    LOGGER.debug('Processing download request')
+
+    return Downloader(
+        url=url,
+        filename=outfile,
+        hexdigest=hexdigest,
+    ).download()

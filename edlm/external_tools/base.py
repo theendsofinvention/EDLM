@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Base class for external tools
+"""
 import os
 import sys
 import typing
@@ -32,6 +35,9 @@ def _find_patool() -> Path:
 
 
 class BaseExternalTool:
+    """
+    Base class for external tools
+    """
     url = None
     hash = None
     default_archive = None
@@ -113,6 +119,7 @@ class BaseExternalTool:
                 hexdigest=self.hash
         ):
             LOGGER.debug(f'{self.__class__.__name__}: download successful')
+            return True
         else:
             LOGGER.error(f'{self.__class__.__name__}: download failed')
             exit(-1)
@@ -125,6 +132,9 @@ class BaseExternalTool:
         LOGGER.info(f'{self.__class__.__name__}: successfully extracted')
 
     def setup(self):
+        """
+        Setup this tool
+        """
         if not self._is_installed():
             LOGGER.debug(f'{self.__class__.__name__}: setting up')
             self._download()
@@ -136,8 +146,18 @@ class BaseExternalTool:
 
     @property
     def exe(self) -> Path:
+        """
+
+        Returns: executable for this tool
+
+        """
         raise NotImplementedError(f'missing exe for {self.__class__.__name__}')
 
     @property
     def version(self) -> str:
+        """
+
+        Returns: version
+
+        """
         raise NotImplementedError(f'missing version for {self.__class__.__name__}')
