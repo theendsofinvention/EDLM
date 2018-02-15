@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Gathers settings
+"""
 
 import collections
 from pathlib import Path
@@ -9,17 +12,30 @@ import yaml
 from ._context import Context
 
 
-def update_nested_dict(d, u):
-    for k, v in u.items():
-        if isinstance(v, collections.Mapping):
-            r = update_nested_dict(d.get(k, {}), v)
-            d[k] = r
+def update_nested_dict(source_dict, updated_dict):
+    """
+    Updates a dictionary from another
+
+    Args:
+        source_dict: source dictionary (will be overwritten)
+        updated_dict: updated dictionary (will take precedence)
+
+    Returns: merged dictionary
+
+    """
+    for key, value in updated_dict.items():
+        if isinstance(value, collections.Mapping):
+            result = update_nested_dict(source_dict.get(key, {}), value)
+            source_dict[key] = result
         else:
-            d[k] = u[k]
-    return d
+            source_dict[key] = updated_dict[key]
+    return source_dict
 
 
 def get_settings(ctx: Context):
+    """
+    Gathers settings
+    """
     ctx.info('reading settings')
 
     settings = {}

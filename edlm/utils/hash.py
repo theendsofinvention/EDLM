@@ -8,6 +8,16 @@ LOGGER = LOGGER.getChild(__name__)
 
 
 def get_hash(data, method: str = 'md5'):
+    """
+    Computes hash from data
+
+    Args:
+        data: data
+        method: hash method (defaults to MD5)
+
+    Returns: hash value
+
+    """
     if not isinstance(data, bytes):
         data = bytes(data, 'utf-8')
 
