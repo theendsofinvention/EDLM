@@ -5,8 +5,8 @@
 from ._final_processing import final_processing
 from ._references import process_references
 from ._symbols import process_symbols
-from .aliases import process_aliases
-from .images import process_images
+from ._aliases import process_aliases
+from ._images import process_images
 from .._context import Context
 
 
