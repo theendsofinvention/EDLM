@@ -1,8 +1,11 @@
 # coding=utf-8
+"""
+EDLM external tools
+"""
 
 from .miktext._miktext import MikTex
 from .pandoc._pandoc import Pandoc
 
 
-miktex = MikTex()
-pandoc = Pandoc()
+MIKTEX = MikTex()
+PANDOC = Pandoc()

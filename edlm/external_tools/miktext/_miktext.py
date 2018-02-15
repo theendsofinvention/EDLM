@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Miktex external tool
+"""
 
 import typing
 from pathlib import Path
@@ -20,6 +23,9 @@ AutoInstall=1
 
 
 class MikTex(BaseExternalTool):
+    """
+    Miktex external tool
+    """
     url = r'https://miktex.org/download/ctan/systems/win32/miktex/setup/miktex-portable-2.9.6521.exe'
     hash = 'c8164da05a93b7f00eb79cba7d9ce611'
     default_archive = Path(HERE, 'miktex.7z').absolute()
@@ -28,17 +34,30 @@ class MikTex(BaseExternalTool):
 
     @property
     def version(self) -> str:
+        """
+
+        Returns: Miktex version
+
+        """
         if self._version is None:
             self._version = self('--version', mute=True).split('\n')[0].split(' ')[1]
         return self._version
 
     @property
     def exe(self) -> Path:
+        """
+
+        Returns: Miktex executable
+
+        """
         if self._exe is None:
             self._exe = Path(self.install_dir, 'texmfs/install/miktex/bin/pdflatex.exe').absolute()
         return self._exe
 
     def setup(self):
+        """
+        Setup Miktex
+        """
         super(MikTex, self).setup()
         mpm_config_file = Path(self.install_dir, 'texmfs/config/miktex/config/miktex.ini')
         if not mpm_config_file.exists():
@@ -67,13 +86,3 @@ class MikTex(BaseExternalTool):
                 output.append('[MPM]')
                 output.append('AutoInstall=1')
             mpm_config_file.write_text('\n'.join(output))
-
-
-if __name__ == '__main__':
-    m = MikTex(Path('./miktex.7z'), Path('./miktex'))
-    m.setup()
-    # print(m._archive_exists())
-    # print(m._archive_is_correct())
-    # m._download()
-    # print(m._archive_exists())
-    # print(m._archive_is_correct())

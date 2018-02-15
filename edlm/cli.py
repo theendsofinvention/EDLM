@@ -1,11 +1,15 @@
 # coding=utf-8
+"""
+Command line interface
+"""
 
 import click
 import elib
 
 from edlm import LOGGER, __version__
 from edlm.config import config
-from edlm.external_tools import miktex, pandoc
+from edlm.external_tools import MIKTEX, PANDOC
+from edlm.convert import Context
 
 LOGGER = LOGGER.getChild(__name__)
 
@@ -14,14 +18,17 @@ LOGGER = LOGGER.getChild(__name__)
 @click.version_option(version=__version__)
 @click.option('--debug', default=False, help='Outputs DEBUG message on console', is_flag=True)
 def cli(debug):
+    """
+    Command line interface
+    """
     LOGGER.info(f'EDLM {__version__}')
     debug = debug or config.debug
     if debug:
         elib.custom_logging.set_handler_level('EDLM', 'ch', 'debug')
     else:
         elib.custom_logging.set_handler_level('EDLM', 'ch', 'info')
-    pandoc.setup()
-    miktex.setup()
+    PANDOC.setup()
+    MIKTEX.setup()
 
 
 # @cli.command()
@@ -61,14 +68,17 @@ def pdf(source_folder, keep_temp_dir):
 
     from edlm.convert import make_pdf
 
+    ctx = Context()
+    ctx.keep_temp_dir = keep_temp_dir
+
     for folder in source_folder:
-        make_pdf(folder)
+        make_pdf(ctx, folder)
 
 
 # noinspection SpellCheckingInspection
-if __name__ == '__main__':
-    cli(obj={})  # pylint: disable=no-value-for-parameter,unexpected-keyword-arg
-    exit(0)
+# if __name__ == '__main__':
+#     cli(obj={})  # pylint: disable=no-value-for-parameter,unexpected-keyword-arg
+#     exit(0)
 
     # os.environ['PATH'] += os.pathsep + r'F:\DEV\test-doc\miktex\texmfs\install\miktex\bin'
 

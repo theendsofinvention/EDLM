@@ -1,7 +1,12 @@
 # coding=utf-8
+"""
+Transmits logging records to click
+"""
 
 import logging
+
 import click
+
 
 class ClickLoggingHandler(logging.Handler):
     """

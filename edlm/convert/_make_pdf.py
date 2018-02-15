@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Makes a PDF document from a source folder
+"""
 
 import shutil
 from pathlib import Path
@@ -7,7 +10,7 @@ import elib
 
 from edlm import LOGGER
 from edlm.convert._context import Context
-from edlm.external_tools import pandoc
+from edlm.external_tools import PANDOC
 from ._get_index import get_index_file
 from ._get_media_folders import get_media_folders
 from ._get_settings import get_settings
@@ -127,7 +130,7 @@ def _build_folder(ctx: Context):
             for ref in sorted(ctx.latex_refs):
                 pandoc_cmd.append(f'-V refs="{ref}"')
 
-            pandoc(' '.join(pandoc_cmd))
+            PANDOC(' '.join(pandoc_cmd))
 
             # pandoc(
             #     f'-s --toc '
@@ -155,10 +158,15 @@ def _is_source_folder(folder: Path) -> bool:
     return Path(folder, 'index.md').exists()
 
 
-def make_pdf(source_folder: Path):
-    _remove_artifacts()
+def make_pdf(ctx: Context, source_folder: Path):
+    """
+    Makes a PDF document from a source folder
 
-    ctx = Context()
+    Args:
+        ctx: Context
+        source_folder: source folder
+    """
+    _remove_artifacts()
 
     source_folder = elib.path.ensure_dir(source_folder).absolute()
 

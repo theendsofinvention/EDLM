@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Computes hashes
+"""
 
 import hashlib
 
