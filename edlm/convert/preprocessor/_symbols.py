@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Processes symbols
+"""
 
 from .._context import Context
 
@@ -9,6 +12,9 @@ SYMBOLS = {
 
 
 def process_symbols(ctx: Context):
+    """
+    Processes symbols
+    """
     ctx.debug('processing symbols')
     for symbol in SYMBOLS:
         ctx.markdown_text = ctx.markdown_text.replace(

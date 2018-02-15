@@ -1,8 +1,9 @@
 # coding=utf-8
 
-import pytest
 import click
+import pytest
 from click.testing import CliRunner
+
 from old_convert.main import cli
 
 

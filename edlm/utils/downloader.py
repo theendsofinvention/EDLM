@@ -11,6 +11,7 @@ import tqdm
 import urllib3  # type: ignore
 
 from edlm import LOGGER
+
 from .hash import get_hash
 
 REQUESTS_HEADERS = {'User-agent': 'Mozilla/5.0'}

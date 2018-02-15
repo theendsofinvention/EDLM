@@ -1,11 +1,17 @@
 # coding=utf-8
+"""
+Gathers the media folders
+"""
 
 import elib
 
 from ._context import Context
 
 
-def get_media_folders(ctx: Context) -> list:
+def get_media_folders(ctx: Context):
+    """
+    Gathers the media folders
+    """
     ctx.info('gathering media folders')
 
     media_folders = []
@@ -24,4 +30,3 @@ def get_media_folders(ctx: Context) -> list:
 
     ctx.info(f'media folders:\n{elib.pretty_format(media_folders)}')
     ctx.media_folders = media_folders
-    return media_folders

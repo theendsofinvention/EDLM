@@ -17,5 +17,5 @@ def final_processing(ctx: Context):
     Final processing of the markdown text
     """
     ctx.markdown_text = RE_DOUBLE_SPACE_AFTER_CMD.sub(
-        '\g<cmd> ', ctx.markdown_text
+        r'\g<cmd> ', ctx.markdown_text
     )

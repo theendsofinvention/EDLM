@@ -11,10 +11,11 @@ import elib
 from edlm import LOGGER
 from edlm.convert._context import Context
 from edlm.external_tools import PANDOC
+
 from ._get_index import get_index_file
 from ._get_media_folders import get_media_folders
 from ._get_settings import get_settings
-from ._get_template_folder import get_template_folder
+from ._get_template_folder import get_templates_folder
 from ._temp_folder import TempDir
 from .preprocessor import process_markdown, process_tex_template
 
@@ -75,7 +76,7 @@ def _build_folder(ctx: Context):
 
         get_media_folders(ctx)
 
-        get_template_folder(ctx)
+        get_templates_folder(ctx)
 
         get_index_file(ctx)
 

@@ -15,7 +15,7 @@ class Pandoc(BaseExternalTool):
     """
     Pandoc external tool
     """
-    url = r'https://github.com/pandoc-extras/pandoc-portable/releases/download/2.0.3/pandoc-2.0.3-windows.zip'
+    url = r'https://www.dropbox.com/s/f6pccole9mdkuex/pandoc-2.0.3-windows.zip?dl=1'
     # noinspection SpellCheckingInspection
     hash = '64685f754a28e5d0cfdaf7214e202e53'
     default_archive = Path(HERE, 'pandoc.7z')

@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Etcher's Document Library Manager
+"""
 from pathlib import Path
 
 import elib

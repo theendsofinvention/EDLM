@@ -1,6 +1,7 @@
 # coding=utf-8
-
-
+"""
+EDLM setup file
+"""
 
 from pip.req import parse_requirements
 from setuptools import find_packages, setup

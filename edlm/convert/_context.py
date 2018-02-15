@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Global context
+"""
 import inspect
 import typing
 from pathlib import Path
@@ -9,6 +12,9 @@ from edlm import LOGGER
 
 
 class Context:
+    """
+    Global context
+    """
     source_folder: Path = None
     keep_temp_dir: bool = False
     paper_size: str = None
@@ -35,15 +41,27 @@ class Context:
     latex_refs: list = None
 
     def debug(self, text):
+        """
+        Convenient shortcut to main EDLM LOGGER
+        """
         LOGGER.debug(f'"{self.source_folder}": {text}')
 
     def info(self, text):
+        """
+        Convenient shortcut to main EDLM LOGGER
+        """
         LOGGER.info(f'"{self.source_folder}": {text}')
 
     def error(self, text):
+        """
+        Convenient shortcut to main EDLM LOGGER
+        """
         LOGGER.error(f'"{self.source_folder}": {text}')
 
     def warning(self, text):
+        """
+        Convenient shortcut to main EDLM LOGGER
+        """
         LOGGER.warning(f'"{self.source_folder}": {text}')
 
     def __repr__(self):

@@ -7,9 +7,9 @@ import click
 import elib
 
 from edlm import LOGGER, __version__
-from edlm.config import config
-from edlm.external_tools import MIKTEX, PANDOC
+from edlm.config import CFG
 from edlm.convert import Context
+from edlm.external_tools import MIKTEX, PANDOC
 
 LOGGER = LOGGER.getChild(__name__)
 
@@ -22,7 +22,7 @@ def cli(debug):
     Command line interface
     """
     LOGGER.info(f'EDLM {__version__}')
-    debug = debug or config.debug
+    debug = debug or CFG.debug
     if debug:
         elib.custom_logging.set_handler_level('EDLM', 'ch', 'debug')
     else:
@@ -76,9 +76,9 @@ def pdf(source_folder, keep_temp_dir):
 
 
 # noinspection SpellCheckingInspection
-# if __name__ == '__main__':
-#     cli(obj={})  # pylint: disable=no-value-for-parameter,unexpected-keyword-arg
-#     exit(0)
+if __name__ == '__main__':
+    cli(obj={})  # pylint: disable=no-value-for-parameter,unexpected-keyword-arg
+    exit(0)
 
     # os.environ['PATH'] += os.pathsep + r'F:\DEV\test-doc\miktex\texmfs\install\miktex\bin'
 

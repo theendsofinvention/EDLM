@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Processes references in the Markdown text
+"""
 
 import elib
 
@@ -12,6 +15,10 @@ REFS_TEMPLATE = r"""
 
 
 class Reference:
+    """
+    Represents a reference in the document
+    """
+
     def __init__(self, raw_ref, abbrev):
         self._abbrev = abbrev
         self._raw_ref = raw_ref
@@ -20,20 +27,35 @@ class Reference:
 
     @property
     def abbrev(self):
+        """
+        Returns: reference's abbreviation
+        """
         return self._abbrev
 
     @property
     def name(self):
+        """
+        Returns: reference's name
+        """
         return self._name
 
     @property
     def link(self):
+        """
+        Returns: reference's link
+        """
         return self._link
 
     def to_latex(self):
+        """
+        Returns: convert reference to Latex text
+        """
         return f'\\href{{{self.link}}}{{{self.name}}}'
 
     def to_markdown(self):
+        """
+        Returns: convert reference to Markdown text
+        """
         return f'[{self.name}]({self.link})'
 
     def __hash__(self):
@@ -44,6 +66,12 @@ class Reference:
 
 
 def process_references(ctx: Context):
+    """
+    Processes references in the Markdown text
+
+    Args:
+        ctx: Context
+    """
     ctx.latex_refs = list()
     ctx.used_references = set()
     if 'references' not in ctx.settings:

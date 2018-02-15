@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Processes pictures in Markdown text
+"""
 import re
 from pathlib import Path
 
@@ -24,8 +27,8 @@ def _get_image_full_path(ctx: Context):
         image_path = Path(folder, image_name)
         if image_path.exists():
             return image_path.absolute()
-    else:
-        raise FileNotFoundError(f'picture "{ctx.image}" not found in any media folders: {ctx.media_folders}')
+
+    raise FileNotFoundError(f'picture "{ctx.image}" not found in any media folders: {ctx.media_folders}')
 
 
 def _get_correct_width(ctx: Context):
@@ -56,12 +59,17 @@ def _process_image_width(ctx: Context):
         _get_correct_width(ctx)
         return RE_WIDTH.sub(f'{{width="{ctx.width}mm"}}', ctx.extras)
 
-    else:
-        ctx.debug(f'setting default witdh for picture {ctx.image}')
-        return f'{{width="{ctx.max_image_width}mm}}'
+    ctx.debug(f'setting default witdh for picture {ctx.image}')
+    return f'{{width="{ctx.max_image_width}mm}}'
 
 
 def process_images(ctx: Context):
+    """
+    Processes pictures in Markdown text
+
+    Args:
+        ctx: Context
+    """
     ctx.info('processing pictures')
     used_images = set()
     unused_images = set()

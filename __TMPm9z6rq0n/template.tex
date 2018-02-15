@@ -283,16 +283,6 @@ $endif$
 \colorlet{shadecolor}{gray!30}
 \renewenvironment{quote}{\begin{shaded*}\begin{oldquote}}{\end{oldquote}\end{shaded*}}
 
-% \usepackage{float}
-% \floatstyle{plaintop}
-% \restylefloat{table}
-% \restylefloat{figure}
-
-% \setlength{\belowcaptionskip}{10pt} % Chosen fairly arbitrarily
-
-% \usepackage{makeidx}
-% \makeindex
-
 \begin{document}
 
 \thispagestyle{empty}
@@ -438,12 +428,6 @@ $if(toc)$
         \clearpage
         \newpage
     }
-$endif$
-
-$if(refs)$
-    $refs$
-	\clearpage
-	\newpage
 $endif$
 
 \pagestyle{fancy}

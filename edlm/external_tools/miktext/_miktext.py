@@ -26,7 +26,8 @@ class MikTex(BaseExternalTool):
     """
     Miktex external tool
     """
-    url = r'https://miktex.org/download/ctan/systems/win32/miktex/setup/miktex-portable-2.9.6521.exe'
+    # url = r'https://miktex.org/download/ctan/systems/win32/miktex/setup/windows-x86/miktex-portable-2.9.6615.exe'
+    url = r'https://www.dropbox.com/s/80p25efbg3zasuj/miktex-portable-2.9.6521.exe?dl=1'
     hash = 'c8164da05a93b7f00eb79cba7d9ce611'
     default_archive = Path(HERE, 'miktex.7z').absolute()
     default_install = Path(HERE, 'miktex').absolute()

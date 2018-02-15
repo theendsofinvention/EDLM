@@ -1,14 +1,23 @@
 # coding=utf-8
+"""
+Manages temporary folder
+"""
+
 import shutil
 import tempfile
 
 import elib
 
 from edlm import LOGGER
+
 from ._context import Context
 
 
 class TempDir:
+    """
+    Manages temporary folder
+    """
+
     def __init__(self, ctx: Context):
         self.ctx = ctx
         self.path = elib.path.ensure_dir(tempfile.mkdtemp(dir='.', prefix='__TMP')).absolute()

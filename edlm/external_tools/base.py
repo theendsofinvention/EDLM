@@ -141,6 +141,8 @@ class BaseExternalTool:
         archive = pyunpack.Archive(self.archive)
         patool = _find_patool()
         archive.extractall(directory=self.install_dir, auto_create_dir=True, patool_path=str(patool))
+        LOGGER.debug(f'{self.__class__.__name__}: removing archive')
+        # self.archive.unlink()
         LOGGER.info(f'{self.__class__.__name__}: successfully extracted')
 
     def setup(self):
