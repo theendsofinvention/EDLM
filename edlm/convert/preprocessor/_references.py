@@ -1,8 +1,8 @@
 # coding=utf-8
 
 import elib
-from .._context import Context
 
+from .._context import Context
 
 REFS_TEMPLATE = r"""
 \newpage
@@ -12,7 +12,6 @@ REFS_TEMPLATE = r"""
 
 
 class Reference:
-
     def __init__(self, raw_ref, abbrev):
         self._abbrev = abbrev
         self._raw_ref = raw_ref

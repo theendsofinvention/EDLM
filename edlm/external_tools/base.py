@@ -1,6 +1,6 @@
 # coding=utf-8
-import sys
 import os
+import sys
 import typing
 from pathlib import Path
 
@@ -29,8 +29,6 @@ def _find_patool() -> Path:
             return patool_path.absolute()
 
     raise FileNotFoundError('patool not found')
-
-
 
 
 class BaseExternalTool:

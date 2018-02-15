@@ -15,5 +15,5 @@ def get_template_folder(ctx: Context):
             ctx.info(f'template folder found: {template_folder}')
             ctx.template_folder = template_folder
         if len(search_path.parents) == 1:
-            raise FileNotFoundError('unable to find a "templates" directory')
+            raise FileNotFoundError('unable to find a "templates" d irectory')
         search_path = search_path.parent.absolute()

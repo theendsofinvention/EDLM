@@ -2,7 +2,6 @@
 
 from .._context import Context
 
-
 SYMBOLS = {
     '°': r'\textdegree',
     '1/2': r'\textonehalf'

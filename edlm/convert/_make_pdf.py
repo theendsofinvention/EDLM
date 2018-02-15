@@ -1,12 +1,12 @@
 # coding=utf-8
 
-from pathlib import Path
 import shutil
+from pathlib import Path
 
 import elib
 
-from edlm.convert._context import Context
 from edlm import LOGGER
+from edlm.convert._context import Context
 from edlm.external_tools import pandoc
 from ._get_index import get_index_file
 from ._get_media_folders import get_media_folders
@@ -28,6 +28,7 @@ PAPER_FORMATS_WIDTH = {
     'a6': 105 * WIDTH_MODIFIER,
     'a7': 74 * WIDTH_MODIFIER,
 }
+
 
 # PAPER_FORMATS_HEIGHT = {
 #     'a0': 1189 * HEIGHT_MODIFIER,
@@ -61,9 +62,7 @@ def _remove_artifacts():
             shutil.rmtree(str(item.absolute()))
 
 
-
 def _build_folder(ctx: Context):
-
     ctx.info(f'making PDF')
 
     # TODO: remove
