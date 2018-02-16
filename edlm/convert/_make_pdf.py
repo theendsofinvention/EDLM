@@ -14,7 +14,7 @@ from edlm.external_tools import PANDOC
 from ._get_index import get_index_file
 from ._get_media_folders import get_media_folders
 from ._get_settings import get_settings
-from ._get_template_folder import get_templates_folder
+from ._get_template import get_template
 from ._temp_folder import TempDir
 from ._preprocessor import process_markdown, process_tex_template
 
@@ -75,15 +75,13 @@ def _build_folder(ctx: Context):
 
         get_media_folders(ctx)
 
-        get_templates_folder(ctx)
+        get_template(ctx)
 
         get_index_file(ctx)
 
         get_settings(ctx)
 
         ctx.template_file = Path(ctx.temp_dir, 'template.tex').absolute()
-        tex_template_text = process_tex_template(ctx)
-        ctx.template_file.write_text(tex_template_text, encoding='utf8')
 
         title = ctx.source_folder.name
         ctx.title = title
