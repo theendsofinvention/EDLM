@@ -31,6 +31,7 @@ def test_patool_in_scripts_folder():
     patool.touch()
     assert _find_patool(dummy) == patool
     patool.unlink()
+    _find_patool.cache_clear()
     with pytest.raises(FileNotFoundError):
         _find_patool(dummy)
 
