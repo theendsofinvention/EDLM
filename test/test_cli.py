@@ -4,7 +4,7 @@ import click
 import pytest
 from click.testing import CliRunner
 
-from old_convert.main import cli
+from edlm.cli import cli
 
 
 def test_basic(runner):
