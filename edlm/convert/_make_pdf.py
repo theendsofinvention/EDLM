@@ -50,7 +50,7 @@ def _set_max_image_width(ctx: Context):
     paper_size = ctx.paper_size.lower()
     if paper_size not in PAPER_FORMATS_WIDTH:
         raise ValueError(paper_size)
-    ctx.max_image_width = int(PAPER_FORMATS_WIDTH[paper_size])
+    ctx.image_max_width = int(PAPER_FORMATS_WIDTH[paper_size])
 
 
 # def _get_max_image_height(paper_size: str) -> int:

@@ -3,13 +3,14 @@
 Processes pictures in Markdown text
 """
 import re
+import typing
 from pathlib import Path
 
 import elib
 
 from .._context import Context
 
-RE_PICTURE_LINE = re.compile(r'\!\['
+RE_PICTURE_LINE = re.compile(r'!\['
                              r'(?P<caption>.*)'
                              r'\]'
                              r'\('
@@ -22,19 +23,19 @@ RE_WIDTH_RAW = re.compile(r'(?P<width>[\d]+)(?P<unit>.*)')
 
 
 def _get_image_full_path(ctx: Context):
-    image_name = Path(ctx.image).name
+    image_name = Path(ctx.image_current).name
     for folder in ctx.media_folders:
         image_path = Path(folder, image_name)
         if image_path.exists():
             return image_path.absolute()
 
-    raise FileNotFoundError(f'picture "{ctx.image}" not found in any media folders: {ctx.media_folders}')
+    raise FileNotFoundError(f'picture "{ctx.image_current}" not found in any media folders: {ctx.media_folders}')
 
 
 def _get_correct_width(ctx: Context):
-    match = RE_WIDTH_RAW.match(ctx.width_str)
+    match = RE_WIDTH_RAW.match(ctx.image_width_str)
     if not match:
-        raise ValueError(ctx.width_str)
+        raise ValueError(ctx.image_width_str)
 
     width = int(match.group('width'))
     unit = match.group('unit')
@@ -46,21 +47,54 @@ def _get_correct_width(ctx: Context):
     else:
         raise ValueError(unit)
 
-    if width > ctx.max_image_width:
-        ctx.debug(f'adapting width for "{ctx.image}" to {ctx.max_image_width}mm')
-        ctx.width = ctx.max_image_width
+    if width > ctx.image_max_width:
+        ctx.debug(f'adapting width for "{ctx.image_current}" to {ctx.image_max_width}mm')
+        ctx.image_width = ctx.image_max_width
+    else:
+        ctx.image_width = width
 
 
 def _process_image_width(ctx: Context):
-    width_match = RE_WIDTH.match(ctx.extras)
+    width_match = RE_WIDTH.match(ctx.image_extras)
 
     if width_match:
-        ctx.width_str = width_match.group('width')
+        ctx.image_width_str = width_match.group('width')
         _get_correct_width(ctx)
-        return RE_WIDTH.sub(f'{{width="{ctx.width}mm"}}', ctx.extras)
+        ctx.image_extras = RE_WIDTH.sub(f'{{width="{ctx.image_width}mm"}}', ctx.image_extras)
+    else:
+        ctx.image_width = ctx.image_max_width
 
-    ctx.debug(f'setting default witdh for picture {ctx.image}')
-    return f'{{width="{ctx.max_image_width}mm}}'
+    ctx.debug(f'setting default witdh for picture {ctx.image_current}')
+    ctx.image_extras = f'{{width="{ctx.image_width}mm"}}'
+
+
+def _check_for_unused_images(ctx):
+
+    unused_images = set()
+    if len(ctx.media_folders) > 1:
+        ctx.debug('checking media path for unused pictures')
+        for file in Path(ctx.media_folders[0]).iterdir():
+            if file.name not in ctx.images_used:
+                ctx.debug(f'checking that "{file}" is used')
+                unused_images.add(str(file.absolute()))
+
+        if unused_images:
+            ctx.warning(f'unused files found:\n{elib.pretty_format(sorted(unused_images))}')
+
+
+def _process_image(ctx: Context, match) -> typing.Optional[str]:
+    ctx.image_caption = match.group('caption')
+    ctx.image_current = match.group('picture')
+    ctx.image_extras = match.group('extras')
+
+    _process_image_width(ctx)
+
+    if not ctx.image_current.startswith('http'):
+        ctx.debug(f'processing picture: {ctx.image_current}')
+        ctx.images_used.add(Path(ctx.image_current).name)
+        ctx.image_current = _get_image_full_path(ctx)
+
+    return f'![{ctx.image_caption}]({ctx.image_current}){ctx.image_extras}'.replace('\\', '\\\\')
 
 
 def process_images(ctx: Context):
@@ -71,39 +105,17 @@ def process_images(ctx: Context):
         ctx: Context
     """
     ctx.info('processing pictures')
-    used_images = set()
-    unused_images = set()
+    ctx.images_used = set()
     output = []
     for line in ctx.markdown_text.split('\n'):
-        match = RE_PICTURE_LINE.match(line)
+        match = RE_PICTURE_LINE.search(line)
+        # match = RE_PICTURE_LINE.match(line)
         if match:
-            ctx.caption = match.group('caption')
-            ctx.image = match.group('picture')
-            ctx.extras = match.group('extras')
-
-            ctx.extras = _process_image_width(ctx)
-
-            if ctx.image.startswith('http'):
-                output.append(line)
-            else:
-                ctx.debug(f'processing picture: {ctx.image}')
-                used_images.add(Path(ctx.image).name)
-                ctx.image = _get_image_full_path(ctx)
-
-                output.append(f'![{ctx.caption}]({ctx.image}){ctx.extras}')
-
+            output.append(RE_PICTURE_LINE.sub(_process_image(ctx, match) or line, line))
         else:
             output.append(line)
 
-    if len(ctx.media_folders) > 1:
-        ctx.debug('checking media path for unused pictures')
-        for file in Path(ctx.media_folders[0]).iterdir():
-            if file.name not in used_images:
-                ctx.debug(f'checking that "{file}" is used')
-                unused_images.add(str(file.absolute()))
-
-        if unused_images:
-            ctx.warning(f'unused files found:\n{elib.pretty_format(sorted(unused_images))}')
+    _check_for_unused_images(ctx)
 
     ctx.info('processing of pictures finished')
     ctx.markdown_text = '\n'.join(output)

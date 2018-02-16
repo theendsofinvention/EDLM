@@ -30,12 +30,13 @@ class Context:
     source_file: Path = None
     markdown_text: str = None
 
-    caption: str = None
-    image: str = None
-    extras: str = None
-    max_image_width: int = None
-    width: int = None
-    width_str: str = None
+    image_caption: str = None
+    image_current: str = None
+    image_extras: str = None
+    image_max_width: int = None
+    image_width: int = None
+    image_width_str: str = None
+    images_used: set = None
 
     used_references = set()
     latex_refs: list = None
