@@ -8,10 +8,8 @@ import elib
 
 from edlm import LOGGER, __version__
 from edlm.config import CFG
-from edlm.convert import Context
+from edlm.convert import Context, make_pdf
 from edlm.external_tools import MIKTEX, PANDOC
-
-from edlm.convert import make_pdf
 
 
 @click.group()
@@ -77,114 +75,3 @@ def pdf(source_folder, keep_temp_dir):
 if __name__ == '__main__':
     cli(obj={})  # pylint: disable=no-value-for-parameter,unexpected-keyword-arg
     exit(0)
-
-    # os.environ['PATH'] += os.pathsep + r'F:\DEV\test-doc\miktex\texmfs\install\miktex\bin'
-
-    # for f in glob.glob('./*.docx'):
-    #     print(f)
-    #
-    #     subprocess.check_call(
-    #         [
-    #             'pandoc',
-    #             '-s',
-    #             '--extract-media=.',
-    #             # '-S',
-    #             # '-t', 'rst',
-    #             f,
-    #             '-o',
-    #             './test3.md',
-    #             # '-V', 'geometry:margin=1in',
-    #         ]
-    #     )
-
-    # subprocess.check_call(
-    #     [
-    #         'pandoc',
-    #         '-s',
-    #         '-t', 'markdown-simple_tables-grid_tables-pipe_tables',
-    #         # '--extract-media=.',
-    #         # '-S',
-    #         # '-t', 'rst',
-    #         './132 617th SOP 2.1.docx',
-    #         '-o',
-    #         './multiline.md',
-    #     ]
-    # )
-    #
-    # subprocess.check_call(
-    #     [
-    #         'pandoc',
-    #         '-s',
-    #         '-t', 'markdown-simple_tables-grid_tables-multiline_tables',
-    #         # '--extract-media=.',
-    #         # '-S',
-    #         # '-t', 'rst',
-    #         './132 617th SOP 2.1.docx',
-    #         '-o',
-    #         './pipe.md',
-    #     ]
-    # )
-    #
-    # subprocess.check_call(
-    #     [
-    #         'pandoc',
-    #         '-s',
-    #         '-t', 'markdown-simple_tables-pipe_tables-multiline_tables',
-    #         # '--extract-media=.',
-    #         # '-S',
-    #         # '-t', 'rst',
-    #         './132 617th SOP 2.1.docx',
-    #         '-o',
-    #         './grid.md',
-    #     ]
-    # )
-    #
-    # subprocess.check_call(
-    #     [
-    #         'pandoc',
-    #         '-s',
-    #         '-t', 'markdown-pipe_tables-grid_tables-multiline_tables',
-    #         # '--extract-media=.',
-    #         # '-S',
-    #         # '-t', 'rst',
-    #         './132 617th SOP 2.1.docx',
-    #         '-o',
-    #         './simple.md',
-    #     ]
-    # )
-
-    # subprocess.check_call(
-    #     [
-    #         'pandoc',
-    #         '-s',
-    #         '--toc',
-    #         '--template', './templates/template.tex',
-    #         # '-B', './templates/617th_title_page.tex',
-    #         'test.md',
-    #         '-o',
-    #         './test.pdf',
-    #         '-V', 'geometry:margin=2.5cm',
-    #         '-V', 'lot',
-    #         '-V', 'lof',
-    #         '-V', 'title=SOP'
-    #     ]
-    # )
-
-    # subprocess.check_call(
-    #     [
-    #         'pandoc',
-    #         '-s',
-    #         'test.tex',
-    #         '-o',
-    #         './test.pdf',
-    #     ]
-    # )
-
-    # subprocess.check_call(
-    #     [
-    #         'pandoc',
-    #         './test.md',
-    #         '-o',
-    #         './test.pdf'
-    #     ]
-    # )
