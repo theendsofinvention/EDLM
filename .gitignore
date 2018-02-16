@@ -332,3 +332,4 @@ tex2pdf.*
 /OUTPUT/
 *.7z
 edlm.yml
+/.pytest_cache/
