@@ -6,6 +6,7 @@ import os
 import sys
 import typing
 from pathlib import Path
+import functools
 
 import elib
 import pyunpack
@@ -17,6 +18,7 @@ LOGGER = LOGGER
 STR_OR_PATH = typing.Union[str, Path]
 
 
+@functools.lru_cache(1)
 def _find_patool(path=sys.executable) -> Path:
     LOGGER.debug('looking for Patool')
     python_exe = Path(path).absolute()
