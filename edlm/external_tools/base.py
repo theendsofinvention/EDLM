@@ -11,7 +11,6 @@ import elib
 import pyunpack
 
 from edlm import LOGGER
-from edlm.utils import download, get_hash
 
 LOGGER = LOGGER
 
@@ -99,7 +98,7 @@ class BaseExternalTool:
         try:
             if not self._archive_exists():
                 return False
-            return get_hash(self.archive.read_bytes()) == self.hash
+            return elib.hash_.get_hash(self.archive.read_bytes()) == self.hash
         except IndexError:
             return False
 
@@ -125,7 +124,7 @@ class BaseExternalTool:
             return True
 
         LOGGER.debug(f'{self.__class__.__name__}: downloading: {self.url} -> {self.archive}')
-        if download(
+        if elib.downloader.download(
                 url=self.url,
                 outfile=self.archive.absolute(),
                 hexdigest=self.hash
