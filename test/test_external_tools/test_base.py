@@ -35,7 +35,6 @@ def test_patool_in_scripts_folder():
         _find_patool(dummy)
 
 
-
 class Sub(BaseExternalTool):
     url = 'None'
     hash = 'None'
@@ -200,6 +199,3 @@ def test_setup():
     sub.setup()
     verify(BaseExternalTool)._download()
     verify(BaseExternalTool)._extract()
-
-
-

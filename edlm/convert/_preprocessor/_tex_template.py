@@ -14,6 +14,7 @@ class TexTemplateLoader(BaseLoader):
     """
     Loads the template for Jinja2
     """
+
     def __init__(self, ctx: Context):
         self.ctx = ctx
 

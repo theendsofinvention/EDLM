@@ -64,4 +64,3 @@ def get_settings(ctx: Context):
             update_nested_dict(ctx.settings, yaml.load(stream))
     ctx.debug(f'settings files:\n{elib.pretty_format(ctx.settings_files)}')
     ctx.debug(f'settings:\n{elib.pretty_format(ctx.settings)}')
-

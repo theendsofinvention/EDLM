@@ -16,4 +16,3 @@ def test_logger(caplog, level):
     assert 'test' not in caplog.text
     func('test')
     assert 'test' in caplog.text
-

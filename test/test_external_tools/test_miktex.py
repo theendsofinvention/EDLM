@@ -22,7 +22,6 @@ def _miktex():
     verify(base.BaseExternalTool)._is_installed()
 
 
-
 def test_miktex_setup_create_new_mpm(miktex: MikTex):
     patch(MikTex, 'version', 'test')
     mpm_file = Path('./texmfs/config/miktex/config/miktex.ini')
@@ -82,6 +81,3 @@ def test_version(miktex: MikTex):
     when(base.BaseExternalTool).__call__('--version', mute=True).thenReturn('miktex version\nnoise')
     miktex.setup()
     assert miktex.version == 'version'
-
-
-

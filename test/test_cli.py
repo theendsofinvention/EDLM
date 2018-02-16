@@ -42,7 +42,3 @@ def test_make_pdf(runner: CliRunner):
     verify(edlm.cli).make_pdf(ANY, str(folder1))
     verify(edlm.cli).make_pdf(ANY, str(folder2))
     verify(edlm.cli).make_pdf(ANY, str(folder3))
-
-
-
-

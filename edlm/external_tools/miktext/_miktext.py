@@ -66,6 +66,7 @@ class MikTex(BaseExternalTool):
             if 'AutoInstall=' in line:
                 content[index] = 'AutoInstall=1'
                 return True
+        return False
 
     @staticmethod
     def _add_auto_install_line(content: list):
@@ -73,6 +74,7 @@ class MikTex(BaseExternalTool):
             if '[MPM]' in line:
                 content.insert(index + 1, 'AutoInstall=1')
                 return True
+        return False
 
     @staticmethod
     def _add_mpm_section(content: list):
@@ -82,11 +84,8 @@ class MikTex(BaseExternalTool):
 
     def _edit_existing_mpm_settings_file(self, mpm_config_file):
         content = mpm_config_file.read_text(encoding='utf8').split('\n')
-        for func in [  # pragma: no cover
-            self._edit_auto_install_line,
-            self._add_auto_install_line,
-            self._add_mpm_section
-        ]:
+        # pragma: no cover
+        for func in [self._edit_auto_install_line, self._add_auto_install_line, self._add_mpm_section]:
             if func(content):
                 mpm_config_file.write_text('\n'.join(content))
                 return
