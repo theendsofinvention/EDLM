@@ -25,7 +25,7 @@ class Pandoc(BaseExternalTool):
         Returns: Pandoc executable
         """
         if self._exe is None:
-            self._exe = Path(list(Path(self.install_dir).glob('pandoc*'))[-1], 'pandoc.exe').absolute()
+            self._exe = Path(Path(self.install_dir), 'pandoc-2.0.3-windows/pandoc.exe').absolute()
         return self._exe
 
     def get_version(self) -> str:
