@@ -84,8 +84,8 @@ class MikTex(BaseExternalTool):
 
     def _edit_existing_mpm_settings_file(self, mpm_config_file):
         content = mpm_config_file.read_text(encoding='utf8').split('\n')
-        # pragma: no cover
-        for func in [self._edit_auto_install_line, self._add_auto_install_line, self._add_mpm_section]:
+        func_list = [self._edit_auto_install_line, self._add_auto_install_line, self._add_mpm_section]
+        for func in func_list:  # pragma: no cover
             if func(content):
                 mpm_config_file.write_text('\n'.join(content))
                 return
