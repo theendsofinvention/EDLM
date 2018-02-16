@@ -33,23 +33,17 @@ class MikTex(BaseExternalTool):
     default_install = Path(HERE, 'miktex').absolute()
     expected_version = '2.9.6354'
 
-    @property
-    def version(self) -> str:
+    def get_version(self) -> str:
         """
-
         Returns: Miktex version
-
         """
         if self._version is None:
             self._version = self('--version').split('\n')[0].split(' ')[1]
         return self._version
 
-    @property
-    def exe(self) -> Path:
+    def get_exe(self) -> Path:
         """
-
         Returns: Miktex executable
-
         """
         if self._exe is None:
             self._exe = Path(self.install_dir, 'texmfs/install/miktex/bin/pdflatex.exe').absolute()

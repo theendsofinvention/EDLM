@@ -42,12 +42,10 @@ class Sub(BaseExternalTool):
     default_install = 'None'
     expected_version = 'None'
 
-    @property
-    def exe(self):
+    def get_exe(self):
         return self._exe
 
-    @property
-    def version(self):
+    def get_version(self):
         return 'version'
 
 

@@ -66,7 +66,8 @@ class BaseExternalTool:
         self._version = None
 
     def __call__(self, cmd: str):
-        out, _ = elib.run(str(self.exe.absolute()) + ' ' + cmd, mute=True)
+        test = str(self.get_exe().absolute())
+        out, _ = elib.run(str(self.get_exe().absolute()) + ' ' + cmd, mute=True)
         return out
 
     def __check_values(self):
@@ -91,12 +92,12 @@ class BaseExternalTool:
 
     def _is_installed(self) -> bool:
         LOGGER.debug(f'{self.__class__.__name__}: checking installation')
-        if not self.exe.exists():
+        if not self.get_exe().exists():
             LOGGER.debug(f'{self.__class__.__name__}: executable not found')
             return False
-        if not self.version == self.expected_version:
+        if not self.get_version() == self.expected_version:
             LOGGER.debug(f'{self.__class__.__name__}: wrong version: '
-                         f'{self.version} '
+                         f'{self.get_version()} '
                          f'(expected {self.expected_version})')
             return False
         return True
@@ -137,24 +138,18 @@ class BaseExternalTool:
             self._download()
             self._extract()
 
-        LOGGER.debug(f'{self.__class__.__name__}: adding to PATH: {self.exe.parent.absolute()}')
-        os.environ['PATH'] = f'{self.exe.parent.absolute()};' + os.environ['PATH']
-        LOGGER.debug(f'{self.__class__.__name__}: {self.version}')
+        LOGGER.debug(f'{self.__class__.__name__}: adding to PATH: {self.get_exe().parent.absolute()}')
+        os.environ['PATH'] = f'{self.get_exe().parent.absolute()};' + os.environ['PATH']
+        LOGGER.debug(f'{self.__class__.__name__}: {self.get_version()}')
 
-    @property
-    def exe(self) -> Path:
+    def get_exe(self) -> Path:
         """
-
         Returns: executable for this tool
-
         """
         raise NotImplementedError(f'missing exe for {self.__class__.__name__}')
 
-    @property
-    def version(self) -> str:
+    def get_version(self) -> str:
         """
-
-        Returns: version
-
+        Returns: version for this tool
         """
-        raise NotImplementedError(f'missing version for {self.__class__.__name__}')
+        raise NotImplementedError(f'missing exe for {self.__class__.__name__}')

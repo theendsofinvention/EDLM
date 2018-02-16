@@ -8,6 +8,7 @@ import pytest
 from mockito import verifyStubbedInvocationsAreUsed, when, verify
 
 from edlm.convert import Context, _make_pdf
+from edlm.external_tools import PANDOC
 
 
 @pytest.mark.parametrize(
@@ -46,6 +47,8 @@ def test_remove_artifacts():
 )
 def test_build_folder(paper_size):
     ctx = Context()
+    pandoc = Path('pandoc')
+    pandoc.touch()
     src_folder = Path('./test').absolute()
     src_folder.mkdir()
     ctx.source_folder = src_folder
@@ -60,6 +63,8 @@ def test_build_folder(paper_size):
     when(_make_pdf).get_settings(...)
     when(_make_pdf).process_markdown(...)
     when(_make_pdf).process_tex_template(...)
+
+    when(PANDOC).get_exe().thenReturn(pandoc)
     when(elib).run(...).thenReturn(('out', 0))
     _make_pdf._build_folder(ctx)
     verifyStubbedInvocationsAreUsed()

@@ -10,5 +10,5 @@ def test_pandoc():
     pandoc = external_tools.Pandoc()
     pandoc._exe = 'exe'
     when(elib).run('exe --version').thenReturn(('pandoc version\ntext', 0))
-    assert pandoc.version == 'version'
-    assert pandoc.version == 'version'
+    assert pandoc.get_version() == 'version'
+    assert pandoc.get_version() == 'version'

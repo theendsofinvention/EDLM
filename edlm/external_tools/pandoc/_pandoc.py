@@ -22,24 +22,18 @@ class Pandoc(BaseExternalTool):
     default_install = Path(HERE, 'pandoc')
     expected_version = '2.0.3'
 
-    @property
-    def exe(self) -> Path:
+    def get_exe(self) -> Path:
         """
-
         Returns: Pandoc executable
-
         """
         if self._exe is None:
             self._exe = Path(list(Path(self.install_dir).glob('pandoc*'))[-1], 'pandoc.exe').absolute()
         return self._exe
 
-    @property
-    def version(self) -> str:
+    def get_version(self) -> str:
         """
-
         Returns: Pandoc version
-
         """
         if self._version is None:
-            self._version = elib.run(f'{self.exe} --version')[0].split('\n')[0].split(' ')[1]
+            self._version = elib.run(f'{str(self.get_exe().absolute())} --version')[0].split('\n')[0].split(' ')[1]
         return self._version
