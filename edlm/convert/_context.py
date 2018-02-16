@@ -40,7 +40,7 @@ class Context:
     image_width_str: str = None
     images_used: set = None
 
-    used_references = set()
+    used_references: set = None
     latex_refs: list = None
 
     def debug(self, text):
