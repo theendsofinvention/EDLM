@@ -109,7 +109,6 @@ def process_images(ctx: Context):
     output = []
     for line in ctx.markdown_text.split('\n'):
         match = RE_PICTURE_LINE.search(line)
-        # match = RE_PICTURE_LINE.match(line)
         if match:
             output.append(RE_PICTURE_LINE.sub(_process_image(ctx, match) or line, line))
         else:
