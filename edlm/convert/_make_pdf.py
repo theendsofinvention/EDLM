@@ -9,15 +9,14 @@ from pathlib import Path
 import elib
 
 from edlm import LOGGER
-from edlm.convert._context import Context
+from edlm.convert import Context
 from edlm.external_tools import PANDOC
-
 from ._get_index import get_index_file
 from ._get_media_folders import get_media_folders
 from ._get_settings import get_settings
 from ._get_template_folder import get_templates_folder
 from ._temp_folder import TempDir
-from .preprocessor import process_markdown, process_tex_template
+from ._preprocessor import process_markdown, process_tex_template
 
 WIDTH_MODIFIER = 0.8
 # HEIGHT_MODIFIER = 0.9
