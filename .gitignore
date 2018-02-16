@@ -335,3 +335,5 @@ edlm.yml
 /.pytest_cache/
 __TMP*
 tex2pdf*
+/bak_miktex/
+/bak_pandoc/
