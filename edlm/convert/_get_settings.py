@@ -10,6 +10,7 @@ import elib
 import yaml
 
 from ._context import Context
+from ._exc import ConvertError
 
 
 def update_nested_dict(source_dict, updated_dict):
@@ -52,6 +53,9 @@ def get_settings(ctx: Context):
             ctx.debug(f'reach mount point at: "{this_folder}"')
             break
         this_folder = this_folder.parent
+
+    if not ctx.settings_files:
+        raise ConvertError('no "settings.ylm" file found', ctx)
 
     for file in reversed(ctx.settings_files):
         with open(file) as stream:
