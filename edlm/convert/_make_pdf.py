@@ -15,11 +15,10 @@ from ._get_index import get_index_file
 from ._get_media_folders import get_media_folders
 from ._get_settings import get_settings
 from ._get_template import get_template
-from ._temp_folder import TempDir
 from ._preprocessor import process_markdown, process_tex_template
+from ._temp_folder import TempDir
 
 WIDTH_MODIFIER = 0.8
-# HEIGHT_MODIFIER = 0.9
 
 PAPER_FORMATS_WIDTH = {
     'a0': 841 * WIDTH_MODIFIER,
@@ -33,30 +32,12 @@ PAPER_FORMATS_WIDTH = {
 }
 
 
-# PAPER_FORMATS_HEIGHT = {
-#     'a0': 1189 * HEIGHT_MODIFIER,
-#     'a1': 841 * HEIGHT_MODIFIER,
-#     'a2': 594 * HEIGHT_MODIFIER,
-#     'a3': 420 * HEIGHT_MODIFIER,
-#     'a4': 297 * HEIGHT_MODIFIER,
-#     'a5': 210 * HEIGHT_MODIFIER,
-#     'a6': 148 * HEIGHT_MODIFIER,
-#     'a7': 108 * HEIGHT_MODIFIER,
-# }
-
-
 def _set_max_image_width(ctx: Context):
     paper_size = ctx.paper_size.lower()
     if paper_size not in PAPER_FORMATS_WIDTH:
         raise ValueError(paper_size)
     ctx.image_max_width = int(PAPER_FORMATS_WIDTH[paper_size])
 
-
-# def _get_max_image_height(paper_size: str) -> int:
-#     paper_size = paper_size.lower()
-#     if paper_size not in PAPER_FORMATS_WIDTH:
-#         raise ValueError(paper_size)
-#     return int(PAPER_FORMATS_HEIGHT[paper_size])
 
 def _remove_artifacts():
     for item in Path('.').iterdir():

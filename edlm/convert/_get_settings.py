@@ -55,9 +55,11 @@ def get_settings(ctx: Context):
         this_folder = this_folder.parent
 
     if not ctx.settings_files:
-        raise ConvertError('no "settings.ylm" file found', ctx)
+        raise ConvertError('no "settings.yml" file found', ctx)
 
     for file in reversed(ctx.settings_files):
+        if not file.read_text():
+            raise ConvertError(f'empty "settings.yml": {file.absolute()}', ctx)
         with open(file) as stream:
             update_nested_dict(ctx.settings, yaml.load(stream))
     ctx.debug(f'settings files:\n{elib.pretty_format(ctx.settings_files)}')

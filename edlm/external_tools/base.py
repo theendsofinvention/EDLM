@@ -17,9 +17,9 @@ LOGGER = LOGGER
 STR_OR_PATH = typing.Union[str, Path]
 
 
-def _find_patool() -> Path:
+def _find_patool(path=sys.executable) -> Path:
     LOGGER.debug('looking for Patool')
-    python_exe = Path(sys.executable).absolute()
+    python_exe = Path(path).absolute()
     LOGGER.debug(f'python_exe: {python_exe}')
     patool_path = Path(python_exe.parent, 'patool')
     LOGGER.debug(f'looking at {patool_path}')
@@ -91,24 +91,18 @@ class BaseExternalTool:
                 raise ValueError(
                     f'Class "{self.__class__.__name__}(BaseExternalTool)" is missing default value for "{name}"')
 
-    def _archive_exists(self) -> bool:
+    def _archive_exists(self) -> bool:  # pragma: no cover
         return self.archive.exists()
 
     def _archive_is_correct(self) -> bool:
-        try:
-            if not self._archive_exists():
-                return False
-            return elib.hash_.get_hash(self.archive.read_bytes()) == self.hash
-        except IndexError:
+        if not self._archive_exists():
             return False
+        return elib.hash_.get_hash(self.archive.read_bytes()) == self.hash
 
     def _is_installed(self) -> bool:
         LOGGER.debug(f'{self.__class__.__name__}: checking installation')
-        try:
-            if not self.exe.exists():
-                LOGGER.debug(f'{self.__class__.__name__}: executable not found')
-                return False
-        except IndexError:
+        if not self.exe.exists():
+            LOGGER.debug(f'{self.__class__.__name__}: executable not found')
             return False
         if not self.version == self.expected_version:
             LOGGER.debug(f'{self.__class__.__name__}: wrong version: '

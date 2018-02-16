@@ -38,7 +38,7 @@ def test_image_doesnt_exist():
         image._get_image_full_path(ctx)
 
 
-@given(width_str=st.from_regex(r'^[\d]{1,4}(cm|mm)$'))
+@given(width_str=st.from_regex(r'^[\d]{1,5}(cm|mm)$'))
 def test_get_correct_width(width_str):
     ctx = Context()
     ctx.image_width_str = width_str
@@ -53,6 +53,14 @@ def test_get_correct_width_wrong_unit():
     ctx.image_max_width = 300
     with pytest.raises(ValueError):
         image._get_correct_width(ctx)
+
+
+def test_shrink():
+    ctx = Context()
+    ctx.image_width_str = '50cm'
+    ctx.image_max_width = 20
+    image._get_correct_width(ctx)
+    assert ctx.image_width == 20
 
 
 def test_get_correct_width_wrong_raw_str():

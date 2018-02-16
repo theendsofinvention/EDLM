@@ -25,9 +25,8 @@ def miktex_path():
 
 @pytest.fixture()
 def runner():
-    runner = CliRunner()
-    with runner.isolated_filesystem():
-        yield runner
+    runner_ = CliRunner()
+    yield runner_
 
 
 # noinspection PyUnusedLocal

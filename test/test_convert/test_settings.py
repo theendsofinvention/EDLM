@@ -51,6 +51,15 @@ def test_single_settings():
     assert ctx.settings == {'key': 'value'}
 
 
+def test_empty_settings():
+    ctx = Context()
+    ctx.source_folder = Path('.').absolute()
+    settings_ = Path('./settings.yml')
+    settings_.write_text('')
+    with pytest.raises(ConvertError):
+        settings.get_settings(ctx)
+
+
 def test_nested_settings():
     sub1 = Path('./sub1').absolute()
     sub1.mkdir()

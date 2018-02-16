@@ -11,6 +11,8 @@ from edlm.config import CFG
 from edlm.convert import Context
 from edlm.external_tools import MIKTEX, PANDOC
 
+from edlm.convert import make_pdf
+
 
 @click.group()
 @click.version_option(version=__version__)
@@ -63,8 +65,6 @@ def pdf(source_folder, keep_temp_dir):
     """
     Converts content of SOURCE_FOLDER(s) recursively for folders containing "index.md" files and convert them to PDF
     """
-
-    from edlm.convert import make_pdf
 
     ctx = Context()
     ctx.keep_temp_dir = keep_temp_dir

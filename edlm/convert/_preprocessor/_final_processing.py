@@ -8,7 +8,7 @@ import re
 from .._context import Context
 
 RE_DOUBLE_SPACE_AFTER_CMD = re.compile(
-    r'\\(?P<cmd>\S+) {2}'
+    r'(?P<cmd>\\\S+) {2}'
 )
 
 
