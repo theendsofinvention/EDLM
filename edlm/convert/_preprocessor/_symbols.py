@@ -5,6 +5,7 @@ Processes symbols
 
 from .._context import Context
 
+# noinspection SpellCheckingInspection
 SYMBOLS = {
     '°': r'\textdegree',
     '1/2': r'\textonehalf'

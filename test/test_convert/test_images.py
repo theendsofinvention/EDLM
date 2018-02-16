@@ -2,10 +2,10 @@
 
 from pathlib import Path
 
-import pytest
 import elib
+import pytest
 from hypothesis import given, strategies as st
-from mockito import when, verify, mock
+from mockito import mock, verify, when
 
 import edlm.convert._preprocessor._images as image
 from edlm.convert import Context
@@ -19,6 +19,7 @@ def _dummy_media_folder():
     for file in test_files:
         file.touch()
     yield media
+
 
 def test_get_image_full_path():
     test_file = Path('./test.png')
@@ -184,6 +185,3 @@ def test_process_images(media):
 ![picture2]({pictures[0].absolute()}){{width="200mm"}}
     ![picture3](http://picture1.com){{width="200mm"}}
     """
-
-
-

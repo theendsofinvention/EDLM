@@ -64,7 +64,7 @@ def _process_image_width(ctx: Context):
     else:
         ctx.image_width = ctx.image_max_width
 
-    ctx.debug(f'setting default witdh for picture {ctx.image_current}')
+    ctx.debug(f'setting default width for picture {ctx.image_current}')
     ctx.image_extras = f'{{width="{ctx.image_width}mm"}}'
 
 

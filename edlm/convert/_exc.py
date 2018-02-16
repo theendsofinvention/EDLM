@@ -1,5 +1,7 @@
 # coding=utf-8
-
+"""
+Convert package exceptions
+"""
 
 from ._context import Context
 
