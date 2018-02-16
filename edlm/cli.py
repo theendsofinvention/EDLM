@@ -11,8 +11,6 @@ from edlm.config import CFG
 from edlm.convert import Context
 from edlm.external_tools import MIKTEX, PANDOC
 
-LOGGER = LOGGER.getChild(__name__)
-
 
 @click.group()
 @click.version_option(version=__version__)
