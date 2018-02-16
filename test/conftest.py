@@ -10,8 +10,6 @@ import pytest
 from click.testing import CliRunner
 from mockito import unstub
 
-from edlm.external_tools.base import _find_patool
-
 
 @pytest.fixture(scope='session')
 def miktex_path():
@@ -68,6 +66,7 @@ def _unstub():
 
 @pytest.fixture(autouse=True)
 def _reset_cache():
+    from edlm.external_tools.base import _find_patool
     _find_patool.cache_clear()
     yield
     _find_patool.cache_clear()
