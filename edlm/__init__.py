@@ -12,7 +12,7 @@ LOGGER = elib.custom_logging.get_logger('EDLM',)
 HERE = Path(__file__).parent.parent.absolute()
 
 try:
-    __version__ = get_distribution(__name__).version
+    __version__ = get_distribution('edlm').version
 except DistributionNotFound:
     __version__ = '"EDLM" package not installed'
 
