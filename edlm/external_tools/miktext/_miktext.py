@@ -55,35 +55,52 @@ class MikTex(BaseExternalTool):
             self._exe = Path(self.install_dir, 'texmfs/install/miktex/bin/pdflatex.exe').absolute()
         return self._exe
 
+    @staticmethod
+    def _create_new_mpm_settings_file(mpm_config_file):
+        elib.path.ensure_dir(mpm_config_file.parent, must_exist=False, create=True)
+        mpm_config_file.write_text(MPM_CONFIG, encoding='utf8')
+
+    @staticmethod
+    def _edit_auto_install_line(content):
+        for index, line in enumerate(content):
+            if 'AutoInstall=' in line:
+                content[index] = 'AutoInstall=1'
+                return True
+
+    @staticmethod
+    def _add_auto_install_line(content: list):
+        for index, line in enumerate(content):
+            if '[MPM]' in line:
+                content.insert(index + 1, 'AutoInstall=1')
+                return True
+
+    @staticmethod
+    def _add_mpm_section(content: list):
+        content.append('[MPM]')
+        content.append('AutoInstall=1\n')
+        return True
+
+    def _edit_existing_mpm_settings_file(self, mpm_config_file):
+        content = mpm_config_file.read_text(encoding='utf8').split('\n')
+        for func in [  # pragma: no cover
+            self._edit_auto_install_line,
+            self._add_auto_install_line,
+            self._add_mpm_section
+        ]:
+            if func(content):
+                mpm_config_file.write_text('\n'.join(content))
+                return
+
+    def _write_mpm_settings_file(self):
+        mpm_config_file = Path(self.install_dir, 'texmfs/config/miktex/config/miktex.ini')
+        if not mpm_config_file.exists():
+            self._create_new_mpm_settings_file(mpm_config_file)
+        else:
+            self._edit_existing_mpm_settings_file(mpm_config_file)
+
     def setup(self):
         """
         Setup Miktex
         """
         super(MikTex, self).setup()
-        mpm_config_file = Path(self.install_dir, 'texmfs/config/miktex/config/miktex.ini')
-        if not mpm_config_file.exists():
-            elib.path.ensure_dir(mpm_config_file.parent, must_exist=False, create=True)
-            mpm_config_file.write_text(MPM_CONFIG, encoding='utf8')
-        else:
-            content = mpm_config_file.read_text(encoding='utf8').split('\n')
-            output = []
-            found = False
-            for line in content:
-                if 'AutoInstall=' in line:
-                    found = True
-                    output.append('AutoInstall=1')
-                else:
-                    output.append(line)
-            if not found:
-                output = []
-                for line in content:
-                    if '[MPM]' in line:
-                        output.append(line)
-                        output.append('AutoInstall=1')
-                        found = True
-                    else:
-                        output.append(line)
-            if not found:
-                output.append('[MPM]')
-                output.append('AutoInstall=1')
-            mpm_config_file.write_text('\n'.join(output))
+        self._write_mpm_settings_file()
