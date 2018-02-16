@@ -22,13 +22,15 @@ class Context:
     media_folders: typing.List[Path] = None
     template_folder: Path = None
     index_file: Path = None
-    settings: dict = None
     template_file: Path = None
     title: str = None
     out_folder: Path = None
     out_file: Path = None
     source_file: Path = None
     markdown_text: str = None
+
+    settings: dict = None
+    settings_files: list = None
 
     image_caption: str = None
     image_current: str = None

@@ -38,8 +38,8 @@ def get_settings(ctx: Context):
     """
     ctx.info('reading settings')
 
-    settings = {}
-    settings_files = []
+    ctx.settings = {}
+    ctx.settings_files = []
 
     this_folder = ctx.source_folder
     while True:
@@ -47,14 +47,15 @@ def get_settings(ctx: Context):
         file = Path(this_folder, 'settings.yml')
         if file.exists() and file.is_file():
             ctx.debug(f'settings file found: {file}')
-            settings_files.append(file)
+            ctx.settings_files.append(file)
         if len(this_folder.parents) is 1:
             ctx.debug(f'reach mount point at: "{this_folder}"')
             break
         this_folder = this_folder.parent
 
-    for file in reversed(settings_files):
+    for file in reversed(ctx.settings_files):
         with open(file) as stream:
-            settings = update_nested_dict(settings, yaml.load(stream))
-    ctx.debug(f'settings:\n{elib.pretty_format(settings)}')
-    ctx.settings = settings
+            update_nested_dict(ctx.settings, yaml.load(stream))
+    ctx.debug(f'settings files:\n{elib.pretty_format(ctx.settings_files)}')
+    ctx.debug(f'settings:\n{elib.pretty_format(ctx.settings)}')
+
