@@ -100,6 +100,8 @@ def _build_folder(ctx: Context):
 
             process_markdown(ctx)
 
+            process_tex_template(ctx)
+
             ctx.source_file = Path(ctx.temp_dir, 'source.md').absolute()
             ctx.source_file.write_text(ctx.markdown_text, encoding='utf8')
 
@@ -107,6 +109,7 @@ def _build_folder(ctx: Context):
 
             ctx.debug(f'context:\n{elib.pretty_format(ctx.__repr__())}')
 
+            # noinspection SpellCheckingInspection
             pandoc_cmd = [
                 '-s',
                 '--toc',
@@ -125,29 +128,7 @@ def _build_folder(ctx: Context):
                 '-N',
             ]
 
-            for ref in sorted(ctx.latex_refs):
-                pandoc_cmd.append(f'-V refs="{ref}"')
-
             PANDOC(' '.join(pandoc_cmd))
-
-            # pandoc(
-            #     f'-s --toc '
-            #     f'--template "{ctx.template_file}" '
-            #     f'--listings "{ctx.source_file}" '
-            #     # '--filter pandoc-citeproc '
-            #     f'-o "{ctx.out_file}" '
-            #     f'-V geometry:margin=1.5cm '
-            #     f'-V refs={ctx.references} '
-            #     f'-V test '
-            #     f'-V geometry:headheight=17pt '
-            #     f'-V geometry:includehead '
-            #     f'-V geometry:includefoot '
-            #     f'-V geometry:heightrounded '
-            #     f'-V lot '
-            #     f'-V lof '
-            #     f'-V papersize:{ctx.paper_size} '
-            #     f'-N',
-            # )
 
 
 def _is_source_folder(folder: Path) -> bool:
