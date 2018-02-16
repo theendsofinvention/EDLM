@@ -78,6 +78,6 @@ AutoInstall=1
 
 
 def test_version(miktex: MikTex):
-    when(base.BaseExternalTool).__call__('--version', mute=True).thenReturn('miktex version\nnoise')
+    when(base.BaseExternalTool).__call__('--version').thenReturn('miktex version\nnoise')
     miktex.setup()
     assert miktex.version == 'version'

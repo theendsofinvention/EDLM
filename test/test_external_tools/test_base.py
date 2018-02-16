@@ -72,18 +72,12 @@ def test_base_meaningful_init():
 
 
 def test_call():
-    filters = None
-    cwd = 'cwd'
-    failure_ok = False
-    cmd = 'some command'
-    mute = False
-    when(elib).run('test some command', cwd=cwd, mute=mute, filters=filters, failure_ok=failure_ok)\
-        .thenReturn(('out', None))
+    when(elib).run('test some command', mute=True).thenReturn(('out', None))
     sub = Sub()
     exe = mock()
     when(exe).absolute().thenReturn('test')
     sub._exe = exe
-    assert sub(cmd=cmd, cwd=cwd, mute=mute, filters=filters, failure_ok=failure_ok) == 'out'
+    assert sub('some command') == 'out'
     verifyStubbedInvocationsAreUsed()
 
 

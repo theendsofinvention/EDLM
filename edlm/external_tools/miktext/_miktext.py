@@ -41,7 +41,7 @@ class MikTex(BaseExternalTool):
 
         """
         if self._version is None:
-            self._version = self('--version', mute=True).split('\n')[0].split(' ')[1]
+            self._version = self('--version').split('\n')[0].split(' ')[1]
         return self._version
 
     @property

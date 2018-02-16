@@ -41,5 +41,5 @@ class Pandoc(BaseExternalTool):
 
         """
         if self._version is None:
-            self._version = elib.run(f'{self.exe} --version', mute=True)[0].split('\n')[0].split(' ')[1]
+            self._version = elib.run(f'{self.exe} --version')[0].split('\n')[0].split(' ')[1]
         return self._version
