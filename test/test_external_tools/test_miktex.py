@@ -1,9 +1,11 @@
 # coding=utf-8
 
-import pytest
 from pathlib import Path
+
+import pytest
+from mockito import patch, verify, when
+
 from edlm.external_tools import MikTex, base
-from mockito import when, verify, mock, patch
 
 
 @pytest.fixture(name='mpm_file')

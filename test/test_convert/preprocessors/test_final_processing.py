@@ -1,6 +1,5 @@
 # coding=utf-8
 
-from pathlib import Path
 from edlm.convert._preprocessor import _final_processing
 
 

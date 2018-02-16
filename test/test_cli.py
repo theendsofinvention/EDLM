@@ -1,14 +1,13 @@
 # coding=utf-8
 
-import click
-import pytest
-from click.testing import CliRunner
 from pathlib import Path
-from mockito import when, verify, ANY
-import edlm.convert
+
+import elib
+from click.testing import CliRunner
+from mockito import ANY, verify, when
 
 import edlm.cli
-import elib
+import edlm.convert
 
 
 def test_basic(runner: CliRunner):

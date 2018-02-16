@@ -1,14 +1,14 @@
 # coding=utf-8
 
-from mockito import when, verify, patch, mock, verifyStubbedInvocationsAreUsed
-from edlm.external_tools.base import _find_patool, BaseExternalTool
-import edlm.external_tools.base
-import pyunpack
-import copy
-import sys
+from pathlib import Path
+
 import elib
 import pytest
-from pathlib import Path
+import pyunpack
+from mockito import mock, verify, verifyStubbedInvocationsAreUsed, when
+
+import edlm.external_tools.base
+from edlm.external_tools.base import BaseExternalTool, _find_patool
 
 
 def test_find_patool_not_found():
@@ -50,7 +50,6 @@ class Sub(BaseExternalTool):
 
 
 def test_base_empty_init():
-
     sub = Sub()
     assert sub.url == 'None'
     assert sub.hash == 'None'
@@ -60,7 +59,6 @@ def test_base_empty_init():
 
 
 def test_base_meaningful_init():
-
     sub = Sub('archive', 'install_dir')
     assert sub.url == 'None'
     assert sub.hash == 'None'
@@ -86,6 +84,7 @@ def test_call():
 def test_check_values(attrib):
     class Dummy(Sub):
         pass
+
     setattr(Dummy, attrib, None)
     with pytest.raises(ValueError):
         Dummy()
