@@ -34,6 +34,7 @@ def runner():
 def pytest_configure(config):
     """Setup"""
     sys._called_from_test = True
+    sys.path.append('.')
 
 
 # noinspection PyUnusedLocal,SpellCheckingInspection
@@ -41,6 +42,7 @@ def pytest_unconfigure(config):
     """Tear down"""
     # noinspection PyUnresolvedReferences,PyProtectedMember
     del sys._called_from_test
+    sys.path.remove('.')
 
 
 @pytest.fixture(autouse=True)
