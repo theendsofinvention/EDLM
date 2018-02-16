@@ -20,9 +20,7 @@ class Context:
     paper_size: str = None
     temp_dir: Path = None
     media_folders: typing.List[Path] = None
-    template_folder: Path = None
     index_file: Path = None
-    template_file: Path = None
     title: str = None
     out_folder: Path = None
     out_file: Path = None
@@ -31,6 +29,9 @@ class Context:
 
     settings: dict = None
     settings_files: list = None
+
+    template_source: Path = None
+    template_file: Path = None
 
     image_caption: str = None
     image_current: str = None
