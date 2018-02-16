@@ -3,7 +3,8 @@
 from pathlib import Path
 
 import pytest
-from mockito import patch, verify, when
+from mockito import patch, verify, when, contains
+import elib
 
 from edlm.external_tools import MikTex, base
 
@@ -18,6 +19,7 @@ def _mpm_file():
 @pytest.fixture(name='miktex')
 def _miktex():
     when(base.BaseExternalTool)._is_installed().thenReturn(True)
+    when(elib).run(contains('--version'), mute=True).thenReturn(('miktex version\ntext', 0))
     miktex = MikTex()
     miktex.install_dir = '.'
     yield miktex
