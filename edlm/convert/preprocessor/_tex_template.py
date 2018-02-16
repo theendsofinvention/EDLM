@@ -37,7 +37,9 @@ def process_tex_template(ctx: Context) -> str:
     elib.path.ensure_dir(ctx.template_folder)
     jinja_env = _get_jinja_env(ctx.template_folder)
 
-    media_folders = ''.join(f'{{{folder}/}}' for folder in ctx.media_folders)
+    media_folders = [folder.absolute() for folder in ctx.media_folders]
+    media_folders = [str(folder).replace('\\', '/') for folder in media_folders]
+    media_folders = ''.join(f'{{{folder}/}}' for folder in media_folders)
     ctx.debug(f'adding media folders to template: {media_folders}')
 
     template = jinja_env.get_template(ctx.template_file.name)

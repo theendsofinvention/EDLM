@@ -19,7 +19,7 @@ class Context:
     keep_temp_dir: bool = False
     paper_size: str = None
     temp_dir: Path = None
-    media_folders: typing.List[str] = None
+    media_folders: typing.List[Path] = None
     template_folder: Path = None
     index_file: Path = None
     settings: dict = None
