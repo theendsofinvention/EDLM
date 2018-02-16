@@ -5,8 +5,6 @@ Pandoc external tool
 
 from pathlib import Path
 
-import elib
-
 from edlm import HERE
 from edlm.external_tools.base import BaseExternalTool
 
