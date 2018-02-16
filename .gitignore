@@ -333,3 +333,5 @@ tex2pdf.*
 *.7z
 edlm.yml
 /.pytest_cache/
+__TMP*
+tex2pdf*
