@@ -29,22 +29,6 @@ def cli(debug):
     MIKTEX.setup()
 
 
-# @cli.command()
-# @click.argument('infile', type=click.Path(exists=True, dir_okay=False, resolve_path=True, readable=True))
-# @click.option('-o', '--outfile', help='Output Markdown file (defaults to the input file name)')
-# @click.option('-d', '--outdir', help='Output directory (defaults to the input file name)')
-# def extractdocx(infile, outfile, outdir):
-#     """
-#     Converts a Word (docx) document to markdown.
-#     """
-#     if not os.path.splitext(infile) == 'md':
-#         LOGGER.error(f'Invalid value for "infile": Path "{infile}" is not a docx file')
-#         return
-#
-#     converter = Convert()
-#     converter.make_md(infile, outfile, outdir)
-
-
 @cli.group()
 def convert():
     """
