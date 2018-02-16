@@ -1,21 +1,23 @@
 # coding=utf-8
 
-import pytest
 from pathlib import Path
+
+import pytest
+
 from edlm.convert import Context, ConvertError
 from edlm.convert._get_media_folders import get_media_folders
 
 
 def test_not_media_folder():
     ctx = Context()
-    ctx.source_folder = Path('.')
+    ctx.source_folder = Path('.').absolute()
     with pytest.raises(ConvertError):
         get_media_folders(ctx)
 
 
 def test_get_media_folder():
     ctx = Context()
-    ctx.source_folder = Path('.')
+    ctx.source_folder = Path('.').absolute()
     media = Path('./media').absolute()
     media.mkdir()
     get_media_folders(ctx)
@@ -39,7 +41,3 @@ def test_get_media_folder_multiple():
     ctx.source_folder = sub3
     get_media_folders(ctx)
     assert ctx.media_folders == [media3, media2, media1]
-
-
-def test_moo():
-    assert True
