@@ -83,4 +83,5 @@ def process_references(ctx: Context):
             ctx.markdown_text = ctx.markdown_text.replace(abbrev, ref.to_markdown())
     for ref in ctx.used_references:
         ctx.latex_refs.append(ref.to_latex())
+    ctx.latex_refs = sorted(ctx.latex_refs)
     ctx.debug(f'used references: {elib.pretty_format(ctx.used_references)}')
