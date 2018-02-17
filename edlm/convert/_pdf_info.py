@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Manages PDF files metadata operations
+"""
 
 import hashlib
 
@@ -26,12 +29,27 @@ def _get_document_hash(ctx: Context) -> str:
     return m.hexdigest()
 
 
-def skip_file(ctx: Context):
+def skip_file(ctx: Context) -> bool:
+    """
+    Checks if a file should be skipped
+
+    Tests for:
+        - EDLM version
+        - index.md
+        - template.tex
+        - media folders content
+
+    Args:
+        ctx: Context
+
+    Returns: True if file should be skipped
+
+    """
     if ctx.out_file.exists():
         pdf = pdfrw.PdfReader(str(ctx.out_file.absolute()))
         creator = pdfstring.PdfString.to_unicode(pdf.Info.Creator)
         if creator != 'EDLM ' + __version__:
-            ctx.info('document generated with an older version of ELDM, regenerating')
+            ctx.info('document generated with an older version of EDLM, regenerating')
             return False
         producer = pdfstring.PdfString.to_unicode(pdf.Info.Producer)
         if producer != 'EDLM ' + _get_document_hash(ctx):
@@ -42,6 +60,13 @@ def skip_file(ctx: Context):
 
 
 def add_metadata_to_pdf(ctx: Context):
+    """
+    Adds metadata about EDLM version and source files after
+    PDF create
+
+    Args:
+        ctx: Context
+    """
     out_file = str(ctx.out_file.absolute())
     trailer = pdfrw.PdfReader(out_file)
     trailer.Info.Author = '132nd-etcher'
