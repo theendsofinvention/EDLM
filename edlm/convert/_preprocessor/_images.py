@@ -116,5 +116,5 @@ def process_images(ctx: Context):
 
     _check_for_unused_images(ctx)
 
-    ctx.info('processing of pictures finished')
+    ctx.debug('processing of pictures finished')
     ctx.markdown_text = '\n'.join(output)
