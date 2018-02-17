@@ -4,6 +4,7 @@ Makes a PDF document from a source folder
 """
 
 import shutil
+import urllib.parse
 from pathlib import Path
 
 import elib
@@ -31,6 +32,13 @@ PAPER_FORMATS_WIDTH = {
     'a6': 105 * WIDTH_MODIFIER,
     'a7': 74 * WIDTH_MODIFIER,
 }
+
+BASE_URL = r'http://132virtualwing.org/docs/'
+
+
+def _download_existing_file(ctx: Context):
+    url = BASE_URL + urllib.parse.quote(ctx.out_file.name)
+    elib.downloader.download(url, ctx.out_file)
 
 
 def _set_max_image_width(ctx: Context):
@@ -79,6 +87,8 @@ def _build_folder(ctx: Context):
                 ctx.out_file = Path(out_folder, f'{title}.PDF').absolute()
             else:
                 ctx.out_file = Path(out_folder, f'{title}_{paper_size}.PDF').absolute()
+
+            _download_existing_file(ctx)
 
             if skip_file(ctx):
                 continue
