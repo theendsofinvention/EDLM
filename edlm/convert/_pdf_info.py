@@ -35,7 +35,7 @@ def skip_file(ctx: Context):
             return False
         producer = pdfstring.PdfString.to_unicode(pdf.Info.Producer)
         if producer != 'EDLM ' + _get_document_hash(ctx):
-            ctx.debug('document updated')
+            ctx.info('document updated, regenerating')
             return False
         ctx.info('this document has not been modified, skipping it')
         return True
