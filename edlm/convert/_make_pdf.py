@@ -37,8 +37,13 @@ BASE_URL = r'http://132virtualwing.org/docs/'
 
 
 def _download_existing_file(ctx: Context):
-    url = BASE_URL + urllib.parse.quote(ctx.out_file.name)
-    elib.downloader.download(url, ctx.out_file)
+    if not ctx.out_file.exists():
+        ctx.info(f'trying to download {ctx.out_file.name}')
+        url = BASE_URL + urllib.parse.quote(ctx.out_file.name)
+        if elib.downloader.download(url, ctx.out_file):
+            ctx.info('download successful')
+        else:
+            ctx.info('download failed')
 
 
 def _set_max_image_width(ctx: Context):
