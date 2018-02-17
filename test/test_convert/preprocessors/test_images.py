@@ -7,9 +7,9 @@ import pytest
 from hypothesis import given, strategies as st
 from mockito import mock, verify, when
 
-import convert._check_for_unused_images
 import edlm.convert._preprocessor._markdown._images as image
 from edlm.convert import Context
+from edlm.convert._check_for_unused_images import check_for_unused_images
 
 
 @pytest.fixture(name='media')
@@ -94,7 +94,7 @@ def test_check_for_unused_images(caplog, media: Path):
     ctx = Context()
     ctx.media_folders = [str(media.absolute()), '.']
     ctx.images_used = set()
-    convert._check_for_unused_images.check_for_unused_images(ctx)
+    check_for_unused_images(ctx)
     for file in media.iterdir():
         assert file.name in caplog.text
 
@@ -109,7 +109,7 @@ def test_check_for_used_images(caplog, media: Path):
     ctx.images_used = set()
     for file in list(media.iterdir())[5:]:
         ctx.images_used.add(file.name)
-    convert._check_for_unused_images.check_for_unused_images(ctx)
+    check_for_unused_images(ctx)
     for file in list(media.iterdir())[:5]:
         assert file.name in caplog.text
     for file in list(media.iterdir())[5:]:
@@ -126,7 +126,7 @@ def test_check_for_no_unused_images(caplog, media: Path):
     ctx.images_used = set()
     for file in list(media.iterdir()):
         ctx.images_used.add(file.name)
-    convert._check_for_unused_images.check_for_unused_images(ctx)
+    check_for_unused_images(ctx)
     for file in list(media.iterdir()):
         assert file.name not in caplog.text
 
@@ -137,7 +137,7 @@ def test_check_for_used_images_only_one_media_folder(caplog):
     ctx = Context()
     ctx.media_folders = ['.']
     ctx.images_used = set()
-    convert._check_for_unused_images.check_for_unused_images(ctx)
+    check_for_unused_images(ctx)
     assert not caplog.text
 
 
