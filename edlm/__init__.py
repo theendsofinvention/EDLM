@@ -13,7 +13,7 @@ HERE = Path(__file__).parent.parent.absolute()
 
 try:
     __version__ = get_distribution('edlm').version
-except DistributionNotFound:
+except DistributionNotFound:  # pragma: no cover
     __version__ = '"EDLM" package not installed'
 
 LOGGER.info(f'EDLM version {__version__}')
