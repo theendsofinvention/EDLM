@@ -58,6 +58,8 @@ def skip_file(ctx: Context) -> bool:
         ctx.info('this document has not been modified, skipping it')
         return True
 
+    return False
+
 
 def add_metadata_to_pdf(ctx: Context):
     """
@@ -69,7 +71,6 @@ def add_metadata_to_pdf(ctx: Context):
     """
     out_file = str(ctx.out_file.absolute())
     trailer = pdfrw.PdfReader(out_file)
-    trailer.Info.Author = '132nd-etcher'
     trailer.Info.Creator = 'EDLM ' + __version__
     trailer.Info.Producer = 'EDLM ' + _get_document_hash(ctx)
     pdfrw.PdfFileWriter(out_file, trailer=trailer).write()

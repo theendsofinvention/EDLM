@@ -73,15 +73,10 @@ def process_references(ctx: Context):
         ctx: Context
     """
     ctx.latex_refs = list()
-    ctx.used_references = set()
-    if 'references' not in ctx.settings:
-        return
-    for abbrev, raw_ref in ctx.settings['references'].items():
+    for abbrev, raw_ref in ctx.settings.references.items():
         if abbrev in ctx.markdown_text:
             ref = Reference(raw_ref, abbrev)
-            ctx.used_references.add(ref)
+            ctx.latex_refs.append(ref.to_latex())
             ctx.markdown_text = ctx.markdown_text.replace(abbrev, ref.to_markdown())
-    for ref in ctx.used_references:
-        ctx.latex_refs.append(ref.to_latex())
+            ctx.debug(f'used reference: {abbrev}')
     ctx.latex_refs = sorted(ctx.latex_refs)
-    ctx.debug(f'used references: {elib.pretty_format(ctx.used_references)}')

@@ -11,6 +11,7 @@ import yaml
 
 from ._context import Context
 from ._exc import ConvertError
+from._settings import Settings
 
 
 def update_nested_dict(source_dict, updated_dict):
@@ -39,7 +40,7 @@ def get_settings(ctx: Context):
     """
     ctx.info('reading settings')
 
-    ctx.settings = {}
+    ctx.settings = Settings()
     ctx.settings_files = []
 
     this_folder = ctx.source_folder
@@ -61,6 +62,9 @@ def get_settings(ctx: Context):
         if not file.read_text():
             raise ConvertError(f'empty "settings.yml": {file.absolute()}', ctx)
         with open(file) as stream:
-            update_nested_dict(ctx.settings, yaml.load(stream))
+            these_settings = yaml.load(stream)
+            ctx.debug(f'content of "{file}": {elib.pretty_format(these_settings)}')
+        ctx.settings.update(these_settings)
+
     ctx.debug(f'settings files:\n{elib.pretty_format(ctx.settings_files)}')
     ctx.debug(f'settings:\n{elib.pretty_format(ctx.settings)}')

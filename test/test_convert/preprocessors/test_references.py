@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from edlm.convert import Context
+from edlm.convert import Context, Settings
 from edlm.convert._preprocessor._references import Reference, process_references
 
 DUMMY_REFS = {
@@ -26,9 +26,7 @@ def test_reference_class():
 
 def test_process_references():
     ctx = Context()
-    ctx.settings = {
-        'references': DUMMY_REFS
-    }
+    ctx.settings.references = DUMMY_REFS
     ctx.markdown_text = """
     This is some dummy markdown text.
     
@@ -53,7 +51,7 @@ def test_process_references():
 
 def test_process_references_no_ref():
     ctx = Context()
-    ctx.settings = {}
+    ctx.settings = Settings()
     ctx.markdown_text = """
     This is some dummy markdown text.
     

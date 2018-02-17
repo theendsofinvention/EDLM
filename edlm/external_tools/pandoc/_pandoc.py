@@ -20,11 +20,11 @@ class Pandoc(BaseExternalTool):
     default_install = Path(HERE, 'pandoc')
     expected_version = '2.0.3'
 
-    def get_exe(self) -> Path:
+    def get_exe(self) -> Path:  # pragma: no cover
         """
         Returns: Pandoc executable
         """
-        if self._exe is None:  # pragma: no cover
+        if self._exe is None:
             self._exe = Path(Path(self.install_dir), 'pandoc-2.0.3-windows/pandoc.exe').absolute()
         return self._exe
 

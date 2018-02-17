@@ -84,11 +84,11 @@ def _build_folder(ctx: Context):
         out_folder = elib.path.ensure_dir('.', must_exist=False, create=True)
         ctx.out_folder = out_folder
 
-        for paper_size in ctx.settings['papersize']:
+        for paper_size in ctx.settings.papersize:
             ctx.paper_size = paper_size
             _set_max_image_width(ctx)
 
-            if paper_size.lower() == 'a4' or len(ctx.settings['papersize']) == 1:
+            if paper_size.lower() == 'a4' or len(ctx.settings.papersize) == 1:
                 ctx.out_file = Path(out_folder, f'{title}.PDF').absolute()
             else:
                 ctx.out_file = Path(out_folder, f'{title}_{paper_size}.PDF').absolute()

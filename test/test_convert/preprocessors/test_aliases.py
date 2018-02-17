@@ -6,7 +6,7 @@ from edlm.convert._preprocessor._aliases import Context, process_aliases
 
 def test_process_aliases():
     ctx = Context()
-    ctx.settings = {
+    ctx.settings.data = {
         'aliases': {
             'key': 'value'
         }

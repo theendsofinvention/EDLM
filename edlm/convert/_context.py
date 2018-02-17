@@ -9,6 +9,7 @@ from pathlib import Path
 import elib
 
 from edlm import LOGGER
+from ._settings import Settings
 
 
 class Context:
@@ -27,7 +28,7 @@ class Context:
     source_file: Path = None
     markdown_text: str = None
 
-    settings: dict = None
+    settings: Settings = Settings()
     settings_files: list = None
 
     template_source: Path = None
@@ -41,7 +42,6 @@ class Context:
     image_width_str: str = None
     images_used: set = None
 
-    used_references: set = None
     latex_refs: list = None
 
     def debug(self, text):

@@ -5,7 +5,7 @@ from pathlib import Path
 import elib
 import elib._run
 import pytest
-from mockito import verifyStubbedInvocationsAreUsed, when, verify
+from mockito import verify, verifyStubbedInvocationsAreUsed, when
 
 from edlm.convert import Context, _make_pdf
 from edlm.external_tools import PANDOC
@@ -56,7 +56,7 @@ def test_build_folder(paper_size):
     source_file.touch()
     ctx.source_file = source_file
     ctx.markdown_text = ''
-    ctx.settings = {'papersize': paper_size}
+    ctx.settings.papersize = paper_size
     when(_make_pdf).get_media_folders(...)
     when(_make_pdf).skip_file(...)
     when(_make_pdf).add_metadata_to_pdf(ctx)
@@ -84,7 +84,7 @@ def test_build_folder_skip():
     source_file.touch()
     ctx.source_file = source_file
     ctx.markdown_text = ''
-    ctx.settings = {'papersize': ['a4']}
+    ctx.settings.papersize = ['a4']
     when(_make_pdf).get_media_folders(...)
     when(_make_pdf).skip_file(...).thenReturn(True)
     when(_make_pdf).get_template(...)
@@ -135,3 +135,25 @@ def test_make_pdf_parent_folder():
     when(_make_pdf)._build_folder(ctx)
     _make_pdf.make_pdf(ctx, Path('.'))
     verify(_make_pdf, times=4)._build_folder(ctx)
+
+
+def test_download_existing_file(caplog):
+    file = Path('test').absolute()
+    ctx = _make_pdf.Context()
+    ctx.out_file = file
+    when(elib.downloader).download(...).thenReturn(True)
+    _make_pdf._download_existing_file(ctx)
+    assert 'download successful' in caplog.text
+    when(elib.downloader).download(...).thenReturn(False)
+    _make_pdf._download_existing_file(ctx)
+    assert 'download failed' in caplog.text
+
+
+def test_download_existing_file_file_exists(caplog):
+    file = Path('test').absolute()
+    ctx = _make_pdf.Context()
+    ctx.out_file = file
+    file.touch()
+    _make_pdf._download_existing_file(ctx)
+    assert 'download failed' not in caplog.text
+    assert 'download successful' not in caplog.text
