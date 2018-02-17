@@ -68,7 +68,7 @@ def _process_image_width(ctx: Context):
     ctx.image_extras = f'{{width="{ctx.image_width}mm"}}'
 
 
-def _check_for_unused_images(ctx):
+def check_for_unused_images(ctx):
 
     unused_images = set()
     if len(ctx.media_folders) > 1:
@@ -114,7 +114,7 @@ def process_images(ctx: Context):
         else:
             output.append(line)
 
-    _check_for_unused_images(ctx)
+    # check_for_unused_images(ctx)
 
     ctx.debug('processing of pictures finished')
     ctx.markdown_text = '\n'.join(output)

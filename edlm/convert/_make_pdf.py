@@ -19,6 +19,8 @@ from ._get_template import get_template
 from ._pdf_info import add_metadata_to_pdf, skip_file
 from ._preprocessor import process_markdown, process_tex_template
 from ._temp_folder import TempDir
+from ._get_includes import get_includes
+from ._preprocessor._markdown._images import check_for_unused_images
 
 WIDTH_MODIFIER = 0.8
 
@@ -63,9 +65,6 @@ def _remove_artifacts():
 def _build_folder(ctx: Context):
     ctx.info(f'making PDF')
 
-    # TODO: remove
-    ctx.keep_temp_dir = True
-
     with TempDir(ctx):
 
         get_media_folders(ctx)
@@ -75,6 +74,8 @@ def _build_folder(ctx: Context):
         get_index_file(ctx)
 
         get_settings(ctx)
+
+        get_includes(ctx)
 
         ctx.template_file = Path(ctx.temp_dir, 'template.tex').absolute()
 
@@ -99,6 +100,8 @@ def _build_folder(ctx: Context):
                 continue
 
             process_markdown(ctx)
+
+            check_for_unused_images(ctx)
 
             process_tex_template(ctx)
 

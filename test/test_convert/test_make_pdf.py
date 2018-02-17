@@ -57,6 +57,7 @@ def test_build_folder(paper_size):
     ctx.source_file = source_file
     ctx.markdown_text = ''
     ctx.settings.papersize = paper_size
+    ctx.media_folders = []
     when(_make_pdf).get_media_folders(...)
     when(_make_pdf).skip_file(...)
     when(_make_pdf).add_metadata_to_pdf(ctx)

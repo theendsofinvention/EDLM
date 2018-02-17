@@ -3,6 +3,7 @@
 Global context
 """
 import typing
+import copy
 from pathlib import Path
 
 import elib
@@ -15,6 +16,7 @@ DEFAULT = {
     'paper_size': 'a4',
     'title': None,
     'markdown_text': None,
+    'force_generation': False,
 
     'temp_dir': None,
     'keep_temp_dir': False,
@@ -37,8 +39,12 @@ DEFAULT = {
     'image_width': None,
     'image_width_str': None,
     'images_used': None,
+    'images_unused': None,
 
     'latex_refs': None,
+
+    'includes': None,
+    'unprocessed_includes': None,
 }
 
 
@@ -76,6 +82,7 @@ class Context:
     paper_size: str = _Val(str)
     title: str = _Val(str)
     markdown_text: str = _Val(str)
+    force_generation: bool = _Val(bool)
 
     temp_dir: Path = _Val(Path)
     keep_temp_dir: bool = _Val(bool)
@@ -98,37 +105,61 @@ class Context:
     image_width: int = _Val(int)
     image_width_str: str = _Val(str)
     images_used: set = _Val(set)
+    images_unused: set = _Val(set)
 
     latex_refs: _Val(list)
+
+    includes: list = _Val(list)
+    unprocessed_includes: list = _Val(list)
 
     def __init__(self):
         self.data = {}
         self.skip_repr = ['markdown_text']
         self.settings = Settings()
 
+    def get_sub_context(self, source_folder: Path = None):
+        new_context = Context()
+        if source_folder is None:
+            source_folder = self.source_folder
+        new_context.data = copy.deepcopy(self.data)
+        new_context.source_folder = source_folder
+        return new_context
+
     def debug(self, text):
         """
         Convenient shortcut to main EDLM LOGGER
         """
-        LOGGER.debug(f'"{self.source_folder}": {text}')
+        if self.index_file:
+            LOGGER.debug(f'"{self.index_file}": {text}')
+        else:
+            LOGGER.debug(f'"{self.source_folder}": {text}')
 
     def info(self, text):
         """
         Convenient shortcut to main EDLM LOGGER
         """
-        LOGGER.info(f'"{self.source_folder}": {text}')
+        if self.index_file:
+            LOGGER.info(f'"{self.index_file}": {text}')
+        else:
+            LOGGER.info(f'"{self.source_folder}": {text}')
 
     def error(self, text):
         """
         Convenient shortcut to main EDLM LOGGER
         """
-        LOGGER.error(f'"{self.source_folder}": {text}')
+        if self.index_file:
+            LOGGER.error(f'"{self.index_file}": {text}')
+        else:
+            LOGGER.error(f'"{self.source_folder}": {text}')
 
     def warning(self, text):
         """
         Convenient shortcut to main EDLM LOGGER
         """
-        LOGGER.warning(f'"{self.source_folder}": {text}')
+        if self.index_file:
+            LOGGER.warning(f'"{self.index_file}": {text}')
+        else:
+            LOGGER.warning(f'"{self.source_folder}": {text}')
 
     def __repr__(self):  # pylint: disable=bad-continuation
         return elib.pretty_format({k: v for k, v in self.data.items() if k not in self.skip_repr})

@@ -12,6 +12,8 @@ def test_markdown_preprocessor():
     index_file = Path('./index.md')
     index_file.write_text('')
     ctx.index_file = index_file
+    ctx.includes = []
+    ctx.markdown_text = ''
     when(_markdown).process_aliases(ctx)
     when(_markdown).process_images(ctx)
     when(_markdown).process_symbols(ctx)

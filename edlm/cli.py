@@ -43,13 +43,15 @@ def convert():
     nargs=-1,
 )
 @click.option('--keep-temp-dir', default=False, help='Keep temporary folder', is_flag=True)
-def pdf(source_folder, keep_temp_dir):
+@click.option('-f', '--force', default=False, help='Force re-generation of documents', is_flag=True)
+def pdf(source_folder, keep_temp_dir, force):
     """
     Converts content of SOURCE_FOLDER(s) recursively for folders containing "index.md" files and convert them to PDF
     """
 
     ctx = Context()
     ctx.keep_temp_dir = keep_temp_dir
+    ctx.force_generation = force
 
     for folder in source_folder:
         make_pdf(ctx, folder)

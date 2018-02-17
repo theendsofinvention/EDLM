@@ -93,7 +93,7 @@ def test_check_for_unused_images(caplog, media: Path):
     ctx = Context()
     ctx.media_folders = [str(media.absolute()), '.']
     ctx.images_used = set()
-    image._check_for_unused_images(ctx)
+    image.check_for_unused_images(ctx)
     for file in media.iterdir():
         assert file.name in caplog.text
 
@@ -108,7 +108,7 @@ def test_check_for_used_images(caplog, media: Path):
     ctx.images_used = set()
     for file in list(media.iterdir())[5:]:
         ctx.images_used.add(file.name)
-    image._check_for_unused_images(ctx)
+    image.check_for_unused_images(ctx)
     for file in list(media.iterdir())[:5]:
         assert file.name in caplog.text
     for file in list(media.iterdir())[5:]:
@@ -125,7 +125,7 @@ def test_check_for_no_unused_images(caplog, media: Path):
     ctx.images_used = set()
     for file in list(media.iterdir()):
         ctx.images_used.add(file.name)
-    image._check_for_unused_images(ctx)
+    image.check_for_unused_images(ctx)
     for file in list(media.iterdir()):
         assert file.name not in caplog.text
 
@@ -136,7 +136,7 @@ def test_check_for_used_images_only_one_media_folder(caplog):
     ctx = Context()
     ctx.media_folders = ['.']
     ctx.images_used = set()
-    image._check_for_unused_images(ctx)
+    image.check_for_unused_images(ctx)
     assert not caplog.text
 
 

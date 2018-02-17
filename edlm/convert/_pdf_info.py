@@ -7,19 +7,29 @@ import hashlib
 
 import pdfrw
 from pdfrw.objects import pdfstring
+from pathlib import Path
 
 from edlm import __version__
 from edlm.convert import Context
 
 
+def _hash_folder(folder: Path):
+    for item in folder.iterdir():
+        assert isinstance(item, Path)
+        if item.is_file() and item.suffix in ['.md', '.yml', '.tex']:
+            yield item.read_bytes()
+        elif item.is_dir():
+            yield from _hash_folder(item)
+
+
 def _iterate_over_data(ctx: Context):
-    yield ctx.index_file.read_bytes()
-    yield ctx.template_source.read_bytes()
-    for settings_file in ctx.settings_files:
-        yield settings_file.read_bytes()
+    yield from _hash_folder(ctx.source_folder)
     for media_folder in ctx.media_folders:
         for file in media_folder.iterdir():
             yield file.read_bytes()
+    for include in ctx.includes:
+        if include.is_dir():
+            yield from _hash_folder(include)
 
 
 def _get_document_hash(ctx: Context) -> str:
@@ -56,6 +66,10 @@ def skip_file(ctx: Context) -> bool:
             ctx.info('document updated, regenerating')
             return False
         ctx.info('this document has not been modified, skipping it')
+        if ctx.force_generation:
+            ctx.info('forcing re-generation of all documents anyway')
+            return False
+
         return True
 
     return False
