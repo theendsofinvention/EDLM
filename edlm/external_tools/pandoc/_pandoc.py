@@ -24,7 +24,7 @@ class Pandoc(BaseExternalTool):
         """
         Returns: Pandoc executable
         """
-        if self._exe is None:
+        if self._exe is None:  # pragma: no cover
             self._exe = Path(Path(self.install_dir), 'pandoc-2.0.3-windows/pandoc.exe').absolute()
         return self._exe
 
