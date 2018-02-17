@@ -82,8 +82,7 @@ class Context:
     title: str = _Val(str)
     markdown_text: str = _Val(str)
 
-    force_generation:
-        bool = _Val(bool)  # flake8: noqa ???
+    force_generation: bool = _Val(bool)  # flake8: noqa ???
 
     temp_dir: Path = _Val(Path)
     keep_temp_dir: bool = _Val(bool)
