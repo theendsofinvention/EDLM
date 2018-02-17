@@ -51,7 +51,7 @@ def pdf(source_folder, keep_temp_dir, force):
 
     ctx = Context()
     ctx.keep_temp_dir = keep_temp_dir
-    ctx.force_generation = force
+    ctx.regen = force
 
     for folder in source_folder:
         make_pdf(ctx, folder)

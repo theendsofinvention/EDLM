@@ -66,7 +66,7 @@ def skip_file(ctx: Context) -> bool:
             ctx.info('document updated, regenerating')
             return False
         ctx.info('this document has not been modified, skipping it')
-        if ctx.force_generation:
+        if ctx.regen:
             ctx.info('forcing re-generation of all documents anyway')
             return False
 
