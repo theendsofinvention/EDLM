@@ -7,7 +7,7 @@ import pytest
 from hypothesis import given, strategies as st
 from mockito import mock, verify, when
 
-import edlm.convert._preprocessor._images as image
+import edlm.convert._preprocessor._markdown._images as image
 from edlm.convert import Context
 
 

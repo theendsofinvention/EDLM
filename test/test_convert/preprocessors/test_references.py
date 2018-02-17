@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from edlm.convert import Context, Settings
-from edlm.convert._preprocessor._references import Reference, process_references
+from edlm.convert._preprocessor._markdown._references import Reference, process_references
 
 DUMMY_REFS = {
     '//ref1': 'ref1_name, ref1_link',

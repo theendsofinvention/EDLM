@@ -5,7 +5,7 @@ Final processing of the markdown text
 
 import re
 
-from .._context import Context
+from . import Context
 
 RE_DOUBLE_SPACE_AFTER_CMD = re.compile(
     r'(?P<cmd>\\\S+) {2}'

@@ -1,7 +1,7 @@
 # coding=utf-8
 
 
-from edlm.convert._preprocessor._aliases import Context, process_aliases
+from edlm.convert._preprocessor._markdown._aliases import Context, process_aliases
 
 
 def test_process_aliases():

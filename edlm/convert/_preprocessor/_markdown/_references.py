@@ -3,7 +3,7 @@
 Processes references in the Markdown text
 """
 
-from .._context import Context
+from . import Context
 
 REFS_TEMPLATE = r"""
 \newpage

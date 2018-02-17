@@ -2,7 +2,7 @@
 
 
 from edlm.convert import Context
-from edlm.convert._preprocessor import _symbols
+from edlm.convert._preprocessor._markdown import _symbols
 
 
 def test_processing_symbols():

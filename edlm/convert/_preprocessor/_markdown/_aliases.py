@@ -3,7 +3,7 @@
 Processes aliases
 """
 
-from .._context import Context
+from . import Context
 
 
 def process_aliases(ctx: Context):

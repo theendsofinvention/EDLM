@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from edlm.convert._preprocessor import _final_processing
+from edlm.convert._preprocessor._markdown import _final_processing
 
 
 def test_final_processing():

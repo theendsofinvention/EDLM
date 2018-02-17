@@ -3,7 +3,7 @@
 Processes symbols
 """
 
-from .._context import Context
+from . import Context
 
 # noinspection SpellCheckingInspection
 SYMBOLS = {

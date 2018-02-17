@@ -3,7 +3,7 @@
 Processing of Markdown content
 """
 
-from .._context import Context
+from ..._context import Context
 from ._aliases import process_aliases
 from ._final_processing import final_processing
 from ._images import process_images

@@ -8,7 +8,7 @@ from pathlib import Path
 
 import elib
 
-from .._context import Context
+from . import Context
 
 RE_PICTURE_LINE = re.compile(r'!\['
                              r'(?P<caption>.*)'
