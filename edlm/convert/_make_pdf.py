@@ -20,7 +20,8 @@ from ._pdf_info import add_metadata_to_pdf, skip_file
 from ._preprocessor import process_markdown, process_tex_template
 from ._temp_folder import TempDir
 from ._get_includes import get_includes
-from ._preprocessor._markdown._images import check_for_unused_images
+# noinspection PyProtectedMember
+from convert._check_for_unused_images import check_for_unused_images
 
 WIDTH_MODIFIER = 0.8
 

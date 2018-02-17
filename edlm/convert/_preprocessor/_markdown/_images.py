@@ -6,8 +6,6 @@ import re
 import typing
 from pathlib import Path
 
-import elib
-
 from . import Context
 
 RE_PICTURE_LINE = re.compile(r'!\['
@@ -66,20 +64,6 @@ def _process_image_width(ctx: Context):
 
     ctx.debug(f'setting default width for picture {ctx.image_current}')
     ctx.image_extras = f'{{width="{ctx.image_width}mm"}}'
-
-
-def check_for_unused_images(ctx):
-
-    unused_images = set()
-    if len(ctx.media_folders) > 1:
-        ctx.debug('checking media path for unused pictures')
-        for file in Path(ctx.media_folders[0]).iterdir():
-            if file.name not in ctx.images_used:
-                ctx.debug(f'checking that "{file}" is used')
-                unused_images.add(str(file.absolute()))
-
-        if unused_images:
-            ctx.warning(f'unused files found:\n{elib.pretty_format(sorted(unused_images))}')
 
 
 def _process_image(ctx: Context, match) -> typing.Optional[str]:

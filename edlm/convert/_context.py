@@ -2,7 +2,6 @@
 """
 Global context
 """
-import typing
 import copy
 from pathlib import Path
 
@@ -118,6 +117,14 @@ class Context:
         self.settings = Settings()
 
     def get_sub_context(self, source_folder: Path = None):
+        """
+        Creates a copy of this context
+
+        Args:
+            source_folder: optional new source_folder Path
+
+        Returns: new context
+        """
         new_context = Context()
         if source_folder is None:
             source_folder = self.source_folder
@@ -163,4 +170,3 @@ class Context:
 
     def __repr__(self):  # pylint: disable=bad-continuation
         return elib.pretty_format({k: v for k, v in self.data.items() if k not in self.skip_repr})
-
