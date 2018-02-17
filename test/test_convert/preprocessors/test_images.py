@@ -26,14 +26,14 @@ def test_get_image_full_path():
     test_file.touch()
     ctx = Context()
     ctx.media_folders = [Path('.')]
-    ctx.image_current = test_file
-    assert image._get_image_full_path(ctx) == test_file.absolute()
+    ctx.image_current = test_file.name
+    assert image._get_image_full_path(ctx) == str(test_file.absolute())
 
 
 def test_image_doesnt_exist():
     ctx = Context()
     ctx.media_folders = [Path('.')]
-    ctx.image_current = Path('./nope')
+    ctx.image_current = Path('./nope').name
     with pytest.raises(FileNotFoundError):
         image._get_image_full_path(ctx)
 
@@ -92,7 +92,7 @@ def test_check_for_unused_images(caplog, media: Path):
     caplog.clear()
     ctx = Context()
     ctx.media_folders = [str(media.absolute()), '.']
-    ctx.images_used = []
+    ctx.images_used = set()
     image._check_for_unused_images(ctx)
     for file in media.iterdir():
         assert file.name in caplog.text
@@ -103,7 +103,7 @@ def test_check_for_used_images(caplog, media: Path):
     caplog.clear()
     ctx = Context()
     ctx.media_folders = [str(media.absolute()), '.']
-    ctx.images_used = []
+    ctx.images_used = set()
     caplog.clear()
     ctx.images_used = set()
     for file in list(media.iterdir())[5:]:
@@ -120,7 +120,7 @@ def test_check_for_no_unused_images(caplog, media: Path):
     caplog.clear()
     ctx = Context()
     ctx.media_folders = [str(media.absolute()), '.']
-    ctx.images_used = []
+    ctx.images_used = set()
     caplog.clear()
     ctx.images_used = set()
     for file in list(media.iterdir()):
@@ -135,7 +135,7 @@ def test_check_for_used_images_only_one_media_folder(caplog):
     caplog.clear()
     ctx = Context()
     ctx.media_folders = ['.']
-    ctx.images_used = []
+    ctx.images_used = set()
     image._check_for_unused_images(ctx)
     assert not caplog.text
 

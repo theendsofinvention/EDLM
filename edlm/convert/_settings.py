@@ -38,7 +38,7 @@ class _Val:
 
     # this is the new initializer:
     def __set_name__(self, owner, name):
-        self.name = name
+        self.name = name  # pylint: disable=attribute-defined-outside-init
 
 
 class Settings:

@@ -3,8 +3,6 @@
 Processes references in the Markdown text
 """
 
-import elib
-
 from .._context import Context
 
 REFS_TEMPLATE = r"""

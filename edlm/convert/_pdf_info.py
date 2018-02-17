@@ -23,10 +23,10 @@ def _iterate_over_data(ctx: Context):
 
 
 def _get_document_hash(ctx: Context) -> str:
-    m = hashlib.md5()
+    hash_ = hashlib.md5()
     for data in _iterate_over_data(ctx):
-        m.update(data)
-    return m.hexdigest()
+        hash_.update(data)
+    return hash_.hexdigest()
 
 
 def skip_file(ctx: Context) -> bool:

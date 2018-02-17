@@ -22,12 +22,12 @@ RE_WIDTH = re.compile(r'{width="(?P<width>.*)"}')
 RE_WIDTH_RAW = re.compile(r'(?P<width>[\d]+)(?P<unit>.*)')
 
 
-def _get_image_full_path(ctx: Context):
+def _get_image_full_path(ctx: Context) -> str:
     image_name = Path(ctx.image_current).name
     for folder in ctx.media_folders:
         image_path = Path(folder, image_name)
         if image_path.exists():
-            return image_path.absolute()
+            return str(image_path.absolute())
 
     raise FileNotFoundError(f'picture "{ctx.image_current}" not found in any media folders: {ctx.media_folders}')
 

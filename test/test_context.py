@@ -12,6 +12,7 @@ from edlm.convert._context import Context
 def test_logger(caplog, level):
     caplog.clear()
     ctx = Context()
+    print(ctx.source_folder)
     func = getattr(ctx, level)
     assert 'test' not in caplog.text
     func('test')

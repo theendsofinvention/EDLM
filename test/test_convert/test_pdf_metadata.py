@@ -117,6 +117,3 @@ def test_add_metadata():
     verify(writer).write()
     assert trailer.Info.Creator == 'EDLM ' + __version__
     assert trailer.Info.Producer == 'EDLM hash'
-
-
-
