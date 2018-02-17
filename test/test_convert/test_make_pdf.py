@@ -58,6 +58,8 @@ def test_build_folder(paper_size):
     ctx.markdown_text = ''
     ctx.settings = {'papersize': paper_size}
     when(_make_pdf).get_media_folders(...)
+    when(_make_pdf).skip_file(...)
+    when(_make_pdf).add_metadata_to_pdf(ctx)
     when(_make_pdf).get_template(...)
     when(_make_pdf).get_index_file(...)
     when(_make_pdf).get_settings(...)
@@ -69,6 +71,27 @@ def test_build_folder(paper_size):
     _make_pdf._build_folder(ctx)
     verifyStubbedInvocationsAreUsed()
     assert ctx.title == 'test'
+
+
+def test_build_folder_skip():
+    ctx = Context()
+    pandoc = Path('pandoc')
+    pandoc.touch()
+    src_folder = Path('./test').absolute()
+    src_folder.mkdir()
+    ctx.source_folder = src_folder
+    source_file = Path('./test/index.md')
+    source_file.touch()
+    ctx.source_file = source_file
+    ctx.markdown_text = ''
+    ctx.settings = {'papersize': ['a4']}
+    when(_make_pdf).get_media_folders(...)
+    when(_make_pdf).skip_file(...).thenReturn(True)
+    when(_make_pdf).get_template(...)
+    when(_make_pdf).get_index_file(...)
+    when(_make_pdf).get_settings(...)
+    _make_pdf._build_folder(ctx)
+    verifyStubbedInvocationsAreUsed()
 
 
 def test_is_source_folder():

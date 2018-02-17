@@ -15,6 +15,7 @@ from ._get_index import get_index_file
 from ._get_media_folders import get_media_folders
 from ._get_settings import get_settings
 from ._get_template import get_template
+from ._pdf_info import add_metadata_to_pdf, skip_file
 from ._preprocessor import process_markdown, process_tex_template
 from ._temp_folder import TempDir
 
@@ -79,6 +80,9 @@ def _build_folder(ctx: Context):
             else:
                 ctx.out_file = Path(out_folder, f'{title}_{paper_size}.PDF').absolute()
 
+            if skip_file(ctx):
+                continue
+
             process_markdown(ctx)
 
             process_tex_template(ctx)
@@ -110,6 +114,8 @@ def _build_folder(ctx: Context):
             ]
 
             PANDOC(' '.join(pandoc_cmd))
+
+            add_metadata_to_pdf(ctx)
 
 
 def _is_source_folder(folder: Path) -> bool:
