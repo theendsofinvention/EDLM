@@ -4,10 +4,10 @@ Manages PDF files metadata operations
 """
 
 import hashlib
+from pathlib import Path
 
 import pdfrw
 from pdfrw.objects import pdfstring
-from pathlib import Path
 
 from edlm import __version__
 from edlm.convert import Context

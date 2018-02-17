@@ -1,4 +1,8 @@
 # coding=utf-8
+"""
+Checks that all images that in this document media folder
+are used throughout the document, otherwise issue a warning
+"""
 from pathlib import Path
 import elib
 
