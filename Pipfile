@@ -25,6 +25,7 @@ elib = "*"
 tqdm = "*"
 pyunpack = "*"
 patool = "*"
+pdfrw = "*"
 
 
 [dev-packages]
