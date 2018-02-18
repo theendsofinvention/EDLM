@@ -4,7 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from edlm.convert import Context, ConvertError, _get_template as template
+from edlm.convert import Context, ConvertError
+from edlm.convert import _get_template as template
 
 
 def test_no_template():

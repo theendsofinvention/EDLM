@@ -1,7 +1,8 @@
 # coding=utf-8
 
-from edlm.convert._get_includes import get_includes, Context
 from pathlib import Path
+
+from edlm.convert._get_includes import Context, get_includes
 
 
 def test_no_includes():
