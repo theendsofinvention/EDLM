@@ -21,5 +21,5 @@ except DistributionNotFound:  # pragma: no cover
             warnings.simplefilter('ignore')
             from setuptools_scm import get_version
             __version__ = get_version()
-    except:
-        __version__ = '"EDLM" package not installed'
+    except (ImportError, ModuleNotFoundError):
+        __version__ = 'not installed'
