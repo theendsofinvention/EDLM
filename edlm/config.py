@@ -18,8 +18,8 @@ class Config(elib.config.BaseConfig):
     miktex_path = elib.config.ConfigProp(str, default='./miktex')
     pandoc_archive = elib.config.ConfigProp(str, default='./pandoc.7z')
     pandoc_path = elib.config.ConfigProp(str, default='./pandoc')
-    debug = elib.config.ConfigProp(parser=bool, default=False)
-    keep_temp_dir = elib.config.ConfigProp(parser=bool, default=False)
+    debug = elib.config.ConfigProp(parser=bool, default='false')
+    keep_temp_dir = elib.config.ConfigProp(parser=bool, default='false')
 
 
 CFG = Config()

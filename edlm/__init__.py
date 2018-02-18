@@ -8,7 +8,7 @@ import warnings
 import elib
 from pkg_resources import DistributionNotFound, get_distribution
 
-LOGGER = elib.custom_logging.get_logger('EDLM', log_to_file=True)
+LOGGER = elib.custom_logging.get_logger('EDLM', log_to_file=True, use_click_handler=True)
 elib.custom_logging.activate_elib_logging()
 
 HERE = Path(__file__).parent.parent.absolute()
