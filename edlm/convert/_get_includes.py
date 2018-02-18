@@ -49,4 +49,5 @@ def get_includes(ctx: Context):
     ctx.includes = []
     _process_own_includes(ctx)
     _process_external_includes(ctx)
-    ctx.info(f'includes:\n{elib.pretty_format(ctx.includes)}')
+    if ctx.includes:
+        ctx.info(f'includes:\n{elib.pretty_format(ctx.includes)}')
