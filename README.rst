@@ -29,25 +29,25 @@ Etcher's Document Library Manager
     :target: https://ci.appveyor.com/project/132nd-etcher/edlm
     :alt: 'Appveyor build'
 .. |codacy| image:: https://img.shields.io/codacy/grade/47205f17278e48ffb558d585bc75ecb7.svg
-	:target: https://www.codacy.com/app/132nd-etcher/edlm
+	:target: https://www.codacy.com/app/132nd-etcher/EDLM
     :alt: 'Codacy grade'
 .. |coverage| image:: https://img.shields.io/codacy/coverage/47205f17278e48ffb558d585bc75ecb7.svg
-	:target: https://www.codacy.com/app/132nd-etcher/edlm
+	:target: https://www.codacy.com/app/132nd-etcher/EDLM
     :alt: 'Codacy coverage'
 .. |graph| image:: https://graphs.waffle.io/132nd-etcher/edlm/throughput.svg
     :target: https://waffle.io/132nd-etcher/edlm/metrics/throughput
     :alt: 'Throughput Graph'
-.. |requires| image:: https://requires.io/github/132nd-etcher/edlm/requirements.svg?branch=master
-    :target: https://requires.io/github/132nd-etcher/edlm/requirements/?branch=master
+.. |requires| image:: https://requires.io/github/132nd-etcher/EDLM/requirements.svg?branch=master
+    :target: https://requires.io/github/132nd-etcher/EDLM/requirements/?branch=master
     :alt: 'Requires.io'
-.. |ccissues| image:: https://img.shields.io/codeclimate/issues/github/132nd-etcher/edlm.svg
-    :target: https://codeclimate.com/github/132nd-etcher/edlm
+.. |ccissues| image:: https://img.shields.io/codeclimate/issues/github/132nd-etcher/EDLM.svg
+    :target: https://codeclimate.com/github/132nd-etcher/EDLM
     :alt: 'CodeClimate issues'
-.. |ccmain| image:: https://img.shields.io/codeclimate/maintainability/132nd-etcher/edlms.svg
-    :target: https://codeclimate.com/github/132nd-etcher/edlm
+.. |ccmain| image:: https://img.shields.io/codeclimate/maintainability/132nd-etcher/EDLMs.svg
+    :target: https://codeclimate.com/github/132nd-etcher/EDLM
     :alt: 'CodeClimate maintainability'
-.. |bch| image:: https://bettercodehub.com/edge/badge/132nd-etcher/edlm?branch=master
-    :target: https://bettercodehub.com/results/132nd-etcher/edlm
+.. |bch| image:: https://bettercodehub.com/edge/badge/132nd-etcher/EDLM?branch=master
+    :target: https://bettercodehub.com/results/132nd-etcher/EDLM
     :alt: 'BetterCodeHub'
 .. |bp| image:: https://bestpractices.coreinfrastructure.org/projects/1380/badge
     :target: https://bestpractices.coreinfrastructure.org/projects/1380
