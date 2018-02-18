@@ -1,8 +1,9 @@
 # coding=utf-8
 
-import elib
 from pathlib import Path
-from mockito import when, contains, verifyStubbedInvocationsAreUsed
+
+import elib
+from mockito import contains, verifyStubbedInvocationsAreUsed, when
 
 from edlm import external_tools
 

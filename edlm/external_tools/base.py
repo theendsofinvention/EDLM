@@ -2,11 +2,11 @@
 """
 Base class for external tools
 """
+import functools
 import os
 import sys
 import typing
 from pathlib import Path
-import functools
 
 import elib
 import pyunpack
