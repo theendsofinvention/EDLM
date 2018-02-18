@@ -42,7 +42,7 @@ def convert():
     type=click.Path(exists=True, file_okay=False, resolve_path=True, readable=True),
     nargs=-1,
 )
-@click.option('--keep-temp-dir', default=False, help='Keep temporary folder', is_flag=True)
+@click.option('-k', '--keep-temp-dir', default=False, help='Keep temporary folder', is_flag=True)
 @click.option('-f', '--force', default=False, help='Force re-generation of documents', is_flag=True)
 def pdf(source_folder, keep_temp_dir, force):
     """
