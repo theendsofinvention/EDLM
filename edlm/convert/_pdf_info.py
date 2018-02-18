@@ -33,7 +33,7 @@ def _iterate_over_data(ctx: Context):
 
 
 def _get_document_hash(ctx: Context) -> str:
-    hash_ = hashlib.md5()
+    hash_ = hashlib.sha1()
     for data in _iterate_over_data(ctx):
         hash_.update(data)
     return hash_.hexdigest()
