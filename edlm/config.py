@@ -49,5 +49,12 @@ class Config(elib.config.BaseConfig):
         """
         pass
 
+    @elib.config.ConfigProp(parser=bool, default=False)
+    def keep_temp_dir(self):
+        """
+        Do not delete temp dir after a successful convert operation
+        """
+        pass
+
 
 CFG = Config()

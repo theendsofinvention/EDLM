@@ -50,7 +50,7 @@ def pdf(source_folder, keep_temp_dir, force):
     """
 
     ctx = Context()
-    ctx.keep_temp_dir = keep_temp_dir
+    ctx.keep_temp_dir = keep_temp_dir or CFG.keep_temp_dir
     ctx.regen = force
 
     for folder in source_folder:
