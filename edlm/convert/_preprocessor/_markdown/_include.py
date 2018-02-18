@@ -11,6 +11,9 @@ from . import Context
 
 
 class Inclusion:
+    """
+    Dummy context for a file inclusion
+    """
     sub_context: Context
     include_str: str
     markdown_source: Path

@@ -27,6 +27,7 @@ class MikTex(BaseExternalTool):
     Miktex external tool
     """
     url = r'https://www.dropbox.com/s/ivyb6s5itb5len2/miktex.7z?dl=1'
+    # noinspection SpellCheckingInspection
     hash = 'fc20affd161264e7c5b816ddc85955cd'
     default_archive = Path(HERE, 'miktex.7z').absolute()
     default_install = Path(HERE, 'miktex').absolute()

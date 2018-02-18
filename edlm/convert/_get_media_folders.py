@@ -5,7 +5,6 @@ Gathers the media folders
 
 import elib
 
-from ._exc import ConvertError
 from ._context import Context
 
 

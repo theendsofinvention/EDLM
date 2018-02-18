@@ -121,9 +121,6 @@ class Context:
         """
         Creates a copy of this context
 
-        Args:
-            source_folder: optional new source_folder Path
-
         Returns: new context
         """
         new_context = Context()
