@@ -27,7 +27,7 @@ def test_template_loader_no_template():
     ctx = Context()
     template = Path('./template.tex').absolute()
     ctx.template_source = template
-    env = Environment()
+    env = Environment(autoescape=True)
     loader = tex.TexTemplateLoader(ctx)
     with pytest.raises(TemplateNotFound):
         loader.get_source(env, 'template.tex')

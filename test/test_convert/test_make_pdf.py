@@ -1,5 +1,6 @@
 # coding=utf-8
 
+import typing
 from pathlib import Path
 
 import elib
@@ -41,11 +42,7 @@ def test_remove_artifacts():
     assert not list(Path('.').iterdir())
 
 
-@pytest.mark.parametrize(
-    'paper_size',
-    (['a4'], ['a3', 'a5'], ['a3'])
-)
-def test_build_folder(paper_size):
+def _get_standard_build_folder() -> typing.Tuple[Context, Path]:
     ctx = Context()
     pandoc = Path('pandoc')
     pandoc.touch()
@@ -56,6 +53,15 @@ def test_build_folder(paper_size):
     source_file.touch()
     ctx.source_file = source_file
     ctx.markdown_text = ''
+    return ctx, pandoc
+
+
+@pytest.mark.parametrize(
+    'paper_size',
+    (['a4'], ['a3', 'a5'], ['a3'])
+)
+def test_build_folder(paper_size):
+    ctx, pandoc = _get_standard_build_folder()
     ctx.settings.papersize = paper_size
     ctx.media_folders = []
     when(_make_pdf).get_media_folders(...)
@@ -75,16 +81,7 @@ def test_build_folder(paper_size):
 
 
 def test_build_folder_skip():
-    ctx = Context()
-    pandoc = Path('pandoc')
-    pandoc.touch()
-    src_folder = Path('./test').absolute()
-    src_folder.mkdir()
-    ctx.source_folder = src_folder
-    source_file = Path('./test/index.md')
-    source_file.touch()
-    ctx.source_file = source_file
-    ctx.markdown_text = ''
+    ctx, _ = _get_standard_build_folder()
     ctx.settings.papersize = ['a4']
     when(_make_pdf).get_media_folders(...)
     when(_make_pdf).skip_file(...).thenReturn(True)
