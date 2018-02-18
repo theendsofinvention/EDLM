@@ -8,7 +8,7 @@ def test_no_include():
     ctx = Context()
     ctx.markdown_text = 'some text'
     ctx.includes = []
-    process_includes(ctx)_
+    process_includes(ctx)
     assert ctx.markdown_text == 'some text'
 
 
