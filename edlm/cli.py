@@ -19,12 +19,14 @@ def cli(debug):
     """
     Command line interface
     """
-    LOGGER.info(f'EDLM {__version__}')
     debug = debug or CFG.debug
     if debug:
         elib.custom_logging.set_handler_level('EDLM', 'ch', 'debug')
     else:
         elib.custom_logging.set_handler_level('EDLM', 'ch', 'info')
+
+    LOGGER.info(f'EDLM version {__version__}')
+
     PANDOC.setup()
     MIKTEX.setup()
 
