@@ -84,7 +84,7 @@ def test_skip_file_should_skip(caplog):
     assert 'this document has not been modified, skipping it' in caplog.text
 
 
-def test_skip_file_force_regen(caplog):
+def _get_should_skip_context(hash_='EDLM hash', version=__version__) -> _pdf_info.Context:
     ctx = _pdf_info.Context()
     ctx.out_file = Path('./test')
     pdf = mock()
@@ -94,44 +94,27 @@ def test_skip_file_force_regen(caplog):
     Path('./test').touch()
     when(pdfrw).PdfReader(...).thenReturn(pdf)
     when(pdfrw.objects.pdfstring.PdfString).to_unicode(...) \
-        .thenReturn('EDLM ' + __version__) \
-        .thenReturn('EDLM hash')
+        .thenReturn('EDLM ' + version) \
+        .thenReturn(hash_)
     when(_pdf_info)._get_document_hash(...).thenReturn('hash')
+    return ctx
+
+
+def test_skip_file_force_regen(caplog):
+    ctx = _get_should_skip_context()
     ctx.regen = True
     assert not _pdf_info.skip_file(ctx)
     assert 'forcing re-generation of all documents anyway' in caplog.text
 
 
 def test_skip_file_document_updated(caplog):
-    ctx = _pdf_info.Context()
-    ctx.out_file = Path('./test')
-    pdf = mock()
-    pdf.Info = mock()
-    pdf.Info.Creator = 'creator'
-    pdf.Info.Producer = 'producer'
-    Path('./test').touch()
-    when(pdfrw).PdfReader(...).thenReturn(pdf)
-    when(pdfrw.objects.pdfstring.PdfString).to_unicode(...) \
-        .thenReturn('EDLM ' + __version__) \
-        .thenReturn('EDLM not the hash')
-    when(_pdf_info)._get_document_hash(...).thenReturn('hash')
+    ctx = _get_should_skip_context(hash_='EDLM not the hash')
     assert not _pdf_info.skip_file(ctx)
     assert 'document updated, regenerating' in caplog.text
 
 
 def test_skip_file_wrong_version(caplog):
-    ctx = _pdf_info.Context()
-    ctx.out_file = Path('./test')
-    pdf = mock()
-    pdf.Info = mock()
-    pdf.Info.Creator = 'creator'
-    pdf.Info.Producer = 'producer'
-    Path('./test').touch()
-    when(pdfrw).PdfReader(...).thenReturn(pdf)
-    when(pdfrw.objects.pdfstring.PdfString).to_unicode(...) \
-        .thenReturn('EDLM wrong version') \
-        .thenReturn('EDLM hash')
-    when(_pdf_info)._get_document_hash(...).thenReturn('hash')
+    ctx = _get_should_skip_context(version='other version')
     assert not _pdf_info.skip_file(ctx)
     assert 'document generated with an older version of EDLM, regenerating' in caplog.text
 
