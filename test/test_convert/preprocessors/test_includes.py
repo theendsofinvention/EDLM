@@ -1,13 +1,14 @@
 # coding=utf-8
 from pathlib import Path
-from edlm.convert._preprocessor._markdown._include import process_includes, Inclusion, Context
+
+from edlm.convert._preprocessor._markdown._include import Context, process_includes
 
 
 def test_no_include():
     ctx = Context()
     ctx.markdown_text = 'some text'
     ctx.includes = []
-    process_includes(ctx)
+    process_includes(ctx)_
     assert ctx.markdown_text == 'some text'
 
 

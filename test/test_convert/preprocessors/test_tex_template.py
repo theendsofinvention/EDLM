@@ -15,7 +15,7 @@ def test_template_loader():
     template = Path('./template.tex').absolute()
     template.write_text('moo', encoding='utf8')
     ctx.template_source = template
-    env = Environment()
+    env = Environment(autoescape=True)
     loader = tex.TexTemplateLoader(ctx)
     source, template_, reload = loader.get_source(env, 'template.tex')
     assert source == 'moo'
