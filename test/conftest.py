@@ -72,6 +72,14 @@ def _reset_cache():
     _find_patool.cache_clear()
 
 
+@pytest.fixture(autouse=True)
+def _setup_config():
+    from edlm.config import CFG
+    CFG.keep_temp_dir = False
+    CFG.debug = False
+    yield
+
+
 def pytest_addoption(parser):
     """Add option for long tests"""
     parser.addoption("--long", action="store_true",
