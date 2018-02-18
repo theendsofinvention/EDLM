@@ -117,7 +117,7 @@ class Context:
         self.skip_repr = ['markdown_text']
         self.settings = Settings()
 
-    def get_sub_context(self, source_folder: Path = None):
+    def get_sub_context(self):
         """
         Creates a copy of this context
 
@@ -127,10 +127,7 @@ class Context:
         Returns: new context
         """
         new_context = Context()
-        if source_folder is None:
-            source_folder = self.source_folder
         new_context.data = copy.deepcopy(self.data)
-        new_context.source_folder = source_folder
         return new_context
 
     def debug(self, text):

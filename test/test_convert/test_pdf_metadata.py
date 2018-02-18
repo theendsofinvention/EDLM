@@ -1,12 +1,12 @@
 # coding=utf-8
 
 from pathlib import Path
-from mockito import when, verify, mock
-import pdfrw
-from pdfrw.objects import pdfstring
 
-from edlm.convert import _pdf_info
+import pdfrw
+from mockito import mock, verify, when
+
 from edlm import __version__
+from edlm.convert import _pdf_info
 
 
 def test_get_document_hash():
@@ -28,7 +28,11 @@ def test_get_document_hash():
     ctx.template_source = template
     ctx.settings_files = [settings]
     ctx.media_folders = [media]
-    ctx.includes = []
+    include_dir = Path('include')
+    include_dir.mkdir()
+    include_file = Path(include_dir, 'include.md')
+    include_file.write_text('sdfsdf', encoding='utf8')
+    ctx.includes = [include_dir, include_file]
     hash_ = _pdf_info._get_document_hash(ctx)
     assert hash_ == _pdf_info._get_document_hash(ctx)
     index_file.write_text('sdfsfsaqzzdqscxdcg', encoding='utf8')
@@ -51,6 +55,10 @@ def test_get_document_hash():
     assert hash_ != _pdf_info._get_document_hash(ctx)
     hash_ = _pdf_info._get_document_hash(ctx)
     assert hash_ == _pdf_info._get_document_hash(ctx)
+    include_file.write_text('wxcwxcmlml', encoding='utf8')
+    assert hash_ != _pdf_info._get_document_hash(ctx)
+    hash_ = _pdf_info._get_document_hash(ctx)
+    assert hash_ == _pdf_info._get_document_hash(ctx)
 
 
 def test_skip_file_doesnt_exist():
@@ -68,12 +76,30 @@ def test_skip_file_should_skip(caplog):
     pdf.Info.Producer = 'producer'
     Path('./test').touch()
     when(pdfrw).PdfReader(...).thenReturn(pdf)
-    when(pdfrw.objects.pdfstring.PdfString).to_unicode(...)\
-        .thenReturn('EDLM ' + __version__)\
+    when(pdfrw.objects.pdfstring.PdfString).to_unicode(...) \
+        .thenReturn('EDLM ' + __version__) \
         .thenReturn('EDLM hash')
     when(_pdf_info)._get_document_hash(...).thenReturn('hash')
     assert _pdf_info.skip_file(ctx)
     assert 'this document has not been modified, skipping it' in caplog.text
+
+
+def test_skip_file_force_regen(caplog):
+    ctx = _pdf_info.Context()
+    ctx.out_file = Path('./test')
+    pdf = mock()
+    pdf.Info = mock()
+    pdf.Info.Creator = 'creator'
+    pdf.Info.Producer = 'producer'
+    Path('./test').touch()
+    when(pdfrw).PdfReader(...).thenReturn(pdf)
+    when(pdfrw.objects.pdfstring.PdfString).to_unicode(...) \
+        .thenReturn('EDLM ' + __version__) \
+        .thenReturn('EDLM hash')
+    when(_pdf_info)._get_document_hash(...).thenReturn('hash')
+    ctx.regen = True
+    assert not _pdf_info.skip_file(ctx)
+    assert 'forcing re-generation of all documents anyway' in caplog.text
 
 
 def test_skip_file_document_updated(caplog):
@@ -85,8 +111,8 @@ def test_skip_file_document_updated(caplog):
     pdf.Info.Producer = 'producer'
     Path('./test').touch()
     when(pdfrw).PdfReader(...).thenReturn(pdf)
-    when(pdfrw.objects.pdfstring.PdfString).to_unicode(...)\
-        .thenReturn('EDLM ' + __version__)\
+    when(pdfrw.objects.pdfstring.PdfString).to_unicode(...) \
+        .thenReturn('EDLM ' + __version__) \
         .thenReturn('EDLM not the hash')
     when(_pdf_info)._get_document_hash(...).thenReturn('hash')
     assert not _pdf_info.skip_file(ctx)
@@ -102,8 +128,8 @@ def test_skip_file_wrong_version(caplog):
     pdf.Info.Producer = 'producer'
     Path('./test').touch()
     when(pdfrw).PdfReader(...).thenReturn(pdf)
-    when(pdfrw.objects.pdfstring.PdfString).to_unicode(...)\
-        .thenReturn('EDLM wrong version')\
+    when(pdfrw.objects.pdfstring.PdfString).to_unicode(...) \
+        .thenReturn('EDLM wrong version') \
         .thenReturn('EDLM hash')
     when(_pdf_info)._get_document_hash(...).thenReturn('hash')
     assert not _pdf_info.skip_file(ctx)

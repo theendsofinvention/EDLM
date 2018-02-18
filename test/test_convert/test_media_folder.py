@@ -8,11 +8,11 @@ from edlm.convert import Context, ConvertError
 from edlm.convert._get_media_folders import get_media_folders
 
 
-def test_not_media_folder():
-    ctx = Context()
-    ctx.source_folder = Path('.').absolute()
-    with pytest.raises(ConvertError):
-        get_media_folders(ctx)
+# def test_not_media_folder():
+#     ctx = Context()
+#     ctx.source_folder = Path('.').absolute()
+#     with pytest.raises(ConvertError):
+#         get_media_folders(ctx)
 
 
 def test_get_media_folder():

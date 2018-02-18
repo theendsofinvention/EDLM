@@ -38,7 +38,8 @@ def _process_local_include(ctx: Context, inclusion: Inclusion):
     inclusion.include_str = f'//include "{inclusion.parent_folder.relative_to(ctx.source_folder)}"'
     inclusion.markdown_source = Path(ctx.source_folder, inclusion.parent_folder)
     _process_include(ctx, inclusion)
-    ctx.images_used.update(inclusion.sub_context.images_used)
+    if inclusion.sub_context.images_used:
+        ctx.images_used.update(inclusion.sub_context.images_used)
 
 
 def _process_external_include(ctx: Context, inclusion: Inclusion):

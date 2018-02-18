@@ -29,8 +29,8 @@ def get_media_folders(ctx: Context):
             break
         this_folder = this_folder.parent
 
-    if not media_folders:
-        raise ConvertError('no media folder found', ctx)
+    # if not media_folders:
+    #     raise ConvertError('no media folder found', ctx)
 
     ctx.info(f'media folders:\n{elib.pretty_format(media_folders)}')
     ctx.media_folders = media_folders
