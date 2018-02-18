@@ -5,10 +5,8 @@ Processing of Markdown content
 
 from ..._context import Context
 from ._aliases import process_aliases
-from ._final_processing import final_processing
 from ._images import process_images
 from ._references import process_references
-from ._symbols import process_symbols
 from ._include import process_includes
 
 
@@ -19,7 +17,5 @@ def process_markdown(ctx: Context):
     ctx.debug(f'processing markdown file: {ctx.index_file}')
     process_aliases(ctx)
     process_images(ctx)
-    process_symbols(ctx)
     process_references(ctx)
     process_includes(ctx)
-    final_processing(ctx)

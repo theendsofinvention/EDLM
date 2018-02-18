@@ -127,6 +127,7 @@ def _build_folder(ctx: Context):
                 '-V geometry:heightrounded',
                 '-V lot',
                 '-V lof',
+                '--pdf-engine=xelatex',
                 f'-V papersize:{ctx.paper_size}',
                 '-N',
             ]

@@ -16,8 +16,6 @@ def test_markdown_preprocessor():
     ctx.markdown_text = ''
     when(_markdown).process_aliases(ctx)
     when(_markdown).process_images(ctx)
-    when(_markdown).process_symbols(ctx)
     when(_markdown).process_references(ctx)
-    when(_markdown).final_processing(ctx)
     _markdown.process_markdown(ctx)
     verifyStubbedInvocationsAreUsed()

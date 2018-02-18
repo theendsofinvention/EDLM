@@ -26,9 +26,8 @@ class MikTex(BaseExternalTool):
     """
     Miktex external tool
     """
-    # url = r'https://miktex.org/download/ctan/systems/win32/miktex/setup/windows-x86/miktex-portable-2.9.6615.exe'
-    url = r'https://www.dropbox.com/s/80p25efbg3zasuj/miktex-portable-2.9.6521.exe?dl=1'
-    hash = 'c8164da05a93b7f00eb79cba7d9ce611'
+    url = r'https://www.dropbox.com/s/ivyb6s5itb5len2/miktex.7z?dl=1'
+    hash = 'fc20affd161264e7c5b816ddc85955cd'
     default_archive = Path(HERE, 'miktex.7z').absolute()
     default_install = Path(HERE, 'miktex').absolute()
     expected_version = '2.9.6354'
@@ -46,7 +45,7 @@ class MikTex(BaseExternalTool):
         Returns: Miktex executable
         """
         if self._exe is None:
-            self._exe = Path(self.install_dir, 'texmfs/install/miktex/bin/pdflatex.exe').absolute()
+            self._exe = Path(self.install_dir, 'miktex/texmfs/install/miktex/bin/pdflatex.exe').absolute()
         return self._exe
 
     @staticmethod
