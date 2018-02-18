@@ -49,8 +49,8 @@ Etcher's Document Library Manager
 .. |bch| image:: https://bettercodehub.com/edge/badge/132nd-etcher/EDLM?branch=master
 	:target: https://bettercodehub.com/results/132nd-etcher/EDLM
 	:alt: 'BetterCodeHub'
-.. |bp| image:: https://bestpractices.coreinfrastructure.org/projects/1380/badge
-	:target: https://bestpractices.coreinfrastructure.org/projects/1380
+.. |bp| image:: https://bestpractices.coreinfrastructure.org/projects/1662/badge
+	:target: https://bestpractices.coreinfrastructure.org/projects/1662
 	:alt: 'OSI Best Practices'
 .. |cf| image:: https://www.codefactor.io/repository/github/132nd-etcher/edlm/badge
 	:target: https://www.codefactor.io/repository/github/132nd-etcher/edlm
