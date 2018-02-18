@@ -7,7 +7,8 @@ from pathlib import Path
 import elib
 from pkg_resources import DistributionNotFound, get_distribution
 
-LOGGER = elib.custom_logging.get_logger('EDLM',)
+LOGGER = elib.custom_logging.get_logger('EDLM', log_to_file=True)
+elib.custom_logging.activate_elib_logging()
 
 HERE = Path(__file__).parent.parent.absolute()
 
