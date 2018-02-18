@@ -1,0 +1,9 @@
+package: 'edlm'
+
+doc:
+  repo: 'https://github.com/132nd-etcher/edlm-doc.git'
+  folder: './doc'
+
+test:
+  runner: ''
+  av_runner: ''
