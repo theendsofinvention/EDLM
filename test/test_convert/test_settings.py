@@ -26,6 +26,7 @@ def _get_dicts():
     }
     return source_dict, target_dict
 
+
 def test_update_nested_dict():
     source_dict, target_dict = _get_dicts()
     settings.update_nested_dict(source_dict, target_dict)
