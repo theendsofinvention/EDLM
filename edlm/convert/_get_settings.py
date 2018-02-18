@@ -59,7 +59,7 @@ def get_settings(ctx: Context):
         raise ConvertError('no "settings.yml" file found', ctx)
 
     for file in reversed(ctx.settings_files):
-        if not file.read_text():
+        if not file.read_text(encoding='utf8'):
             raise ConvertError(f'empty "settings.yml": {file.absolute()}', ctx)
         with open(file) as stream:
             these_settings = yaml.load(stream)

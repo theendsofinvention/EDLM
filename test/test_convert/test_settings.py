@@ -89,7 +89,7 @@ def test_empty_settings():
     ctx = Context()
     ctx.source_folder = Path('.').absolute()
     settings_ = Path('./settings.yml')
-    settings_.write_text('')
+    settings_.write_text('', encoding='utf8')
     with pytest.raises(ConvertError):
         settings.get_settings(ctx)
 
@@ -105,7 +105,8 @@ def test_nested_settings():
         'key4:\n'
         '  key1: value1\n'
         '  key2: value1\n'
-        '  key3: value1\n'
+        '  key3: value1\n',
+        encoding='utf8'
     )
     sub2 = Path(sub1, 'sub2').absolute()
     sub2.mkdir()
@@ -113,7 +114,8 @@ def test_nested_settings():
     settings_2.write_text(
         'key2: value2\n'
         'key4:\n'
-        '  key2: value2\n'
+        '  key2: value2\n',
+        encoding='utf8'
     )
     sub3 = Path(sub2, 'sub3').absolute()
     sub3.mkdir()
@@ -121,7 +123,8 @@ def test_nested_settings():
     settings_3.write_text(
         'key3: value3\n'
         'key4:\n'
-        '  key3: value3\n'
+        '  key3: value3\n',
+        encoding='utf8'
     )
     ctx = Context()
     ctx.source_folder = sub3
@@ -149,7 +152,7 @@ def test_nested_settings2():
         'key4:\n'
         '  key1: value1\n'
         '  key2: value1\n'
-        '  key3: value1\n'
+        '  key3: value1\n', encoding='utf8'
     )
     sub2 = Path(sub1, 'sub2').absolute()
     sub2.mkdir()
@@ -157,7 +160,7 @@ def test_nested_settings2():
     settings_2.write_text(
         'key2: value2\n'
         'key4:\n'
-        '  key2: value2\n'
+        '  key2: value2\n', encoding='utf8'
     )
     sub3 = Path(sub2, 'sub3').absolute()
     sub3.mkdir()
@@ -165,7 +168,7 @@ def test_nested_settings2():
     settings_3.write_text(
         'key3: value3\n'
         'key4:\n'
-        '  key3: value3\n'
+        '  key3: value3\n', encoding='utf8'
     )
     ctx = Context()
     ctx.source_folder = sub3

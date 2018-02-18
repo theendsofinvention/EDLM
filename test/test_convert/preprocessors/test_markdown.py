@@ -10,7 +10,7 @@ from pathlib import Path
 def test_markdown_preprocessor():
     ctx = Context()
     index_file = Path('./index.md')
-    index_file.write_text('')
+    index_file.write_text('', encoding='utf8')
     ctx.index_file = index_file
     ctx.includes = []
     ctx.markdown_text = ''

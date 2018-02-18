@@ -63,4 +63,4 @@ def test_process_template():
     template.touch()
     ctx.template_source = template
     tex.process_tex_template(ctx)
-    assert ctx.template_file.read_text() == ''
+    assert ctx.template_file.read_text(encoding='utf8') == ''

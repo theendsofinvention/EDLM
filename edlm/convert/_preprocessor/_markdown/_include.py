@@ -14,7 +14,7 @@ def _process_local_include(ctx: Context, include: Path):
     from . import process_markdown
     include_str = f'//include "{include.relative_to(ctx.source_folder)}"'
     sub_context = ctx.get_sub_context()
-    sub_context.markdown_text = Path(ctx.source_folder, include).read_text()
+    sub_context.markdown_text = Path(ctx.source_folder, include).read_text(encoding='utf8')
     sub_context.index_file = include
     sub_context.includes = []
     process_markdown(sub_context)
@@ -28,7 +28,7 @@ def _process_external_include(ctx: Context, include: Path):
     include_str = f'//include "{include.relative_to(ctx.source_folder.parent)}"'
     sub_context = ctx.get_sub_context()
     sub_context.source_folder = include
-    sub_context.markdown_text = Path(include, 'index.md').read_text()
+    sub_context.markdown_text = Path(include, 'index.md').read_text(encoding='utf8')
     sub_context.index_file = include
     sub_context.includes = []
     get_includes(sub_context)
