@@ -1,10 +1,12 @@
 # coding=utf-8
 
 
-from edlm.convert._preprocessor import _markdown
-from edlm.convert import Context
-from mockito import when, verifyStubbedInvocationsAreUsed
 from pathlib import Path
+
+from mockito import verifyStubbedInvocationsAreUsed, when
+
+from edlm.convert import Context
+from edlm.convert._preprocessor import _markdown
 
 
 def test_markdown_preprocessor():

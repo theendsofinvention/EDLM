@@ -5,7 +5,7 @@ Get templates folder
 
 from pathlib import Path
 
-from . import ConvertError, Context
+from . import Context, ConvertError
 
 
 def get_template(ctx: Context):

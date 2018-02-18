@@ -8,6 +8,7 @@ from pathlib import Path
 import elib
 
 from edlm import LOGGER
+
 from ._settings import Settings
 
 DEFAULT = {

@@ -1,7 +1,8 @@
 # coding=utf-8
 
 import pytest
-from edlm.convert._temp_folder import TempDir, Context
+
+from edlm.convert._temp_folder import Context, TempDir
 
 
 def test_temp_dir():
