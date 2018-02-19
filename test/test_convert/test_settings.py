@@ -7,7 +7,7 @@ import edlm.convert._get_settings as settings
 from edlm.convert import Context, ConvertError, _settings
 
 
-def test_update_nested_dict():
+def _get_dicts():
     source_dict = {
         'source': 'source',
         'shared': 'source',
@@ -24,6 +24,11 @@ def test_update_nested_dict():
             'shared': 'target',
         }
     }
+    return source_dict, target_dict
+
+
+def test_update_nested_dict():
+    source_dict, target_dict = _get_dicts()
     settings.update_nested_dict(source_dict, target_dict)
     assert source_dict == {
         'source': 'source',
@@ -39,22 +44,7 @@ def test_update_nested_dict():
 
 def test_update_nested_dict2():
     settings_ = _settings.Settings()
-    source_dict = {
-        'source': 'source',
-        'shared': 'source',
-        'sub': {
-            'source': 'source',
-            'shared': 'source',
-        }
-    }
-    target_dict = {
-        'target': 'target',
-        'shared': 'target',
-        'sub': {
-            'target': 'target',
-            'shared': 'target',
-        }
-    }
+    source_dict, target_dict = _get_dicts()
     settings_.update(source_dict)
     settings_.update(target_dict)
     assert settings_.data == {
