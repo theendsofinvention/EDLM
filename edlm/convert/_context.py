@@ -109,7 +109,7 @@ class Context:
     images_used: set = _Val(set)
     images_unused: set = _Val(set)
 
-    latex_refs: _Val(list)
+    latex_refs: list = _Val(list)
 
     includes: list = _Val(list)
     unprocessed_includes: list = _Val(list)
