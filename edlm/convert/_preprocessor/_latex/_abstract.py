@@ -19,58 +19,23 @@ $if(applies)$
         \begin{{center}}
             \begin{{tabular}}{{ r l }}
 
-                {{{_COLOR}APPLIES TO:}}
-                & {_PARBOX}{{{_APPLIES}}} \\
+                {{{_COLOR}APPLIES TO:}} & {_PARBOX}{{{_APPLIES}}} \\ {_SPACING} \\
 
-                {_SPACING} \\
+                $if(type)$ {{{_COLOR}TYPE:}} & {_PARBOX}{{\textbf{{$type$}}}} \\ {_SPACING} \\ $endif$
 
-                $if(type)$
-                {{{_COLOR}TYPE:}}
-                & {_PARBOX}{{\textbf{{$type$}}}} \\
+                $if(version)$ {{{_COLOR}VERSION:}} & {_PARBOX}{{$version$}} \\ {_SPACING} \\ $endif$
 
-                {_SPACING} \\
+                $if(audience)$ {{{_COLOR}INTENDED AUDIENCE:}} & {_PARBOX}{{$audience$}} \\ {_SPACING} \\ $endif$
+
+                $if(status)$ {{{_COLOR}STATUS:}} & {_PARBOX}{{$status$}} \\ {_SPACING} \\ $endif$
+
+                $if(published_date)$ {{{_COLOR}PUBLISHED DATE:}} & {_PARBOX}{{$published_date$}} \\ {_SPACING} \\
                 $endif$
 
-                $if(version)$
-                {{{_COLOR}VERSION:}}
-                & {_PARBOX}{{$version$}} \\
-
-                {_SPACING} \\
+                $if(responsible)$ {{{_COLOR}DOCUMENT RESPONSIBLE:}} & {_PARBOX}{{$responsible$}} \\ {_SPACING} \\
                 $endif$
 
-                $if(audience)$
-                {{{_COLOR}INTENDED AUDIENCE:}}
-                & {_PARBOX}{{$audience$}} \\
-
-                {_SPACING} \\
-                $endif$
-
-                $if(status)$
-                {{{_COLOR}STATUS:}}
-                & {_PARBOX}{{$status$}} \\
-
-                {_SPACING} \\
-                $endif$
-
-                $if(published_date)$
-                {{{_COLOR}PUBLISHED DATE:}}
-                & {_PARBOX}{{$published_date$}} \\
-
-                {_SPACING} \\
-                $endif$
-
-                $if(responsible)$
-                {{{_COLOR}DOCUMENT RESPONSIBLE:}}
-                & {_PARBOX}{{$responsible$}} \\
-
-                {_SPACING} \\
-                $endif$
-
-                $if(summary_of_changes)$
-                {{{_COLOR}SUMMARY OF CHANGES:}}
-                & {_PARBOX}{{{_CHANGES}}} \\
-
-                {_SPACING} \\
+                $if(summary_of_changes)$ {{{_COLOR}SUMMARY OF CHANGES:}} & {_PARBOX}{{{_CHANGES}}} \\ {_SPACING} \\
                 $endif$
 
             \end{{tabular}}
