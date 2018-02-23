@@ -3,7 +3,6 @@
 Gathers settings
 """
 
-import collections
 from pathlib import Path
 
 import elib
@@ -11,8 +10,7 @@ import yaml
 
 from ._context import Context
 from ._exc import ConvertError
-
-from._settings import Settings
+from ._settings import Settings
 
 
 def get_settings(ctx: Context):

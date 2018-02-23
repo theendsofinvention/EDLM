@@ -1,8 +1,11 @@
 # coding=utf-8
+"""
+Processes Latex template
+"""
 import elib
-from jinja2 import BaseLoader, TemplateNotFound, Environment
+from jinja2 import BaseLoader, Environment, TemplateNotFound
 
-from convert import Context, ConvertError
+from ... import Context
 
 
 class TexTemplateLoader(BaseLoader):

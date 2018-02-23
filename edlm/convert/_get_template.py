@@ -5,7 +5,7 @@ Get templates folder
 
 from pathlib import Path
 
-from . import Context, ConvertError
+from . import Context
 
 DEFAULT_TEMPLATE = r"""
 % !TeX program    = pdflatex
