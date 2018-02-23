@@ -8,14 +8,14 @@ TITLE_PAGE = r"""
 \thispagestyle{empty}
 
 \begin{center}
-    \vspace*{\fill}
+    \vspace*{2em}
 
     \begin{figure}[h]
       \centering
       \includegraphics[height=6cm]{logo132.png}
     \end{figure}
 
-    \vspace{2cm}
+    \vspace{2em}
 
     \noindent\rule{\textwidth}{0.4pt}
 
@@ -24,6 +24,8 @@ TITLE_PAGE = r"""
     \noindent\rule{\textwidth}{0.4pt}
 
     $subtitle$
+
+    \vfill
 
     $if(title_pictures)$
         \begin{figure}[h]
