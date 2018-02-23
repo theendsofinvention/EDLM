@@ -4,14 +4,13 @@ from pathlib import Path
 
 import pytest
 
-from edlm.convert import Context, ConvertError
-from edlm.convert import _get_template as template
+from edlm.convert import Context, _get_template as template
 
 
 def test_no_template():
     ctx = Context()
     ctx.source_folder = Path('.').absolute()
-    with pytest.raises(ConvertError):
+    with pytest.raises(FileNotFoundError):
         template.get_template(ctx)
 
 

@@ -5,7 +5,7 @@ Get templates folder
 
 from pathlib import Path
 
-from . import Context, ConvertError
+from . import Context
 
 
 def get_template(ctx: Context):
@@ -24,7 +24,7 @@ def get_template(ctx: Context):
         if file.exists() and file.is_file():
             ctx.template_source = file
         if len(this_folder.parents) is 1:
-            raise ConvertError('no "template.tex" file found', ctx)
+            raise FileNotFoundError('no "template.tex" file found', ctx)
         this_folder = this_folder.parent
 
     ctx.info(f'using template file: {ctx.template_source}')

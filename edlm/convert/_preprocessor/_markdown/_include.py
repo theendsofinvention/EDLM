@@ -72,7 +72,7 @@ def process_includes(ctx: Context):
         inclusion.parent_folder = include
         if include.is_file():
             _process_local_include(ctx, inclusion)
-        elif include.is_dir():
+        elif include.is_dir():  # pragma: no branch
             _process_external_include(ctx, inclusion)
 
     _get_unprocessed_includes(ctx)

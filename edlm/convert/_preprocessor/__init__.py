@@ -4,4 +4,4 @@ Pre-processors
 """
 
 from ._markdown import process_markdown
-from ._tex_template import process_tex_template
+from ._latex import process_latex

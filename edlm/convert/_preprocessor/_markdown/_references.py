@@ -17,11 +17,14 @@ class Reference:
     Represents a reference in the document
     """
 
-    def __init__(self, raw_ref, abbrev):
+    def __init__(self, raw_ref: str, abbrev: str):
         self._abbrev = abbrev
         self._raw_ref = raw_ref
-        self._name = raw_ref.split(',')[0].lstrip().rstrip()
-        self._link = raw_ref.split(',')[1].lstrip().rstrip()
+        try:
+            self._name = raw_ref.split(',')[0].lstrip().rstrip()
+            self._link = raw_ref.split(',')[1].lstrip().rstrip()
+        except IndexError:
+            raise ValueError(f'reference badly formatted in "settings.yml": {abbrev}\n')
 
     @property
     def abbrev(self):

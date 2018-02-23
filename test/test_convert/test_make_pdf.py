@@ -71,7 +71,7 @@ def test_build_folder(paper_size):
     when(_make_pdf).get_index_file(...)
     when(_make_pdf).get_settings(...)
     when(_make_pdf).process_markdown(...)
-    when(_make_pdf).process_tex_template(...)
+    when(_make_pdf).process_latex(...)
 
     when(PANDOC).get_exe().thenReturn(pandoc)
     when(elib).run(...).thenReturn(('out', 0))

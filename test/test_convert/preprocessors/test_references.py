@@ -1,5 +1,7 @@
 # coding=utf-8
 
+import pytest
+
 from edlm.convert import Context, Settings
 from edlm.convert._preprocessor._markdown._references import Reference, process_references
 
@@ -72,3 +74,8 @@ def test_process_references_no_ref():
     
     This should be ref1 //ref1 again.
     """
+
+
+def test_badly_formatted_ref():
+    with pytest.raises(ValueError):
+        Reference('wrong ref', 'abbrev')
