@@ -8,6 +8,7 @@ from ._aliases import process_aliases
 from ._images import process_images
 from ._references import process_references
 from ._include import process_includes
+from ._hyperlinks import process_hyperlinks
 
 
 def process_markdown(ctx: Context):
@@ -19,3 +20,4 @@ def process_markdown(ctx: Context):
     process_images(ctx)
     process_references(ctx)
     process_includes(ctx)
+    process_hyperlinks(ctx)
