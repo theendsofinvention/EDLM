@@ -78,13 +78,13 @@ $endif$
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \hypersetup{
 $if(title)$
-            pdftitle=$title$,
+  pdftitle=$title$,
 $endif$
 $if(author-meta)$
-            pdfauthor=$author-meta$,
+  pdfauthor=$author-meta$,
 $endif$
-            pdfcreator=EDLM,
-            pdfproducer=EDLM,
+  pdfcreator=EDLM,
+  pdfproducer=EDLM,
 $if(subtitle)$
             pdfsubject=$subtitle$,
 $endif$
@@ -304,8 +304,8 @@ $endif$
 
 \usepackage{floatrow}
 \floatsetup[figure]{capposition=top}
-\setlength\LTleft{\fill} 
-\setlength\LTright {\fill} 
+\setlength\LTleft{\fill}
+\setlength\LTright {\fill}
 
 \begin{document}
 
@@ -443,7 +443,7 @@ $endif$
 %$endfor$
 
 $if(toc)$
-	\vspace*{5em}
+    \vspace*{5em}
     {
         \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
         \setcounter{tocdepth}{$toc-depth$}
@@ -457,15 +457,15 @@ $endif$
 
 %# This section includes references from the context
 %% if ctx.latex_refs|length > 0
-	\vspace*{5em}
-	\pdfbookmark[section]{List of references}{refs}
-	\section*{List of references}
-	\begin{itemize}
-	    %% for ref in ctx.latex_refs
-			\item \VAR{ref} \\
-		%% endfor
-	\end{itemize}
-	\newpage
+    \vspace*{5em}
+    \pdfbookmark[section]{List of references}{refs}
+    \section*{List of references}
+    \begin{itemize}
+        %% for ref in ctx.latex_refs
+            \item \VAR{ref} \\
+        %% endfor
+    \end{itemize}
+    \newpage
 %% endif
 
 \pagestyle{fancy}
@@ -513,7 +513,7 @@ $endfor$
 \clearpage
 
 \end{document}
-"""
+"""  # noqa
 
 
 def get_template(ctx: Context):
