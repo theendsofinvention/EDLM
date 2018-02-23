@@ -7,10 +7,23 @@ import collections
 
 import elib
 
+# noinspection SpellCheckingInspection
 DEFAULT = {
     'papersize': ['a4'],
     'aliases': dict(),
     'references': dict(),
+    'links': {
+        'breaklinks': 'true',
+        'bookmarks': 'true',
+        'bookmarksopen': 'true',
+        'linkcolor': "Grey",
+        'citecolor': "Grey",
+        'urlcolor': "Grey",
+        'anchorcolor': "Grey",
+        'filecolor': "Grey",
+        'menucolor': "Grey",
+        'runcolor': "Grey",
+    }
 }
 
 
@@ -49,6 +62,7 @@ class Settings:
     papersize: list = _Val(list)
     aliases: dict = _Val(dict)
     references: dict = _Val(dict)
+    links: dict = _Val(dict)
 
     def __init__(self):
         self.data = {}

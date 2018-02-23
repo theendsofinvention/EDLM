@@ -28,21 +28,6 @@ def _get_dicts():
 
 
 def test_update_nested_dict():
-    source_dict, target_dict = _get_dicts()
-    settings.update_nested_dict(source_dict, target_dict)
-    assert source_dict == {
-        'source': 'source',
-        'shared': 'target',
-        'target': 'target',
-        'sub': {
-            'source': 'source',
-            'shared': 'target',
-            'target': 'target',
-        }
-    }
-
-
-def test_update_nested_dict2():
     settings_ = _settings.Settings()
     source_dict, target_dict = _get_dicts()
     settings_.update(source_dict)
