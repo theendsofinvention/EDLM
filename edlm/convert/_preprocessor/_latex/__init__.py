@@ -1,13 +1,8 @@
 # coding=utf-8
-"""
-Processes Tex templates
-"""
-
 import elib
-from jinja2 import BaseLoader, Environment, TemplateNotFound
+from jinja2 import BaseLoader, TemplateNotFound, Environment
 
-from .._context import Context
-from .._exc import ConvertError
+from convert import Context, ConvertError
 
 
 class TexTemplateLoader(BaseLoader):
@@ -63,7 +58,7 @@ def _get_jinja_env(ctx: Context):
     )
 
 
-def process_tex_template(ctx: Context):
+def process_latex(ctx: Context):
     """
     Processes the Tex template
 
@@ -74,7 +69,8 @@ def process_tex_template(ctx: Context):
     try:
         elib.path.ensure_file(ctx.template_source)
     except FileNotFoundError:
-        raise ConvertError(f'LaTeX template not found: "{ctx.template_source}"', ctx)
+        ctx.error(f'LaTeX template not found: "{ctx.template_source}"')
+        raise
 
     jinja_env = _get_jinja_env(ctx)
 
@@ -86,4 +82,5 @@ def process_tex_template(ctx: Context):
         template = jinja_env.get_template(ctx.template_source.name)
         ctx.template_file.write_text(template.render(**locals()), encoding='utf8')
     except TemplateNotFound:
-        raise ConvertError('LaTeX template not found', ctx)
+        ctx.error(f'template not found: {ctx.template_source}')
+        raise
