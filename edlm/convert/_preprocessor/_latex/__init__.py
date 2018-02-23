@@ -84,9 +84,9 @@ def process_latex(ctx: Context):
     media_folders = [str(folder).replace('\\', '/') for folder in media_folders]
     media_folders = ''.join(f'{{{folder}/}}' for folder in media_folders)
     ctx.debug(f'adding media folders to template: {media_folders}')
-    empty_page = EMPTY_PAGE
-    abstract = ABSTRACT
-    title_page = TITLE_PAGE
+    empty_page = EMPTY_PAGE  # pylint: disable=unused-variable
+    abstract = ABSTRACT  # pylint: disable=unused-variable
+    title_page = TITLE_PAGE  # pylint: disable=unused-variable
     try:
         template = jinja_env.get_template(ctx.template_source.name)
         ctx.template_file.write_text(template.render(**locals()), encoding='utf8')

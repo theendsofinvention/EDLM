@@ -3,11 +3,11 @@
 Latex abstract
 """
 
-_parbox = r'\parbox[t]{10cm}'
-_color = r'\color{gray}'
-_changes = r'$for(summary_of_changes)$ $summary_of_changes$ \vspace{2mm} \\ $endfor$'
-_applies = r'$for(applies)$ \textbf{$applies$} \\ $endfor$'
-_spacing = r'\null'
+_PARBOX = r'\parbox[t]{10cm}'
+_COLOR = r'\color{gray}'
+_CHANGES = r'$for(summary_of_changes)$ $summary_of_changes$ \vspace{2mm} \\ $endfor$'
+_APPLIES = r'$for(applies)$ \textbf{$applies$} \\ $endfor$'
+_SPACING = r'\null'
 
 # noinspection SpellCheckingInspection
 ABSTRACT = rf"""
@@ -19,58 +19,58 @@ $if(applies)$
         \begin{{center}}
             \begin{{tabular}}{{ r l }}
 
-                {{{_color}APPLIES TO:}}
-                & {_parbox}{{{_applies}}} \\
+                {{{_COLOR}APPLIES TO:}}
+                & {_PARBOX}{{{_APPLIES}}} \\
 
-                {_spacing} \\
+                {_SPACING} \\
 
                 $if(type)$
-                {{{_color}TYPE:}}
-                & {_parbox}{{\textbf{{$type$}}}} \\
+                {{{_COLOR}TYPE:}}
+                & {_PARBOX}{{\textbf{{$type$}}}} \\
 
-                {_spacing} \\
+                {_SPACING} \\
                 $endif$
 
                 $if(version)$
-                {{{_color}VERSION:}}
-                & {_parbox}{{$version$}} \\
+                {{{_COLOR}VERSION:}}
+                & {_PARBOX}{{$version$}} \\
 
-                {_spacing} \\
+                {_SPACING} \\
                 $endif$
 
                 $if(audience)$
-                {{{_color}INTENDED AUDIENCE:}}
-                & {_parbox}{{$audience$}} \\
+                {{{_COLOR}INTENDED AUDIENCE:}}
+                & {_PARBOX}{{$audience$}} \\
 
-                {_spacing} \\
+                {_SPACING} \\
                 $endif$
 
                 $if(status)$
-                {{{_color}STATUS:}}
-                & {_parbox}{{$status$}} \\
+                {{{_COLOR}STATUS:}}
+                & {_PARBOX}{{$status$}} \\
 
-                {_spacing} \\
+                {_SPACING} \\
                 $endif$
 
                 $if(published_date)$
-                {{{_color}PUBLISHED DATE:}}
-                & {_parbox}{{$published_date$}} \\
+                {{{_COLOR}PUBLISHED DATE:}}
+                & {_PARBOX}{{$published_date$}} \\
 
-                {_spacing} \\
+                {_SPACING} \\
                 $endif$
 
                 $if(responsible)$
-                {{{_color}DOCUMENT RESPONSIBLE:}}
-                & {_parbox}{{$responsible$}} \\
+                {{{_COLOR}DOCUMENT RESPONSIBLE:}}
+                & {_PARBOX}{{$responsible$}} \\
 
-                {_spacing} \\
+                {_SPACING} \\
                 $endif$
 
                 $if(summary_of_changes)$
-                {{{_color}SUMMARY OF CHANGES:}}
-                & {_parbox}{{{_changes}}} \\
+                {{{_COLOR}SUMMARY OF CHANGES:}}
+                & {_PARBOX}{{{_CHANGES}}} \\
 
-                {_spacing} \\
+                {_SPACING} \\
                 $endif$
 
             \end{{tabular}}

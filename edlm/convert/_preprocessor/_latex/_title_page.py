@@ -43,4 +43,4 @@ TITLE_PAGE = r"""
     This work is licensed under a {\href{https://creativecommons.org/licenses/by-sa/3.0/}{Creative Commons Attribution-ShareAlike 3.0 Unported License}}.
 
 \end{center}
-"""
+"""  # noqa
