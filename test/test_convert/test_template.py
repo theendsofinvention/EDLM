@@ -2,15 +2,16 @@
 
 from pathlib import Path
 
-from edlm.convert import Context
-from edlm.convert import _get_template as template
+import pytest
+
+from edlm.convert import Context, _get_template as template
 
 
-def test_no_template(caplog):
+def test_no_template():
     ctx = Context()
     ctx.source_folder = Path('.').absolute()
-    template.get_template(ctx)
-    assert 'no template found, using default "template.tex"' in caplog.text
+    with pytest.raises(FileNotFoundError):
+        template.get_template(ctx)
 
 
 def test_simple_template():
