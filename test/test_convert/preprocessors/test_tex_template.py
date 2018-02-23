@@ -6,7 +6,7 @@ import pytest
 from jinja2 import Environment, TemplateNotFound
 from mockito import when
 
-import convert._preprocessor._latex as latex
+import edlm.convert._preprocessor._latex as latex
 from edlm.convert import Context
 
 
