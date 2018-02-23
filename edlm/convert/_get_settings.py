@@ -15,26 +15,6 @@ from ._exc import ConvertError
 from._settings import Settings
 
 
-def update_nested_dict(source_dict, updated_dict):
-    """
-    Updates a dictionary from another
-
-    Args:
-        source_dict: source dictionary (will be overwritten)
-        updated_dict: updated dictionary (will take precedence)
-
-    Returns: merged dictionary
-
-    """
-    for key, value in updated_dict.items():
-        if isinstance(value, collections.Mapping):
-            result = update_nested_dict(source_dict.get(key, {}), value)
-            source_dict[key] = result
-        else:
-            source_dict[key] = updated_dict[key]
-    return source_dict
-
-
 def get_settings(ctx: Context):
     """
     Gathers settings
