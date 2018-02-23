@@ -5,6 +5,9 @@ Processes Latex template
 import elib
 from jinja2 import BaseLoader, Environment, TemplateNotFound
 
+from ._abstract import ABSTRACT
+from ._empty_page import EMPTY_PAGE
+from ._title_page import TITLE_PAGE
 from ... import Context
 
 
@@ -81,6 +84,9 @@ def process_latex(ctx: Context):
     media_folders = [str(folder).replace('\\', '/') for folder in media_folders]
     media_folders = ''.join(f'{{{folder}/}}' for folder in media_folders)
     ctx.debug(f'adding media folders to template: {media_folders}')
+    empty_page = EMPTY_PAGE  # pylint: disable=unused-variable
+    abstract = ABSTRACT  # pylint: disable=unused-variable
+    title_page = TITLE_PAGE  # pylint: disable=unused-variable
     try:
         template = jinja_env.get_template(ctx.template_source.name)
         ctx.template_file.write_text(template.render(**locals()), encoding='utf8')
