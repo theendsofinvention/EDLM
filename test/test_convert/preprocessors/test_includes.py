@@ -1,9 +1,9 @@
 # coding=utf-8
 from pathlib import Path
 
+from edlm.convert._preprocessor._markdown._images import process_images
 from edlm.convert._preprocessor._markdown._include import Context, process_includes
 from edlm.convert._preprocessor._markdown._references import process_references
-from edlm.convert._preprocessor._markdown._images import process_images
 
 
 def test_no_include():
@@ -79,7 +79,6 @@ def test_include_images():
     assert not media3.name in ctx.images_used
 
 
-
 def test_include_external_images():
     ctx = Context()
     source_folder = Path('source').absolute()
@@ -106,4 +105,3 @@ def test_include_external_images():
     process_includes(ctx)
     assert ctx.markdown_text == f'![media1]({media1}){{width="Nonemm"}}\n\n' \
                                 f'![parent_media1]({parent_media1}){{width="Nonemm"}}'
-

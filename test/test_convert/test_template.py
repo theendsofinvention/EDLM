@@ -2,7 +2,8 @@
 
 from pathlib import Path
 
-from edlm.convert import Context, _get_template as template
+from edlm.convert import Context
+from edlm.convert import _get_template as template
 
 
 def test_no_template(caplog):
