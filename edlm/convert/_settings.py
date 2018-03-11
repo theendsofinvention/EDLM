@@ -12,17 +12,18 @@ DEFAULT = {
     'papersize': ['a4'],
     'aliases': dict(),
     'references': dict(),
+    'title': 'None',
     'links': {
         'breaklinks': 'true',
         'bookmarks': 'true',
         'bookmarksopen': 'true',
-        'linkcolor': "Grey",
-        'citecolor': "Grey",
-        'urlcolor': "Grey",
-        'anchorcolor': "Grey",
-        'filecolor': "Grey",
-        'menucolor': "Grey",
-        'runcolor': "Grey",
+        'linkcolor': 'Grey',
+        'citecolor': 'Grey',
+        'urlcolor': 'Grey',
+        'anchorcolor': 'Grey',
+        'filecolor': 'Grey',
+        'menucolor': 'Grey',
+        'runcolor': 'Grey',
     }
 }
 
@@ -63,6 +64,7 @@ class Settings:
     aliases: dict = _Val(dict)
     references: dict = _Val(dict)
     links: dict = _Val(dict)
+    title: str = _Val(str)
 
     def __init__(self):
         self.data = {}

@@ -80,8 +80,9 @@ def _build_folder(ctx: Context):
 
         ctx.template_file = Path(ctx.temp_dir, 'template.tex').absolute()
 
-        title = ctx.source_folder.name
+        title = ctx.settings.title or ctx.source_folder.name
         ctx.title = title
+        ctx.debug(f'document title: "{ctx.title}"')
 
         out_folder = elib.path.ensure_dir('.', must_exist=False, create=True)
         ctx.out_folder = out_folder
