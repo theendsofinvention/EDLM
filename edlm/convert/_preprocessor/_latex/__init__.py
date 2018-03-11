@@ -39,7 +39,7 @@ class TexTemplateLoader(BaseLoader):
         old state somewhere (for example in a closure).  If it returns `False`
         the template will be reloaded.
         """
-        self.ctx.debug(f'environment: {elib.pretty_format(environment)}')
+        self.ctx.debug(f'environment: {elib.pretty.pretty_format(environment)}')
         self.ctx.debug(f'template: {template}')
         if not self.ctx.template_source.exists():
             raise TemplateNotFound(str(self.ctx.template_source))

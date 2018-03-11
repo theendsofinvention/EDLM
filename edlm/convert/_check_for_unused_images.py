@@ -26,4 +26,4 @@ def check_for_unused_images(ctx):
                 unused_images.add(str(file.absolute()))
 
         if unused_images:
-            ctx.warning(f'unused files found:\n{elib.pretty_format(sorted(unused_images))}')
+            ctx.warning(f'unused files found:\n{elib.pretty.pretty_format(sorted(unused_images))}')

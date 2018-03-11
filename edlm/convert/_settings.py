@@ -99,4 +99,4 @@ class Settings:
         self.data = self._update_nested_dict(self.data, other_dict)
 
     def __repr__(self) -> str:
-        return "Settings:\n" + elib.pretty_format(self.data)
+        return "Settings:\n" + elib.pretty.pretty_format(self.data)

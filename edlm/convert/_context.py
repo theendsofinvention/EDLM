@@ -166,4 +166,4 @@ class Context:
             LOGGER.warning(f'"{self.source_folder}": {text}')
 
     def __repr__(self):  # pylint: disable=bad-continuation
-        return elib.pretty_format({k: v for k, v in self.data.items() if k not in self.skip_repr})
+        return elib.pretty.pretty_format({k: v for k, v in self.data.items() if k not in self.skip_repr})

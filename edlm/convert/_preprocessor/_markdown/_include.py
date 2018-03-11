@@ -77,4 +77,5 @@ def process_includes(ctx: Context):
 
     _get_unprocessed_includes(ctx)
     if ctx.unprocessed_includes:
-        ctx.warning(f'there are unprocessed "//include" directives:\n{elib.pretty_format(ctx.unprocessed_includes)}')
+        ctx.warning(f'there are unprocessed "//include" directives:\n'
+                    f'{elib.pretty.pretty_format(ctx.unprocessed_includes)}')

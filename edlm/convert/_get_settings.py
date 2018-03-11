@@ -42,8 +42,8 @@ def get_settings(ctx: Context):
             raise ConvertError(f'empty "settings.yml": {file.absolute()}', ctx)
         with open(file) as stream:
             these_settings = yaml.load(stream)
-            ctx.debug(f'content of "{file}": {elib.pretty_format(these_settings)}')
+            ctx.debug(f'content of "{file}": {elib.pretty.pretty_format(these_settings)}')
         ctx.settings.update(these_settings)
 
-    ctx.debug(f'settings files:\n{elib.pretty_format(ctx.settings_files)}')
-    ctx.debug(f'settings:\n{elib.pretty_format(ctx.settings)}')
+    ctx.debug(f'settings files:\n{elib.pretty.pretty_format(ctx.settings_files)}')
+    ctx.debug(f'settings:\n{elib.pretty.pretty_format(ctx.settings)}')

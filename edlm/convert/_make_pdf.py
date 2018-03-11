@@ -111,7 +111,7 @@ def _build_folder(ctx: Context):
 
             ctx.info(f'building format: {paper_size}')
 
-            ctx.debug(f'context:\n{elib.pretty_format(ctx.__repr__())}')
+            ctx.debug(f'context:\n{elib.pretty.pretty_format(ctx.__repr__())}')
 
             # noinspection SpellCheckingInspection
             pandoc_cmd = [
