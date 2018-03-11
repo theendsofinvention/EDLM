@@ -2,7 +2,6 @@
 
 from edlm.convert._settings import Settings
 
-
 BASE_DICT = {
     'title': 'title',
     'papersize': ['a3', 'a4'],
@@ -79,5 +78,3 @@ def test_simple_settings_update():
         'bookmarks': 'true',
         'anchorcolor': 'Black',
     }
-
-
