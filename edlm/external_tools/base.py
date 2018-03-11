@@ -68,7 +68,7 @@ class BaseExternalTool:
         self._version = None
 
     def __call__(self, cmd: str):
-        out, _ = elib.run(str(self.get_exe().absolute()) + ' ' + cmd, mute=True)
+        out, _ = elib.run.run(str(self.get_exe().absolute()) + ' ' + cmd, mute=True)
         return out
 
     def __check_values(self):
