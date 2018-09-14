@@ -7,14 +7,7 @@ import os
 import sys
 
 import pytest
-from click.testing import CliRunner
 from mockito import unstub
-
-
-@pytest.fixture()
-def runner():
-    runner_ = CliRunner()
-    yield runner_
 
 
 # noinspection PyUnusedLocal

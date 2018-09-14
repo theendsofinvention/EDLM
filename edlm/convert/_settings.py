@@ -2,10 +2,8 @@
 """
 Per-document settings
 """
-
 import collections
-
-import elib
+import pprint
 
 # noinspection SpellCheckingInspection
 DEFAULT = {
@@ -98,4 +96,4 @@ class Settings:
         self.data = self._update_nested_dict(self.data, other_dict)
 
     def __repr__(self) -> str:
-        return "Settings:\n" + elib.pretty_format(self.data)
+        return "Settings:\n" + pprint.pformat(self.data)

@@ -2,8 +2,9 @@
 """
 Etcher's Document Library Manager
 """
-from pathlib import Path
+# pylint: disable=invalid-name
 import warnings
+from pathlib import Path
 
 import elib
 from pkg_resources import DistributionNotFound, get_distribution
@@ -20,6 +21,7 @@ except DistributionNotFound:  # pragma: no cover
         with warnings.catch_warnings():
             warnings.simplefilter('ignore')
             from setuptools_scm import get_version
+
             __version__ = get_version()
     except (ImportError, ModuleNotFoundError):
         __version__ = 'not installed'

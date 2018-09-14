@@ -5,7 +5,6 @@ Gathers settings
 import pprint
 from pathlib import Path
 
-import elib
 import yaml
 
 from ._context import Context

@@ -3,12 +3,10 @@
 Global context
 """
 import copy
+import pprint
 from pathlib import Path
 
-import elib
-
 from edlm import LOGGER
-
 from ._settings import Settings
 
 DEFAULT = {
@@ -133,36 +131,36 @@ class Context:
         Convenient shortcut to main EDLM LOGGER
         """
         if self.index_file:
-            LOGGER.debug(f'"{self.index_file}": {text}')
+            LOGGER.debug('"%s": %s', self.index_file, text)
         else:
-            LOGGER.debug(f'"{self.source_folder}": {text}')
+            LOGGER.debug('"%s": %s', self.source_folder, text)
 
     def info(self, text):
         """
         Convenient shortcut to main EDLM LOGGER
         """
         if self.index_file:
-            LOGGER.info(f'"{self.index_file}": {text}')
+            LOGGER.info('"%s": %s', self.index_file, text)
         else:
-            LOGGER.info(f'"{self.source_folder}": {text}')
+            LOGGER.info('"%s": %s', self.source_folder, text)
 
     def error(self, text):
         """
         Convenient shortcut to main EDLM LOGGER
         """
         if self.index_file:
-            LOGGER.error(f'"{self.index_file}": {text}')
+            LOGGER.error('"%s": %s', self.index_file, text)
         else:
-            LOGGER.error(f'"{self.source_folder}": {text}')
+            LOGGER.error('"%s": %s', self.source_folder, text)
 
     def warning(self, text):
         """
         Convenient shortcut to main EDLM LOGGER
         """
         if self.index_file:
-            LOGGER.warning(f'"{self.index_file}": {text}')
+            LOGGER.warning('"%s": %s', self.index_file, text)
         else:
-            LOGGER.warning(f'"{self.source_folder}": {text}')
+            LOGGER.warning('"%s": %s', self.source_folder, text)
 
     def __repr__(self):  # pylint: disable=bad-continuation
-        return elib.pretty_format({k: v for k, v in self.data.items() if k not in self.skip_repr})
+        return pprint.pformat({k: v for k, v in self.data.items() if k not in self.skip_repr})

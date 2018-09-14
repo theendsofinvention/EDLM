@@ -2,7 +2,7 @@
 """
 Makes a PDF document from a source folder
 """
-
+import pprint
 import shutil
 import urllib.parse
 from pathlib import Path
@@ -12,7 +12,6 @@ import elib
 from edlm import LOGGER
 from edlm.convert import Context
 from edlm.external_tools import PANDOC
-
 from ._check_for_unused_images import check_for_unused_images
 from ._get_includes import get_includes
 from ._get_index import get_index_file
@@ -110,7 +109,7 @@ def _build_folder(ctx: Context):
 
             ctx.info(f'building format: {paper_size}')
 
-            ctx.debug(f'context:\n{elib.pretty_format(ctx.__repr__())}')
+            ctx.debug(f'context:\n{pprint.pformat(ctx.__repr__())}')
 
             # noinspection SpellCheckingInspection
             pandoc_cmd = [
@@ -155,7 +154,7 @@ def make_pdf(ctx: Context, source_folder: Path):
 
     source_folder = elib.path.ensure_dir(source_folder).absolute()
 
-    LOGGER.info(f'analyzing folder: "{source_folder}"')
+    LOGGER.info('analyzing folder: %s', source_folder)
 
     if _is_source_folder(source_folder):
         ctx.source_folder = source_folder

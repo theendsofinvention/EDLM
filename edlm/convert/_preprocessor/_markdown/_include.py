@@ -2,10 +2,8 @@
 """
 Replaces include directive with the actual markdown content
 """
-
+import pprint
 from pathlib import Path
-
-import elib
 
 from . import Context
 
@@ -77,4 +75,4 @@ def process_includes(ctx: Context):
 
     _get_unprocessed_includes(ctx)
     if ctx.unprocessed_includes:
-        ctx.warning(f'there are unprocessed "//include" directives:\n{elib.pretty_format(ctx.unprocessed_includes)}')
+        ctx.warning(f'there are unprocessed "//include" directives:\n{pprint.pformat(ctx.unprocessed_includes)}')

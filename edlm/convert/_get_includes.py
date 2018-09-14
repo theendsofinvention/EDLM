@@ -2,11 +2,9 @@
 """
 Gather the includes that are use throughout the document
 """
-
+import pprint
 import typing
 from pathlib import Path
-
-import elib
 
 from . import Context
 
@@ -48,4 +46,4 @@ def get_includes(ctx: Context):
     _process_own_includes(ctx)
     _process_external_includes(ctx)
     if ctx.includes:
-        ctx.info(f'includes:\n{elib.pretty_format(ctx.includes)}')
+        ctx.info(f'includes:\n{pprint.pformat(ctx.includes)}')

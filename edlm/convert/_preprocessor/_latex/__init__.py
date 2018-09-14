@@ -2,6 +2,8 @@
 """
 Processes Latex template
 """
+import pprint
+
 import elib
 from jinja2 import BaseLoader, Environment, TemplateNotFound
 
@@ -39,7 +41,7 @@ class TexTemplateLoader(BaseLoader):
         old state somewhere (for example in a closure).  If it returns `False`
         the template will be reloaded.
         """
-        self.ctx.debug(f'environment: {elib.pretty_format(environment)}')
+        self.ctx.debug(f'environment: {pprint.pformat(environment)}')
         self.ctx.debug(f'template: {template}')
         if not self.ctx.template_source.exists():
             raise TemplateNotFound(str(self.ctx.template_source))
@@ -84,9 +86,9 @@ def process_latex(ctx: Context):
     media_folders = [str(folder).replace('\\', '/') for folder in media_folders]
     media_folders = ''.join(f'{{{folder}/}}' for folder in media_folders)
     ctx.debug(f'adding media folders to template: {media_folders}')
-    empty_page = EMPTY_PAGE  # pylint: disable=unused-variable
-    abstract = ABSTRACT  # pylint: disable=unused-variable
-    title_page = TITLE_PAGE  # pylint: disable=unused-variable
+    empty_page = EMPTY_PAGE  # pylint: disable=possibly-unused-variable
+    abstract = ABSTRACT  # pylint: disable=possibly-unused-variable
+    title_page = TITLE_PAGE  # pylint: disable=possibly-unused-variable
     try:
         template = jinja_env.get_template(ctx.template_source.name)
         ctx.template_file.write_text(template.render(**locals()), encoding='utf8')
