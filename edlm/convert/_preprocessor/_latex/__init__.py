@@ -49,7 +49,7 @@ class TexTemplateLoader(BaseLoader):
 
 
 def _get_jinja_env(ctx: Context):
-    return Environment(
+    return Environment(  # nosec
         block_start_string=r'\BLOCK{',
         block_end_string=r'}',
         variable_start_string=r'\VAR{',

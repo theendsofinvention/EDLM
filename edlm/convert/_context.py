@@ -71,7 +71,6 @@ class _Val:
 
     # this is the new initializer:
     def __set_name__(self, owner, name):
-        assert owner
         self.name = name  # pylint: disable=attribute-defined-outside-init
 
 

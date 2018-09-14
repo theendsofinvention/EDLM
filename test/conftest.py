@@ -11,18 +11,6 @@ from click.testing import CliRunner
 from mockito import unstub
 
 
-@pytest.fixture(scope='session')
-def miktex_path():
-    yield os.path.abspath(
-        os.path.join(
-            os.path.dirname(
-                os.path.dirname(__file__)
-            ),
-            'miktex',
-        )
-    )
-
-
 @pytest.fixture()
 def runner():
     runner_ = CliRunner()

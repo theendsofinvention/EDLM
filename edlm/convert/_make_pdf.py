@@ -58,7 +58,6 @@ def _set_max_image_width(ctx: Context):
 
 def _remove_artifacts():
     for item in Path('.').iterdir():
-        assert isinstance(item, Path)
         if item.is_dir() and item.name.startswith('__TMP') or item.name.startswith('tex2pdf.'):
             shutil.rmtree(str(item.absolute()))
 

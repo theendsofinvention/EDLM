@@ -13,14 +13,12 @@ from . import Context
 
 def _gather_indices(folder: Path) -> typing.Iterator[Path]:
     for item in folder.iterdir():
-        assert isinstance(item, Path)
         if item.is_file() and not item.name == 'index.md' and item.name.endswith('.md'):
             yield item.absolute()
 
 
 def _gather_external_includes(ctx: Context) -> typing.Iterator[Path]:
     for item in ctx.source_folder.parent.iterdir():
-        assert isinstance(item, Path)
         if item.is_dir() and Path(item, 'index.md').exists():
             yield item.absolute()
 

@@ -15,7 +15,6 @@ from edlm.convert import Context
 
 def _hash_folder(folder: Path):
     for item in folder.iterdir():
-        assert isinstance(item, Path)
         if item.is_file() and item.suffix in ['.md', '.yml', '.tex']:
             yield item.read_bytes()
         elif item.is_dir():
@@ -33,7 +32,7 @@ def _iterate_over_data(ctx: Context):
 
 
 def _get_document_hash(ctx: Context) -> str:
-    hash_ = hashlib.sha1()
+    hash_ = hashlib.sha1()  # nosec
     for data in _iterate_over_data(ctx):
         hash_.update(data)
     return hash_.hexdigest()

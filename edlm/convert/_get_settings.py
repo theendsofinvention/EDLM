@@ -2,7 +2,7 @@
 """
 Gathers settings
 """
-
+import pprint
 from pathlib import Path
 
 import elib
@@ -41,9 +41,9 @@ def get_settings(ctx: Context):
         if not file.read_text(encoding='utf8'):
             raise ConvertError(f'empty "settings.yml": {file.absolute()}', ctx)
         with open(file) as stream:
-            these_settings = yaml.load(stream)
-            ctx.debug(f'content of "{file}": {elib.pretty_format(these_settings)}')
+            these_settings = yaml.safe_load(stream)
+            ctx.debug(f'content of "{file}": {pprint.pformat(these_settings)}')
         ctx.settings.update(these_settings)
 
-    ctx.debug(f'settings files:\n{elib.pretty_format(ctx.settings_files)}')
-    ctx.debug(f'settings:\n{elib.pretty_format(ctx.settings)}')
+    ctx.debug(f'settings files:\n{pprint.pformat(ctx.settings_files)}')
+    ctx.debug(f'settings:\n{pprint.pformat(ctx.settings)}')
