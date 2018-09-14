@@ -344,3 +344,4 @@ __pycache__
 .coverage*
 htmlcov
 .mypy_cache
+*.toml.example
