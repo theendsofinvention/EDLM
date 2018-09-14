@@ -3,6 +3,7 @@
 from pathlib import Path
 
 import elib
+import elib_run
 import pytest
 import pyunpack
 from mockito import mock, verify, verifyStubbedInvocationsAreUsed, when
@@ -69,7 +70,7 @@ def test_base_meaningful_init():
 
 
 def test_call():
-    when(elib).run('test some command', mute=True).thenReturn(('out', None))
+    when(elib_run).run('test some command', mute=True).thenReturn(('out', None))
     sub = Sub()
     exe = mock()
     when(exe).absolute().thenReturn('test')

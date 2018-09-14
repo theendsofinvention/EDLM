@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-import elib
+import elib_run
 import pytest
 from mockito import contains, patch, verify, when
 
@@ -18,11 +18,13 @@ def _mpm_file():
 
 @pytest.fixture(name='miktex')
 def _miktex():
+    # noinspection PyProtectedMember
     when(base.BaseExternalTool)._is_installed().thenReturn(True)
-    when(elib).run(contains('--version'), mute=True).thenReturn(('miktex version\ntext', 0))
+    when(elib_run).run(contains('--version'), mute=True).thenReturn(('miktex version\ntext', 0))
     miktex = MikTex()
     miktex.install_dir = '.'
     yield miktex
+    # noinspection PyProtectedMember
     verify(base.BaseExternalTool)._is_installed()
 
 

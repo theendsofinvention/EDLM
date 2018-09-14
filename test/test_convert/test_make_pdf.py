@@ -4,10 +4,11 @@ import typing
 from pathlib import Path
 
 import elib
-import elib._run
+import elib_run
 import pytest
 from mockito import verify, verifyStubbedInvocationsAreUsed, when
 
+# noinspection PyProtectedMember
 from edlm.convert import Context, _make_pdf
 from edlm.external_tools import PANDOC
 
@@ -74,7 +75,7 @@ def test_build_folder(paper_size):
     when(_make_pdf).process_latex(...)
 
     when(PANDOC).get_exe().thenReturn(pandoc)
-    when(elib).run(...).thenReturn(('out', 0))
+    when(elib_run).run(...).thenReturn(('out', 0))
     _make_pdf._build_folder(ctx)
     verifyStubbedInvocationsAreUsed()
     assert ctx.title == 'test'
