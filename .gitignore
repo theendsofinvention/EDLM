@@ -345,3 +345,4 @@ __pycache__
 htmlcov
 .mypy_cache
 *.toml.example
+.venv
