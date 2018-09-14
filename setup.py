@@ -3,13 +3,28 @@
 EDLM setup file
 """
 
-from pip.req import parse_requirements
 from setuptools import find_packages, setup
 
-requirements = [str(r.req) for r in
-                parse_requirements('requirements.txt', session=False)]
-test_requirements = [str(r.req) for r in
-                     parse_requirements('requirements-dev.txt', session=False)]
+requirements = [
+    'certifi',
+    'chardet',
+    'click-log',
+    'click',
+    'idna',
+    'jinja2',
+    'markupsafe',
+    'requests',
+    'urllib3',
+    'elib',
+    'tqdm',
+    'pyunpack',
+    'patool',
+    'pdfrw',
+    'elib-run',
+]
+test_requirements = [
+    'epab',
+]
 
 CLASSIFIERS = filter(None, map(str.strip,
                                """
