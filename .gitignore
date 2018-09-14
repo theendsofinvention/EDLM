@@ -346,3 +346,5 @@ htmlcov
 .mypy_cache
 *.toml.example
 .venv
+packages_EDLM.png
+classes_EDLM.png
