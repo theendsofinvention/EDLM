@@ -338,3 +338,9 @@ tex2pdf*
 /bak_miktex/
 /bak_pandoc/
 /doitall.cmd
+/dist/
+/build/
+__pycache__
+.coverage*
+htmlcov
+.mypy_cache
