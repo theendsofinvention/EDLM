@@ -4,6 +4,7 @@ Base class for external tools
 """
 import abc
 import functools
+import logging
 import os
 import sys
 import typing
@@ -13,9 +14,7 @@ import elib
 import elib_run
 import pyunpack
 
-from edlm import LOGGER
-
-LOGGER = LOGGER
+LOGGER = logging.getLogger('EDLM')
 
 StrOrPath = typing.Union[str, Path]
 

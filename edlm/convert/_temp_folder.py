@@ -3,13 +3,15 @@
 Manages temporary folder
 """
 
+import logging
 import shutil
 import tempfile
 
 import elib
 
-from edlm import LOGGER
 from edlm.convert._context import Context
+
+LOGGER = logging.getLogger('EDLM')
 
 
 class TempDir:

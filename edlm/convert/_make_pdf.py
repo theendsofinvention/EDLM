@@ -8,8 +8,7 @@ import urllib.parse
 from pathlib import Path
 
 import elib
-
-from edlm import LOGGER
+import logging
 from edlm.convert._context import Context
 from edlm.convert._check_for_unused_images import check_for_unused_images
 from edlm.convert._get_includes import get_includes
@@ -22,6 +21,8 @@ from edlm.convert._pdf_info import add_metadata_to_pdf, skip_file
 from edlm.convert._preprocessor import process_latex, process_markdown
 from edlm.convert._temp_folder import TempDir
 from edlm.external_tools import PANDOC
+
+LOGGER = logging.getLogger('EDLM')
 
 WIDTH_MODIFIER = 0.8
 

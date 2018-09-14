@@ -3,11 +3,13 @@
 Global context
 """
 import copy
+import logging
 import pprint
 from pathlib import Path
 
-from edlm import LOGGER
-from ._settings import Settings
+from edlm.convert._settings import Settings
+
+LOGGER = logging.getLogger('EDLM')
 
 DEFAULT = {
     'source_folder': None,

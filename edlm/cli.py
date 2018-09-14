@@ -2,14 +2,17 @@
 """
 Command line interface
 """
-
+import logging
 import click
 import elib
 
-from edlm import LOGGER, __version__
+from edlm import __version__
 from edlm.config import CFG
 from edlm.convert import Context, make_pdf
 from edlm.external_tools import MIKTEX, PANDOC
+
+
+LOGGER = logging.getLogger('EDLM')
 
 
 @click.group()
