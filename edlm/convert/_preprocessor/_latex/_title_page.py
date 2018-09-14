@@ -12,7 +12,7 @@ TITLE_PAGE = r"""
 
     \begin{figure}[h]
       \centering
-      \includegraphics[height=6cm]{logo132.png}
+      \includegraphics[height=6cm]{logo57th.png}
     \end{figure}
 
     \vspace{2em}
