@@ -5,7 +5,7 @@ Replaces include directive with the actual markdown content
 import pprint
 from pathlib import Path
 
-from . import Context
+from edlm.convert._context import Context
 
 
 class Inclusion:

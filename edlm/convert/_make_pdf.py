@@ -10,7 +10,7 @@ from pathlib import Path
 import elib
 
 from edlm import LOGGER
-from edlm.convert import Context
+from edlm.convert._context import Context
 from edlm.convert._check_for_unused_images import check_for_unused_images
 from edlm.convert._get_includes import get_includes
 from edlm.convert._get_index import get_index_file

@@ -3,7 +3,7 @@
 Processes aliases
 """
 
-from . import Context
+from edlm.convert._context import Context
 
 
 def process_aliases(ctx: Context):

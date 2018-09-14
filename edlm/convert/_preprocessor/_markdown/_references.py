@@ -3,7 +3,7 @@
 Processes references in the Markdown text
 """
 
-from . import Context
+from edlm.convert._context import Context
 
 REFS_TEMPLATE = r"""
 \newpage
