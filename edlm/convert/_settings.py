@@ -56,10 +56,10 @@ class Settings:
     """
     Per-document settings
     """
-    papersize: list = _Val(list)
-    aliases: dict = _Val(dict)
-    references: dict = _Val(dict)
-    links: dict = _Val(dict)
+    papersize = _Val(list)
+    aliases = _Val(dict)
+    references = _Val(dict)
+    links = _Val(dict)
 
     def __init__(self):
         self.data = {}

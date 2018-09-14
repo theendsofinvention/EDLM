@@ -26,28 +26,43 @@ class MikTex(BaseExternalTool):
     """
     Miktex external tool
     """
-    url = r'https://www.dropbox.com/s/ivyb6s5itb5len2/miktex.7z?dl=1'
-    # noinspection SpellCheckingInspection
-    hash = 'fc20affd161264e7c5b816ddc85955cd'
-    default_archive = Path(HERE, 'miktex.7z').absolute()
-    default_install = Path(HERE, 'miktex').absolute()
-    expected_version = '2.9.6354'
+
+    @property
+    def url(self) -> str:
+        """Download URL"""
+        return r'https://www.dropbox.com/s/ivyb6s5itb5len2/miktex.7z?dl=1'
+
+    @property
+    def hash(self) -> str:
+        """Expected archive hash"""
+        return 'fc20affd161264e7c5b816ddc85955cd'
+
+    @property
+    def default_archive(self) -> Path:
+        """Expected tool version"""
+        return Path(HERE, 'miktex.7z').absolute()
+
+    @property
+    def default_install(self) -> Path:
+        """Default installation location"""
+        return Path(HERE, 'miktex').absolute()
+
+    @property
+    def expected_version(self) -> str:
+        """Expected tool version"""
+        return '2.9.6354'
 
     def get_version(self) -> str:
         """
         Returns: Miktex version
         """
-        if self._version is None:
-            self._version = self('--version').split('\n')[0].split(' ')[1]
-        return self._version
+        return self('--version').split('\n')[0].split(' ')[1]
 
     def get_exe(self) -> Path:
         """
         Returns: Miktex executable
         """
-        if self._exe is None:
-            self._exe = Path(self.install_dir, 'miktex/texmfs/install/miktex/bin/pdflatex.exe').absolute()
-        return self._exe
+        return Path(self.install_dir, 'miktex/texmfs/install/miktex/bin/pdflatex.exe').absolute()
 
     @staticmethod
     def _create_new_mpm_settings_file(mpm_config_file):

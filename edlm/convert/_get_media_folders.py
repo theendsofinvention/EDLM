@@ -6,7 +6,7 @@ import pprint
 
 import elib
 
-from ._context import Context
+from edlm.convert._context import Context
 
 
 def get_media_folders(ctx: Context):

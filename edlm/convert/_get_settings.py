@@ -7,9 +7,9 @@ from pathlib import Path
 
 import yaml
 
-from ._context import Context
-from ._exc import ConvertError
-from ._settings import Settings
+from edlm.convert._context import Context
+from edlm.convert._exc import ConvertError
+from edlm.convert._settings import Settings
 
 
 def get_settings(ctx: Context):

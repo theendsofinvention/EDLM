@@ -3,14 +3,22 @@
 Processes Latex template
 """
 import pprint
+from pathlib import Path
 
 import elib
 from jinja2 import BaseLoader, Environment, TemplateNotFound
 
-from ._abstract import ABSTRACT
-from ._empty_page import EMPTY_PAGE
-from ._title_page import TITLE_PAGE
-from ... import Context
+from edlm.convert._context import Context
+from edlm.convert._preprocessor._latex._abstract import ABSTRACT
+from edlm.convert._preprocessor._latex._empty_page import EMPTY_PAGE
+from edlm.convert._preprocessor._latex._title_page import TITLE_PAGE
+
+
+def _get_template_source(ctx: Context) -> Path:
+    if ctx.template_source:
+        return ctx.template_source
+
+    raise ValueError('ctx.template_source is undefined')
 
 
 class TexTemplateLoader(BaseLoader):
@@ -18,7 +26,7 @@ class TexTemplateLoader(BaseLoader):
     Loads the template for Jinja2
     """
 
-    def __init__(self, ctx: Context):
+    def __init__(self, ctx: Context) -> None:
         self.ctx = ctx
 
     def get_source(self, environment, template):
@@ -82,16 +90,17 @@ def process_latex(ctx: Context):
 
     jinja_env = _get_jinja_env(ctx)
 
-    media_folders = [folder.absolute() for folder in ctx.media_folders]
-    media_folders = [str(folder).replace('\\', '/') for folder in media_folders]
-    media_folders = ''.join(f'{{{folder}/}}' for folder in media_folders)
+    _media_folders_raw = [folder.absolute() for folder in ctx.media_folders]
+    _media_folders_sanitized = [str(folder).replace('\\', '/') for folder in _media_folders_raw]
+    media_folders = ''.join(f'{{{folder}/}}' for folder in _media_folders_sanitized)
     ctx.debug(f'adding media folders to template: {media_folders}')
     empty_page = EMPTY_PAGE  # pylint: disable=possibly-unused-variable
     abstract = ABSTRACT  # pylint: disable=possibly-unused-variable
     title_page = TITLE_PAGE  # pylint: disable=possibly-unused-variable
+    template_source = _get_template_source(ctx)
     try:
-        template = jinja_env.get_template(ctx.template_source.name)
+        template = jinja_env.get_template(template_source.name)
         ctx.template_file.write_text(template.render(**locals()), encoding='utf8')
     except TemplateNotFound:
-        ctx.error(f'template not found: {ctx.template_source}')
+        ctx.error(f'template not found: {template_source.absolute()}')
         raise

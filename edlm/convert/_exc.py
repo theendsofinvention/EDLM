@@ -3,7 +3,7 @@
 Convert package exceptions
 """
 
-from ._context import Context
+from edlm.convert._context import Context
 
 
 class ConvertError(Exception):
@@ -11,6 +11,6 @@ class ConvertError(Exception):
     Raised when an error happen during the conversion
     """
 
-    def __init__(self, message, ctx: Context):
+    def __init__(self, message, ctx: Context) -> None:
         super(ConvertError, self).__init__(f'"{ctx.source_folder}": conversion error: {message}')
         self.ctx = ctx

@@ -3,12 +3,12 @@
 Processing of Markdown content
 """
 
-from ._aliases import process_aliases
-from ._hyperlinks import process_hyperlinks
-from ._images import process_images
-from ._include import process_includes
-from ._references import process_references
-from ..._context import Context
+from edlm.convert._context import Context
+from edlm.convert._preprocessor._markdown._aliases import process_aliases
+from edlm.convert._preprocessor._markdown._hyperlinks import process_hyperlinks
+from edlm.convert._preprocessor._markdown._images import process_images
+from edlm.convert._preprocessor._markdown._include import process_includes
+from edlm.convert._preprocessor._markdown._references import process_references
 
 
 def process_markdown(ctx: Context):

@@ -76,40 +76,40 @@ class Context:
     """
     Global context
     """
-    source_folder: Path = _Val(Path)
-    paper_size: str = _Val(str)
-    title: str = _Val(str)
-    markdown_text: str = _Val(str)
+    source_folder = _Val(Path)
+    paper_size = _Val(str)
+    title = _Val(str)
+    markdown_text = _Val(str)
 
-    regen: bool = _Val(bool)  # flake8: noqa
+    regen = _Val(bool)  # flake8: noqa
 
-    temp_dir: Path = _Val(Path)
-    keep_temp_dir: bool = _Val(bool)
-    media_folders: list = _Val(list)
-    index_file: Path = _Val(Path)
-    out_folder: Path = _Val(Path)
-    out_file: Path = _Val(Path)
-    source_file: Path = _Val(Path)
+    temp_dir = _Val(Path)
+    keep_temp_dir = _Val(bool)
+    media_folders = _Val(list)
+    index_file = _Val(Path)
+    out_folder = _Val(Path)
+    out_file = _Val(Path)
+    source_file = _Val(Path)
 
-    settings: Settings = _Val(Settings)
-    settings_files: list = _Val(list)
+    settings = _Val(Settings)
+    settings_files = _Val(list)
 
-    template_source: Path = _Val(Path)
-    template_file: Path = _Val(Path)
+    template_source = _Val(Path)
+    template_file = _Val(Path)
 
-    image_caption: str = _Val(str)
-    image_current: str = _Val(str)
-    image_extras: str = _Val(str)
-    image_max_width: int = _Val(int)
-    image_width: int = _Val(int)
-    image_width_str: str = _Val(str)
-    images_used: set = _Val(set)
-    images_unused: set = _Val(set)
+    image_caption = _Val(str)
+    image_current = _Val(str)
+    image_extras = _Val(str)
+    image_max_width = _Val(int)
+    image_width = _Val(int)
+    image_width_str = _Val(str)
+    images_used = _Val(set)
+    images_unused = _Val(set)
 
-    latex_refs: list = _Val(list)
+    latex_refs = _Val(list)
 
-    includes: list = _Val(list)
-    unprocessed_includes: list = _Val(list)
+    includes = _Val(list)
+    unprocessed_includes = _Val(list)
 
     def __init__(self):
         self.data = {}

@@ -17,7 +17,7 @@ class Reference:
     Represents a reference in the document
     """
 
-    def __init__(self, raw_ref: str, abbrev: str):
+    def __init__(self, raw_ref: str, abbrev: str) -> None:
         self._abbrev = abbrev
         self._raw_ref = raw_ref
         try:
@@ -27,33 +27,33 @@ class Reference:
             raise ValueError(f'reference badly formatted in "settings.yml": {abbrev}\n')
 
     @property
-    def abbrev(self):
+    def abbrev(self) -> str:
         """
         Returns: reference's abbreviation
         """
         return self._abbrev
 
     @property
-    def name(self):
+    def name(self) -> str:
         """
         Returns: reference's name
         """
         return self._name
 
     @property
-    def link(self):
+    def link(self) -> str:
         """
         Returns: reference's link
         """
         return self._link
 
-    def to_latex(self):
+    def to_latex(self) -> str:
         """
         Returns: convert reference to Latex text
         """
         return f'\\href{{{self.link}}}{{{self.name}}}'
 
-    def to_markdown(self):
+    def to_markdown(self) -> str:
         """
         Returns: convert reference to Markdown text
         """
@@ -62,7 +62,7 @@ class Reference:
     def __hash__(self):
         return hash(self.abbrev)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.name
 
 

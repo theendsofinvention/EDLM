@@ -10,7 +10,7 @@ import pdfrw
 from pdfrw.objects import pdfstring
 
 from edlm import __version__
-from edlm.convert import Context
+from edlm.convert._context import Context
 
 
 def _hash_folder(folder: Path):

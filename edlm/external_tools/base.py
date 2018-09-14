@@ -2,6 +2,7 @@
 """
 Base class for external tools
 """
+import abc
 import functools
 import os
 import sys
@@ -45,13 +46,33 @@ class BaseExternalTool:
     """
     Base class for external tools
     """
-    url = None
-    hash = None
-    default_archive = None
-    default_install = None
-    expected_version = None
 
-    def __init__(self, archive: StrOrPath = None, install_dir: StrOrPath = None):
+    @property
+    @abc.abstractmethod
+    def url(self) -> str:
+        """Download URL"""
+
+    @property
+    @abc.abstractmethod
+    def hash(self) -> str:
+        """Expected archive hash"""
+
+    @property
+    @abc.abstractmethod
+    def default_install(self) -> Path:
+        """Default installation location"""
+
+    @property
+    @abc.abstractmethod
+    def default_archive(self) -> Path:
+        """Default archive name"""
+
+    @property
+    @abc.abstractmethod
+    def expected_version(self) -> str:
+        """Expected tool version"""
+
+    def __init__(self, archive: StrOrPath = None, install_dir: StrOrPath = None) -> None:
         self.__check_values()
 
         if archive is None:

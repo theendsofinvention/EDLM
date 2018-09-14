@@ -9,7 +9,7 @@ import tempfile
 import elib
 
 from edlm import LOGGER
-from ._context import Context
+from edlm.convert._context import Context
 
 
 class TempDir:
@@ -17,7 +17,7 @@ class TempDir:
     Manages temporary folder
     """
 
-    def __init__(self, ctx: Context):
+    def __init__(self, ctx: Context) -> None:
         self.ctx = ctx
         self.path = elib.path.ensure_dir(tempfile.mkdtemp(dir='.', prefix='__TMP')).absolute()
 

@@ -6,7 +6,7 @@ import pprint
 import typing
 from pathlib import Path
 
-from . import Context
+from edlm.convert._context import Context
 
 
 def _gather_indices(folder: Path) -> typing.Iterator[Path]:

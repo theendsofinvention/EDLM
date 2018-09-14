@@ -53,15 +53,13 @@ edlm=edlm.cli:cli
 '''
 
 setup(
-    name='edlm',
-    package_dir={'edlm': 'edlm'},
+    name='EDLM',
     use_scm_version=True,
     install_requires=requirements,
     tests_require=test_requirements,
     entry_points=entry_points,
     setup_requires=['setuptools_scm'],
-    test_suite='pytest',
-    packages=find_packages('.'),
+    packages=find_packages(),
     python_requires='>=3.6',
     license='MIT',
     classifiers=CLASSIFIERS,

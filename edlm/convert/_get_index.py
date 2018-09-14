@@ -5,7 +5,7 @@ Gathers "index.md" file
 
 import elib
 
-from ._context import Context
+from edlm.convert._context import Context
 
 
 def get_index_file(ctx: Context):

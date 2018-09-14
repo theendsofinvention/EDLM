@@ -3,7 +3,7 @@
 Conversion operations
 """
 
-from ._context import Context
-from ._exc import ConvertError
-from ._make_pdf import make_pdf
-from ._settings import Settings
+from edlm.convert._context import Context
+from edlm.convert._exc import ConvertError
+from edlm.convert._make_pdf import make_pdf
+from edlm.convert._settings import Settings
