@@ -49,4 +49,8 @@ class Pandoc(BaseExternalTool):
         """
         Returns: Pandoc version
         """
-        return self('--version').split('\n')[0].split(' ')[1]
+        version_str = self('--version')
+        try:
+            return version_str.split('\n')[0].split(' ')[1]
+        except IndexError:
+            print(version_str)
