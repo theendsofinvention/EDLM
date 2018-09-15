@@ -28,6 +28,9 @@ def _setup_logging():
     LOGGER.setLevel(logging.DEBUG)
     LOGGER.addHandler(_file_handler)
     LOGGER.addHandler(_console_handler)
+    elib_run_logger = logging.getLogger('elib_run')
+    elib_run_logger.setLevel(logging.INFO)
+    elib_run_logger.addHandler(_console_handler)
 
 
 LOGGER = logging.getLogger('EDLM')
