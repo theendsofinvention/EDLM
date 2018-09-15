@@ -3,8 +3,9 @@
 Command line interface
 """
 import logging
+import sys
+
 import click
-import elib
 
 from edlm import __version__
 from edlm.config import CFG
@@ -12,21 +13,39 @@ from edlm.convert import Context, make_pdf
 from edlm.external_tools import MIKTEX, PANDOC
 
 
+def _setup_logging():
+    format_str = '%(relativeCreated)10d ms ' \
+                 '%(levelname)8s ' \
+                 '[%(pathname)s@%(lineno)d %(funcName)s]: ' \
+                 '%(message)s'
+    formatter = logging.Formatter(format_str)
+    _console_handler = logging.StreamHandler(sys.stdout)
+    _console_handler.setFormatter(formatter)
+    _console_handler.setLevel(logging.DEBUG)
+    _file_handler = logging.FileHandler('edlm.log', mode='w', encoding='utf8')
+    _file_handler.setFormatter(formatter)
+    _file_handler.setLevel(logging.DEBUG)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(_file_handler)
+    LOGGER.addHandler(_console_handler)
+
+
 LOGGER = logging.getLogger('EDLM')
 
 
 @click.group()
 @click.version_option(version=__version__)
-@click.option('--debug', default=False, help='Outputs DEBUG message on console', is_flag=True)
+@click.option('--debug', '-d', default=False, help='Outputs DEBUG message on console', is_flag=True)
 def cli(debug):
     """
     Command line interface
     """
+    _setup_logging()
     debug = debug or CFG.debug
-    if debug:
-        elib.custom_logging.set_handler_level('EDLM', 'ch', 'debug')
-    else:
-        elib.custom_logging.set_handler_level('EDLM', 'ch', 'info')
+    handlers = (handler for handler in LOGGER.handlers if not isinstance(handler, logging.FileHandler))
+    if not debug:
+        for handler in handlers:
+            handler.setLevel(logging.INFO)
 
     LOGGER.info(__version__)
 
