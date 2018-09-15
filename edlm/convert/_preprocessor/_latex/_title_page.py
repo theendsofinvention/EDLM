@@ -16,7 +16,7 @@ TITLE_PAGE = rf"""
 \begin{{minipage}}[t]{{0.4\textwidth}}
     \begin{{flushright}}
         \textit{{\textbf{{VIRTUAL 57\textsuperscript{{th}} WING}}}} \\
-        \textit{{\textbf{{ $qualifier_long$ }}}} \\
+        \textit{{\textbf{{ $qualifier$ }}}} \\
         \vspace*{{1em}}
         \textit{{\textbf{{ $published_date$ }}}} \\
         \vspace*{{1em}}
