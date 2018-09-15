@@ -95,7 +95,7 @@ def process_latex(ctx: Context):
     media_folders = ''.join(f'{{{folder}/}}' for folder in _media_folders_sanitized)
     ctx.debug(f'adding media folders to template: {media_folders}')
     empty_page = EMPTY_PAGE  # pylint: disable=possibly-unused-variable
-    abstract = ABSTRACT  # pylint: disable=possibly-unused-variable
+    # abstract = ABSTRACT  # pylint: disable=possibly-unused-variable
     title_page = TITLE_PAGE  # pylint: disable=possibly-unused-variable
     template_source = _get_template_source(ctx)
     try:
