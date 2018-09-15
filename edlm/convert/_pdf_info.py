@@ -23,6 +23,9 @@ def _hash_folder(folder: Path):
 
 def _iterate_over_data(ctx: Context):
     yield from _hash_folder(ctx.source_folder)
+    yield ctx.template_source.read_bytes()
+    for file in ctx.settings_files:
+        yield file.read_bytes()
     for media_folder in ctx.media_folders:
         for file in media_folder.iterdir():
             yield file.read_bytes()
