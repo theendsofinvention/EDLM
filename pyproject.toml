@@ -169,13 +169,15 @@ package_name = "EDLM"
 # value type: string
 # This configuration is optional and comes with a default setting
 # default: 
-# entry_point = 
+entry_point = 'edlm/__main__.py'
 
 # PyInstaller data-files list
 # value type: List of strings
 # This configuration is optional and comes with a default setting
 # default: []
-# data_files = 
+data_files = [
+    "edlm/vendor/7za.exe;edlm/vendor",
+]
 
 
 [tool.epab.doc]
