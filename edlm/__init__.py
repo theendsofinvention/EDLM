@@ -19,5 +19,5 @@ except DistributionNotFound:  # pragma: no cover
             from setuptools_scm import get_version
 
             __version__ = get_version()
-    except (ImportError, ModuleNotFoundError):
+    except (ImportError, ModuleNotFoundError, LookupError):
         __version__ = 'not installed'
