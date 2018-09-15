@@ -32,6 +32,8 @@ def _iterate_over_data(ctx: Context):
     for include in ctx.includes:
         if include.is_dir():
             yield from _hash_folder(include)
+        else:
+            yield include.read_bytes()
 
 
 def _get_document_hash(ctx: Context) -> str:
