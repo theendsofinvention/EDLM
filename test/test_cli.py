@@ -1,7 +1,6 @@
 # coding=utf-8
 from pathlib import Path
 
-import elib
 from click.testing import CliRunner
 from mockito import ANY, verify, when
 

@@ -18,18 +18,15 @@ def _check_front_matter(ctx: Context, front_matter: dict) -> None:
     :type front_matter: dict
     """
     missing_keys = set()
-    for key in (
-        'title', 'qualifier', 'qualifier_short', 'type', 'category', 'title_pictures',
-        'header_picture', 'description', 'opr', 'certified_by', 'supersedes',
-        'link', 'published_date', 'summary_of_changes'
-    ):
+    for key in ('title', 'qualifier', 'qualifier_short', 'type', 'category', 'title_pictures',
+                'header_picture', 'description', 'opr', 'certified_by', 'supersedes',
+                'link', 'published_date', 'summary_of_changes'
+                ):
         if key not in front_matter:
             missing_keys.add(key)
     if missing_keys:
         ctx.error(f'missing values in "{ctx.index_file}" front matter: {missing_keys}')
         sys.exit(0)
-
-
 
 
 def process_front_matter(ctx: Context) -> None:
