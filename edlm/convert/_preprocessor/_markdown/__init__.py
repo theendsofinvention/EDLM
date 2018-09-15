@@ -13,7 +13,7 @@ from edlm.convert._preprocessor._markdown._include import process_includes
 from edlm.convert._preprocessor._markdown._references import process_references
 
 
-def process_markdown(ctx: Context):
+def process_markdown(ctx: Context, skip_front_matter: bool = False):
     """
     Processing of Markdown content
     """
@@ -24,4 +24,5 @@ def process_markdown(ctx: Context):
     process_includes(ctx)
     process_hyperlinks(ctx)
     process_boxes(ctx)
-    process_front_matter(ctx)
+    if not skip_front_matter and ctx.index_file.name == 'index.md':
+        process_front_matter(ctx)

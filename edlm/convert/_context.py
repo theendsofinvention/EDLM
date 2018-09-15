@@ -17,6 +17,7 @@ DEFAULT = {
     'title': None,
     'markdown_text': None,
     'regen': False,
+    'front_matter': {},
 
     'temp_dir': None,
     'keep_temp_dir': False,

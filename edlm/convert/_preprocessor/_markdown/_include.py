@@ -22,12 +22,11 @@ def _process_include(ctx: Context, inclusion: Inclusion):
     from . import process_markdown
     from ..._get_includes import get_includes
     from ..._get_media_folders import get_media_folders
-    inclusion.sub_context.markdown_text = inclusion.markdown_source.read_text(encoding='utf8')
     inclusion.sub_context.index_file = inclusion.markdown_source
     inclusion.sub_context.includes = []
     get_includes(inclusion.sub_context)
     get_media_folders(inclusion.sub_context)
-    process_markdown(inclusion.sub_context)
+    process_markdown(inclusion.sub_context, skip_front_matter=True)
     ctx.markdown_text = ctx.markdown_text.replace(inclusion.include_str, inclusion.sub_context.markdown_text)
     if inclusion.sub_context.latex_refs:
         refs = set(inclusion.sub_context.latex_refs)
@@ -37,7 +36,8 @@ def _process_include(ctx: Context, inclusion: Inclusion):
 
 def _process_local_include(ctx: Context, inclusion: Inclusion):
     inclusion.include_str = f'//include "{inclusion.parent_folder.relative_to(ctx.source_folder)}"'
-    inclusion.markdown_source = Path(ctx.source_folder, inclusion.parent_folder)
+    inclusion.markdown_source = Path(ctx.source_folder, inclusion.parent_folder).absolute()
+    inclusion.sub_context.markdown_text = inclusion.markdown_source.read_text()
     _process_include(ctx, inclusion)
     if inclusion.sub_context.images_used:
         ctx.images_used.update(inclusion.sub_context.images_used)
@@ -45,8 +45,9 @@ def _process_local_include(ctx: Context, inclusion: Inclusion):
 
 def _process_external_include(ctx: Context, inclusion: Inclusion):
     inclusion.include_str = f'//include "{inclusion.parent_folder.relative_to(ctx.source_folder.parent)}"'
-    inclusion.markdown_source = Path(inclusion.parent_folder, 'index.md')
+    inclusion.markdown_source = Path(inclusion.parent_folder, 'index.md').absolute()
     inclusion.sub_context.source_folder = inclusion.parent_folder
+    _, _, inclusion.sub_context.markdown_text = inclusion.markdown_source.read_text().split('---', 2)
     _process_include(ctx, inclusion)
 
 
