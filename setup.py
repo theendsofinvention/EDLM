@@ -49,7 +49,7 @@ Topic :: Utilities
 
 entry_points = '''
 [console_scripts]
-edlm=edlm.cli:cli
+edlm=edlm.__main__:main
 '''
 
 setup(
