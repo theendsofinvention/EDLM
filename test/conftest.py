@@ -72,3 +72,26 @@ def pytest_runtest_setup(item):
     long_marker = item.get_marker("long")
     if long_marker is not None and not item.config.getoption('long'):
         pytest.skip('skipping long tests')
+
+@pytest.fixture()
+def dummy_front_matter():
+    yield """---
+title: dummy_title
+qualifier_short: dummy_qualifier_short
+qualifier: dummy_qualifier
+type: dummy_type
+category: dummy_category 
+title_pictures: dummy_title_pictures
+header_picture: dummy_header_picture
+description: dummy_description
+opr: dummy_opr
+certified_by:
+  - dummy
+supersedes:
+  - dummy
+link: dummy
+published_date: dummy
+summary_of_changes:
+  - dummy
+---
+"""

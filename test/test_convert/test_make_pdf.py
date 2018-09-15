@@ -43,7 +43,7 @@ def test_remove_artifacts():
     assert not list(Path('.').iterdir())
 
 
-def _get_standard_build_folder() -> typing.Tuple[Context, Path]:
+def _get_standard_build_folder(markdown_text='') -> typing.Tuple[Context, Path]:
     ctx = Context()
     pandoc = Path('pandoc')
     pandoc.touch()
@@ -51,9 +51,9 @@ def _get_standard_build_folder() -> typing.Tuple[Context, Path]:
     src_folder.mkdir()
     ctx.source_folder = src_folder
     source_file = Path('./test/index.md')
-    source_file.touch()
+    source_file.write_text(markdown_text)
     ctx.source_file = source_file
-    ctx.markdown_text = ''
+    ctx.markdown_text = markdown_text
     return ctx, pandoc
 
 
@@ -61,10 +61,14 @@ def _get_standard_build_folder() -> typing.Tuple[Context, Path]:
     'paper_size',
     (['a4'], ['a3', 'a5'], ['a3'])
 )
-def test_build_folder(paper_size):
-    ctx, pandoc = _get_standard_build_folder()
+def test_build_folder(paper_size, dummy_front_matter):
+    ctx, pandoc = _get_standard_build_folder(dummy_front_matter)
     ctx.settings.papersize = paper_size
     ctx.media_folders = []
+    ctx.front_matter = {
+        'qualifier_short': 'dummy',
+        'title': 'dummy',
+    }
     when(_make_pdf).get_media_folders(...)
     when(_make_pdf).skip_file(...)
     when(_make_pdf).add_metadata_to_pdf(ctx)
@@ -78,17 +82,23 @@ def test_build_folder(paper_size):
     when(elib_run).run(...).thenReturn(('out', 0))
     _make_pdf._build_folder(ctx)
     verifyStubbedInvocationsAreUsed()
-    assert ctx.title == 'test'
+    assert ctx.title == 'V57WG-dummy-dummy'
 
 
-def test_build_folder_skip():
+def test_build_folder_skip(dummy_front_matter):
     ctx, _ = _get_standard_build_folder()
     ctx.settings.papersize = ['a4']
+    ctx.index_file = Path('index.md')
+    ctx.front_matter = {
+        'qualifier_short': 'dummy',
+        'title': 'dummy',
+    }
     when(_make_pdf).get_media_folders(...)
     when(_make_pdf).skip_file(...).thenReturn(True)
     when(_make_pdf).get_template(...)
     when(_make_pdf).get_index_file(...)
     when(_make_pdf).get_settings(...)
+    when(_make_pdf).process_markdown(...)
     _make_pdf._build_folder(ctx)
     verifyStubbedInvocationsAreUsed()
 
