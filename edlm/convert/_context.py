@@ -85,6 +85,8 @@ class Context:
 
     regen = _Val(bool)  # flake8: noqa
 
+    front_matter = _Val(dict)
+
     temp_dir = _Val(Path)
     keep_temp_dir = _Val(bool)
     media_folders = _Val(list)

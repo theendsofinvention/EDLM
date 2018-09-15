@@ -2,15 +2,16 @@
 """
 Makes a PDF document from a source folder
 """
+import logging
 import pprint
 import shutil
 import urllib.parse
 from pathlib import Path
 
 import elib
-import logging
-from edlm.convert._context import Context
+
 from edlm.convert._check_for_unused_images import check_for_unused_images
+from edlm.convert._context import Context
 from edlm.convert._get_includes import get_includes
 from edlm.convert._get_index import get_index_file
 from edlm.convert._get_media_folders import get_media_folders
@@ -80,16 +81,19 @@ def _build_folder(ctx: Context):
 
         ctx.template_file = Path(ctx.temp_dir, 'template.tex').absolute()
 
-        title = ctx.source_folder.name
-        ctx.title = title
-
         out_folder = elib.path.ensure_dir('.', must_exist=False, create=True)
         ctx.out_folder = out_folder
 
         for paper_size in ctx.settings.papersize:
-            ctx.paper_size = paper_size
+
             _set_max_image_width(ctx)
 
+            process_markdown(ctx)
+
+            title = f'V57WG-{ctx.front_matter["qualifier_short"]}-{ctx.front_matter["title"]}'
+            ctx.title = title
+
+            ctx.paper_size = paper_size
             if paper_size.lower() == 'a4' or len(ctx.settings.papersize) == 1:
                 ctx.out_file = Path(out_folder, f'{title}.PDF').absolute()
             else:
@@ -99,8 +103,6 @@ def _build_folder(ctx: Context):
 
             if skip_file(ctx):
                 continue
-
-            process_markdown(ctx)
 
             check_for_unused_images(ctx)
 
