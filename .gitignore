@@ -327,7 +327,6 @@ tex2pdf.*
 /*.gv
 /DOCS/
 /tmp*/
-/Pipfile.lock
 /pandoc/
 /OUTPUT/
 *.7z
