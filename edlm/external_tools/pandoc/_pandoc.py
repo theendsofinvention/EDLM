@@ -54,3 +54,4 @@ class Pandoc(BaseExternalTool):
             return version_str.split('\n')[0].split(' ')[1]
         except IndexError:
             print(version_str)
+            raise
