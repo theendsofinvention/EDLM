@@ -5,6 +5,7 @@ Processing of Markdown content
 
 from edlm.convert._context import Context
 from edlm.convert._preprocessor._markdown._aliases import process_aliases
+from edlm.convert._preprocessor._markdown._boxes import process_boxes
 from edlm.convert._preprocessor._markdown._front_matter import process_front_matter
 from edlm.convert._preprocessor._markdown._hyperlinks import process_hyperlinks
 from edlm.convert._preprocessor._markdown._images import process_images
@@ -22,4 +23,5 @@ def process_markdown(ctx: Context):
     process_references(ctx)
     process_includes(ctx)
     process_hyperlinks(ctx)
+    process_boxes(ctx)
     process_front_matter(ctx)
