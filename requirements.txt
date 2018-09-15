@@ -7,7 +7,6 @@ click==6.7
 configobj==5.0.6
 dataclasses==0.6
 delegator.py==0.1.0
-easyprocess==0.2.3
 elib-run==2018.9.9.1
 elib==2018.9.2.2
 everett==0.9
@@ -21,13 +20,11 @@ idna==2.7
 jinja2==2.10
 markupsafe==1.0
 packaging==17.1
-patool==1.12
 pdfrw==0.4
 pefile==2018.8.8
 pexpect==4.6.0
 ptyprocess==0.6.0
 pyparsing==2.2.0
-pyunpack==0.1.2
 pyyaml==3.13
 raven==6.9.0
 requests==2.19.1

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e67587796714b56f07518625b4d1b5ae436fe4eb60b22b47c40fd8bce3e9d803"
+            "sha256": "9527b2263ebf6ee88d4b662755dfdd2e646cd40c5e28d1a9f404f339d13f6ef9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -81,12 +81,6 @@
                 "sha256:58f3ea6fe36680e1d828e2e66e52844b826f186409dfee4436e42351b0e699fe"
             ],
             "version": "==0.1.0"
-        },
-        "easyprocess": {
-            "hashes": [
-                "sha256:94e241cadc9a46f55b5c06000df85618849602e7e1865b8de87576b90a22e61f"
-            ],
-            "version": "==0.2.3"
         },
         "elib": {
             "hashes": [
@@ -179,14 +173,6 @@
             ],
             "version": "==17.1"
         },
-        "patool": {
-            "hashes": [
-                "sha256:3f642549c9a78f5b8bef1af92df385b521d360520d1f34e4dba3fd1dee2a21bc",
-                "sha256:e3180cf8bfe13bedbcf6f5628452fca0c2c84a3b5ae8c2d3f55720ea04cb1097"
-            ],
-            "index": "pypi",
-            "version": "==1.12"
-        },
         "pdfrw": {
             "hashes": [
                 "sha256:0dc0494a0e6561b268542b28ede2280387c2728114f117d3bb5d8e4787b93ef4",
@@ -221,13 +207,6 @@
                 "sha256:fee43f17a9c4087e7ed1605bd6df994c6173c1e977d7ade7b651292fab2bd010"
             ],
             "version": "==2.2.0"
-        },
-        "pyunpack": {
-            "hashes": [
-                "sha256:4668ae507c26ac2ac2847ef83e8d6adfed86721f3a9346c2dfc92066f26d8fe7"
-            ],
-            "index": "pypi",
-            "version": "==0.1.2"
         },
         "pyyaml": {
             "hashes": [
@@ -509,11 +488,11 @@
         },
         "hypothesis": {
             "hashes": [
-                "sha256:0b6d0c348fa6ebc475626571dff0eb5cf118e098cb25a54c82d40c303ddae4cd",
-                "sha256:57329f7e361c1e2ddded5a759cc0347a245269cd47345322b818b16680f47bf0",
-                "sha256:7112e161bdc615fe8a9912887eded3a3c77708086082d8817a29a322a34fd3f1"
+                "sha256:568eb2acfd1545714a1d136cfb3967e9e3608227027181afc6653ec3fe4d1b02",
+                "sha256:7e5f8b3d6c78a34a8fa6e995e5c1808fefe42a5a7aeed050b9ce8c3ce118a365",
+                "sha256:ffa37bc51a5c414d7ea79b773c6aa00e3cea99340270695ec2045fc2c902d6a3"
             ],
-            "version": "==3.71.3"
+            "version": "==3.71.5"
         },
         "idna": {
             "hashes": [

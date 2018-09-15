@@ -40,12 +40,12 @@ class MikTex(BaseExternalTool):
     @property
     def default_archive(self) -> Path:
         """Expected tool version"""
-        return Path(HERE, 'miktex.7z').absolute()
+        return Path('./miktex.7z').absolute()
 
     @property
     def default_install(self) -> Path:
         """Default installation location"""
-        return Path(HERE, 'miktex').absolute()
+        return Path('./tools/miktex').absolute()
 
     @property
     def expected_version(self) -> str:
@@ -62,7 +62,7 @@ class MikTex(BaseExternalTool):
         """
         Returns: Miktex executable
         """
-        return Path(self.install_dir, 'miktex/texmfs/install/miktex/bin/pdflatex.exe').absolute()
+        return Path(self.install_dir, 'texmfs/install/miktex/bin/pdflatex.exe').absolute()
 
     @staticmethod
     def _create_new_mpm_settings_file(mpm_config_file):

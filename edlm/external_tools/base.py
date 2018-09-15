@@ -14,9 +14,20 @@ import elib
 import elib_run
 import pyunpack
 
+from edlm import HERE
+
 LOGGER = logging.getLogger('EDLM')
 
 StrOrPath = typing.Union[str, Path]
+
+@functools.lru_cache(1)
+def _find_7za() -> Path:
+    LOGGER.debug('looking for 7za.exe')
+    _7za_path = Path(HERE, 'edlm/vendor/7za.exe').absolute()
+    if not _7za_path.exists():
+        LOGGER.error('unable to find 7za.exe: %s', str(_7za_path))
+        sys.exit(1)
+    return  _7za_path
 
 
 @functools.lru_cache(1)
@@ -145,10 +156,12 @@ class BaseExternalTool:
         exit(-1)
 
     def _extract(self):
+        _7za_path = _find_7za()
         LOGGER.info(f'%s: extracting (this may take a while)', self.__class__.__name__)
-        archive = pyunpack.Archive(self.archive)
-        patool = _find_patool()
-        archive.extractall(directory=self.install_dir, auto_create_dir=True, patool_path=str(patool))
+        LOGGER.debug(f'%s: extracting to: %s', self.__class__.__name__, self.install_dir)
+        print(self.archive)
+        archive_str = str(self.archive.absolute()).replace('\\', '/')
+        elib_run.run(fr'{str(_7za_path)} x {archive_str} -otools -y')
         LOGGER.debug(f'%s: removing archive', self.__class__.__name__)
         # self.archive.unlink()
         LOGGER.info(f'%s: successfully extracted', self.__class__.__name__)

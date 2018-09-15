@@ -27,12 +27,12 @@ class Pandoc(BaseExternalTool):
     @property
     def default_archive(self) -> Path:
         """Expected tool version"""
-        return Path(HERE, 'pandoc.7z')
+        return Path('./pandoc.7z')
 
     @property
     def default_install(self) -> Path:
         """Default installation location"""
-        return Path(HERE, 'pandoc')
+        return Path('./tools/pandoc-2.0.3-windows')
 
     @property
     def expected_version(self) -> str:
@@ -43,7 +43,7 @@ class Pandoc(BaseExternalTool):
         """
         Returns: Pandoc executable
         """
-        return Path(Path(self.install_dir), 'pandoc-2.0.3-windows/pandoc.exe').absolute()
+        return Path(Path(self.install_dir), 'pandoc.exe').absolute()
 
     def get_version(self) -> str:
         """
