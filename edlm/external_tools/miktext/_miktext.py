@@ -8,7 +8,6 @@ from pathlib import Path
 
 import elib
 
-from edlm import HERE
 from edlm.external_tools.base import BaseExternalTool
 
 StrOrPath = typing.Union[str, Path]

@@ -12,13 +12,13 @@ from pathlib import Path
 
 import elib
 import elib_run
-import pyunpack
 
 from edlm import HERE
 
 LOGGER = logging.getLogger('EDLM')
 
 StrOrPath = typing.Union[str, Path]
+
 
 @functools.lru_cache(1)
 def _find_7za() -> Path:
@@ -27,7 +27,7 @@ def _find_7za() -> Path:
     if not _7za_path.exists():
         LOGGER.error('unable to find 7za.exe: %s', str(_7za_path))
         sys.exit(1)
-    return  _7za_path
+    return _7za_path
 
 
 @functools.lru_cache(1)
