@@ -29,11 +29,13 @@ class MikTex(BaseExternalTool):
     @property
     def url(self) -> str:
         """Download URL"""
-        return r'https://www.dropbox.com/s/ivyb6s5itb5len2/miktex.7z?dl=1'
+        return r'https://www.dropbox.com/s/ivyb6s5itb5len2NONE/miktex.7z?dl=1'
 
     @property
     def hash(self) -> str:
         """Expected archive hash"""
+        return 'd35212e0fecd32a084bd4b47e9162b15'
+        return '7a57d6b1b3a32d44a89611146645af9a'
         return 'fc20affd161264e7c5b816ddc85955cd'
 
     @property
@@ -49,7 +51,8 @@ class MikTex(BaseExternalTool):
     @property
     def expected_version(self) -> str:
         """Expected tool version"""
-        return '2.9.6354'
+        # return '2.9.6354'
+        return '2.9.6634'
 
     def get_version(self) -> str:
         """
@@ -61,7 +64,8 @@ class MikTex(BaseExternalTool):
         """
         Returns: Miktex executable
         """
-        return Path(self.install_dir, 'texmfs/install/miktex/bin/pdflatex.exe').absolute()
+        # return Path(self.install_dir, 'texmfs/install/miktex/bin/pdflatex.exe').absolute()
+        return Path(self.install_dir, 'texmfs/install/miktex/bin/xelatex.exe').absolute()
 
     @staticmethod
     def _create_new_mpm_settings_file(mpm_config_file):

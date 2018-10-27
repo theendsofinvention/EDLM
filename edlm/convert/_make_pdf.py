@@ -24,6 +24,9 @@ from edlm.convert._temp_folder import TempDir
 from edlm.external_tools import PANDOC
 
 LOGGER = logging.getLogger('EDLM')
+PROCESS_LOGGER = logging.getLogger('elib_run.process')
+PROCESS_LOGGER.setLevel(logging.DEBUG)
+# PROCESS_LOGGER.addHandler(logging.StreamHandler())
 
 WIDTH_MODIFIER = 0.8
 
@@ -122,7 +125,7 @@ def _build_folder(ctx: Context):
                 f'--template "{ctx.template_file}"',
                 f'--listings "{ctx.source_file}"',
                 f'-o "{ctx.out_file}"',
-                '-V geometry:margin=1.5cm',
+                '-V geometry:margin=2.5cm',
                 '-V test',
                 '-V geometry:headheight=17pt',
                 '-V geometry:includehead',
@@ -130,14 +133,20 @@ def _build_folder(ctx: Context):
                 '-V geometry:heightrounded',
                 '-V lot',
                 '-V lof',
-                '--pdf-engine=xelatex',
+                # '--pdf-engine=xelatex',
                 f'-V papersize:{ctx.paper_size}',
+                f'-V subparagraph:yes',
+                f'-V toc-depth:2',
+                # f'-V fontsize:20pt',
+                # f'-V fontfamily:arev',
+                # f'-V mainfont:arev',
                 '-N',
             ]
 
             PANDOC(' '.join(pandoc_cmd))
-
+            LOGGER.debug('adding metadata to resulting PDF')
             add_metadata_to_pdf(ctx)
+            LOGGER.info('PDF successfully generated: %s', ctx.out_file)
 
 
 def _is_source_folder(folder: Path) -> bool:

@@ -56,6 +56,8 @@ class Settings:
     """
     Per-document settings
     """
+    font_size = _Val(int)
+    font_family = _Val(str)
     papersize = _Val(list)
     aliases = _Val(dict)
     references = _Val(dict)

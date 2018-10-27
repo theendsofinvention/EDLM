@@ -100,7 +100,9 @@ class BaseExternalTool:
         self._version = None
 
     def __call__(self, cmd: str):
-        out, _ = elib_run.run(str(self.get_exe().absolute()) + ' ' + cmd, mute=True)
+        out, code = elib_run.run(str(self.get_exe().absolute()) + ' ' + cmd, timeout=120)
+        if code != 0:
+            LOGGER.error(out)
         return out
 
     def __check_values(self):

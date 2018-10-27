@@ -44,7 +44,7 @@ class Pandoc(BaseExternalTool):
         """
         return Path(Path(self.install_dir), 'pandoc.exe').absolute()
 
-    def get_version(self) -> str:
+    def get_version(self, retry: int = 0) -> str:
         """
         Returns: Pandoc version
         """
@@ -52,5 +52,6 @@ class Pandoc(BaseExternalTool):
         try:
             return version_str.split('\n')[0].split(' ')[1]
         except IndexError:
-            print(version_str)
-            raise
+            if retry > 10:
+                raise
+            return self.get_version(retry+1)
