@@ -3,46 +3,77 @@
 Title page
 """
 
+_HLINE = r'\vspace{-10pt}\noindent\rule{\textwidth}{1pt}\vspace{-10pt}'
+
 # noinspection SpellCheckingInspection
-TITLE_PAGE = r"""
-\thispagestyle{empty}
+TITLE_PAGE = rf"""
+\thispagestyle{{empty}}
+\newgeometry{{noheadfoot=true,left=2.5cm,right=2.5cm,top=1.5cm,bottom=1.5cm}}
 
-\begin{center}
-    \vspace*{2em}
+\begin{{minipage}}[t]{{0.5\textwidth}}
+    \textit{{\textbf{{BY ORDER OF THE COMMAND STAFF\\VIRTUAL 57\textsuperscript{{th}} WING}}}} \\
+    \begin{{minipage}}[l]{{\textwidth}}
+        \vspace*{{1em}}
+        $for(title_pictures)$
+              \includegraphics[height=2.5cm]{{$title_pictures$}}
+        $endfor$
+    \end{{minipage}}
+\end{{minipage}}
+\hfill
+\begin{{minipage}}[t]{{0.5\textwidth}}
+    \begin{{flushright}}
+        \textit{{\textbf{{VIRTUAL 57\textsuperscript{{th}} WING}}}} \\
+        \textit{{\textbf{{ $qualifier$ }}}} \\
+        \vspace*{{1em}}
+        \textit{{\textbf{{ $published_date$ }}}} \\
+        \vspace*{{1em}}
+        \textit{{\textbf{{ $category$ }}}} \\
+        \vspace*{{1em}}
+        \textit{{\textbf{{ $title$ }}}}
+    \end{{flushright}}
+\end{{minipage}}
+    
+\begin{{center}}
+    \textbf{{COMPLIANCE WITH THIS PUBLICATION IS MANDATORY FOR ALL AFFECTED PARTIES}}
+\end{{center}}
 
-    \begin{figure}[h]
-      \centering
-      \includegraphics[height=6cm]{logo57th.png}
-    \end{figure}
+{_HLINE}
 
-    \vspace{2em}
+\textbf{{ACCESSIBILITY:}} The most current version of this document is available digitally on the Virtual 
+57\textsuperscript{{th}} Wing website at \url{{$link$}}.
 
-    \noindent\rule{\textwidth}{0.4pt}
+\textbf{{RELEASABILITY:}} $if(releasability)$
+	$releasability$
+$else$
+	There are no releasability restriction on this publication.
+$endif$
 
-    {\fontsize{2cm}{2.3cm}\selectfont $title$\par}
+\textbf{{DISCLAIMER:}} This document is modeled from real world USAF publications for non-profit entertainment purposes only, 
+to be used within the virtual flying community.  It in no way implies endorsement by any branch of the 
+US Armed Services or its constituent organizations and groups. Not for real world use.
 
-    \noindent\rule{\textwidth}{0.4pt}
+{_HLINE}
 
-    $subtitle$
+\begin{{minipage}}[t]{{0.5\textwidth}}
+    OPR: $opr$ \\
+    Supersedes: $supersedes$
+\end{{minipage}}
+\hfill
+\begin{{minipage}}[t]{{0.5\textwidth}}
+    \begin{{flushright}}
+        Certified by: \\ $for(certified_by)$ $certified_by$ \\ $endfor$
+        Pages: \pageref{{LastPage}}
+    \end{{flushright}}
+\end{{minipage}}
 
-    \vfill
+{_HLINE}
 
-    $if(title_pictures)$
-        \begin{figure}[h]
-            \begin{minipage}[c]{\linewidth}
-                \centering
-                $for(title_pictures)$
-                      \includegraphics[height=3cm]{$title_pictures$}
-                $endfor$
-            \end{minipage}
-        \end{figure}
-    $endif$
+\textit{{\textbf{{$description$}}}}
 
-    \vfill
+\textbf{{SUMMARY OF CHANGES}} \\ $for(summary_of_changes)$ - $summary_of_changes$ \\ $endfor$
 
-    {\href{http://132virtualwing.org}{\wing}}, \the\year \\
-    \vspace{0.3cm}
-    This work is licensed under a {\href{https://creativecommons.org/licenses/by-sa/3.0/}{Creative Commons Attribution-ShareAlike 3.0 Unported License}}.
+\vfill
+\restoregeometry
 
-\end{center}
+
 """  # noqa

@@ -327,7 +327,6 @@ tex2pdf.*
 /*.gv
 /DOCS/
 /tmp*/
-/Pipfile.lock
 /pandoc/
 /OUTPUT/
 *.7z
@@ -338,3 +337,14 @@ tex2pdf*
 /bak_miktex/
 /bak_pandoc/
 /doitall.cmd
+/dist/
+/build/
+__pycache__
+.coverage*
+htmlcov
+.mypy_cache
+*.toml.example
+.venv
+packages_EDLM.png
+classes_EDLM.png
+tools/

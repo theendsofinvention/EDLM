@@ -10,12 +10,11 @@ import pdfrw
 from pdfrw.objects import pdfstring
 
 from edlm import __version__
-from edlm.convert import Context
+from edlm.convert._context import Context
 
 
 def _hash_folder(folder: Path):
     for item in folder.iterdir():
-        assert isinstance(item, Path)
         if item.is_file() and item.suffix in ['.md', '.yml', '.tex']:
             yield item.read_bytes()
         elif item.is_dir():
@@ -24,16 +23,21 @@ def _hash_folder(folder: Path):
 
 def _iterate_over_data(ctx: Context):
     yield from _hash_folder(ctx.source_folder)
+    yield ctx.template_source.read_bytes()
+    for file in ctx.settings_files:
+        yield file.read_bytes()
     for media_folder in ctx.media_folders:
         for file in media_folder.iterdir():
             yield file.read_bytes()
     for include in ctx.includes:
         if include.is_dir():
             yield from _hash_folder(include)
+        else:
+            yield include.read_bytes()
 
 
 def _get_document_hash(ctx: Context) -> str:
-    hash_ = hashlib.sha1()
+    hash_ = hashlib.sha1()  # nosec
     for data in _iterate_over_data(ctx):
         hash_.update(data)
     return hash_.hexdigest()

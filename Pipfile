@@ -1,17 +1,12 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [requires]
-
 python_version = "3.6"
 
-
 [packages]
-
 certifi = "*"
 chardet = "*"
 click-log = "*"
@@ -23,11 +18,8 @@ requests = "*"
 "urllib3" = "*"
 elib = "*"
 tqdm = "*"
-pyunpack = "*"
-patool = "*"
 pdfrw = "*"
-
+elib-run = "*"
 
 [dev-packages]
-
 epab = "*"

@@ -76,10 +76,10 @@ def test_include_images():
     process_includes(ctx)
     assert media1.name in ctx.images_used
     assert media2.name in ctx.images_used
-    assert not media3.name in ctx.images_used
+    assert media3.name not in ctx.images_used
 
 
-def test_include_external_images():
+def test_include_external_images(dummy_front_matter):
     ctx = Context()
     source_folder = Path('source').absolute()
     source_folder.mkdir()
@@ -97,11 +97,11 @@ def test_include_external_images():
         media.touch()
     ctx.source_folder = source_folder
     ctx.media_folders = [source_media]
-    ctx.markdown_text = '![media1](media1.png)\n\n//include "parent"'
+    ctx.markdown_text = dummy_front_matter + '![media1](media1.png)\n\n//include "parent"'
     include = Path(parent_folder, 'index.md').absolute()
-    include.write_text('![parent_media1](parent_media.png)')
+    include.write_text(dummy_front_matter + '![parent_media1](parent_media.png)')
     ctx.includes = [parent_folder]
     process_images(ctx)
     process_includes(ctx)
-    assert ctx.markdown_text == f'![media1]({media1}){{width="Nonemm"}}\n\n' \
-                                f'![parent_media1]({parent_media1}){{width="Nonemm"}}'
+    assert f'![media1]({media1}){{width="Nonemm"}}' in ctx.markdown_text
+    assert f'![parent_media1]({parent_media1}){{width="Nonemm"}}' in ctx.markdown_text

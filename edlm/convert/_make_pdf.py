@@ -2,26 +2,31 @@
 """
 Makes a PDF document from a source folder
 """
-
+import logging
+import pprint
 import shutil
 import urllib.parse
 from pathlib import Path
 
 import elib
 
-from edlm import LOGGER
-from edlm.convert import Context
+from edlm.convert._check_for_unused_images import check_for_unused_images
+from edlm.convert._context import Context
+from edlm.convert._get_includes import get_includes
+from edlm.convert._get_index import get_index_file
+from edlm.convert._get_media_folders import get_media_folders
+from edlm.convert._get_settings import get_settings
+from edlm.convert._get_template import get_template
+from edlm.convert._pdf_info import add_metadata_to_pdf, skip_file
+# noinspection PyProtectedMember
+from edlm.convert._preprocessor import process_latex, process_markdown
+from edlm.convert._temp_folder import TempDir
 from edlm.external_tools import PANDOC
 
-from ._check_for_unused_images import check_for_unused_images
-from ._get_includes import get_includes
-from ._get_index import get_index_file
-from ._get_media_folders import get_media_folders
-from ._get_settings import get_settings
-from ._get_template import get_template
-from ._pdf_info import add_metadata_to_pdf, skip_file
-from ._preprocessor import process_latex, process_markdown
-from ._temp_folder import TempDir
+LOGGER = logging.getLogger('EDLM')
+PROCESS_LOGGER = logging.getLogger('elib_run.process')
+PROCESS_LOGGER.setLevel(logging.DEBUG)
+# PROCESS_LOGGER.addHandler(logging.StreamHandler())
 
 WIDTH_MODIFIER = 0.8
 
@@ -58,7 +63,6 @@ def _set_max_image_width(ctx: Context):
 
 def _remove_artifacts():
     for item in Path('.').iterdir():
-        assert isinstance(item, Path)
         if item.is_dir() and item.name.startswith('__TMP') or item.name.startswith('tex2pdf.'):
             shutil.rmtree(str(item.absolute()))
 
@@ -80,16 +84,19 @@ def _build_folder(ctx: Context):
 
         ctx.template_file = Path(ctx.temp_dir, 'template.tex').absolute()
 
-        title = ctx.source_folder.name
-        ctx.title = title
-
         out_folder = elib.path.ensure_dir('.', must_exist=False, create=True)
         ctx.out_folder = out_folder
 
         for paper_size in ctx.settings.papersize:
-            ctx.paper_size = paper_size
+
             _set_max_image_width(ctx)
 
+            process_markdown(ctx)
+
+            title = f'V57WG-{ctx.front_matter["qualifier_short"]}-{ctx.front_matter["title"]}'
+            ctx.title = title
+
+            ctx.paper_size = paper_size
             if paper_size.lower() == 'a4' or len(ctx.settings.papersize) == 1:
                 ctx.out_file = Path(out_folder, f'{title}.PDF').absolute()
             else:
@@ -100,8 +107,6 @@ def _build_folder(ctx: Context):
             if skip_file(ctx):
                 continue
 
-            process_markdown(ctx)
-
             check_for_unused_images(ctx)
 
             process_latex(ctx)
@@ -111,7 +116,7 @@ def _build_folder(ctx: Context):
 
             ctx.info(f'building format: {paper_size}')
 
-            ctx.debug(f'context:\n{elib.pretty_format(ctx.__repr__())}')
+            ctx.debug(f'context:\n{pprint.pformat(ctx.__repr__())}')
 
             # noinspection SpellCheckingInspection
             pandoc_cmd = [
@@ -120,7 +125,7 @@ def _build_folder(ctx: Context):
                 f'--template "{ctx.template_file}"',
                 f'--listings "{ctx.source_file}"',
                 f'-o "{ctx.out_file}"',
-                '-V geometry:margin=1.5cm',
+                '-V geometry:margin=2.5cm',
                 '-V test',
                 '-V geometry:headheight=17pt',
                 '-V geometry:includehead',
@@ -128,14 +133,20 @@ def _build_folder(ctx: Context):
                 '-V geometry:heightrounded',
                 '-V lot',
                 '-V lof',
-                '--pdf-engine=xelatex',
+                # '--pdf-engine=xelatex',
                 f'-V papersize:{ctx.paper_size}',
+                f'-V subparagraph:yes',
+                f'-V toc-depth:2',
+                # f'-V fontsize:20pt',
+                # f'-V fontfamily:arev',
+                # f'-V mainfont:arev',
                 '-N',
             ]
 
             PANDOC(' '.join(pandoc_cmd))
-
+            LOGGER.debug('adding metadata to resulting PDF')
             add_metadata_to_pdf(ctx)
+            LOGGER.info('PDF successfully generated: %s', ctx.out_file)
 
 
 def _is_source_folder(folder: Path) -> bool:
@@ -156,7 +167,7 @@ def make_pdf(ctx: Context, source_folder: Path):
 
     source_folder = elib.path.ensure_dir(source_folder).absolute()
 
-    LOGGER.info(f'analyzing folder: "{source_folder}"')
+    LOGGER.info('analyzing folder: %s', source_folder)
 
     if _is_source_folder(source_folder):
         ctx.source_folder = source_folder

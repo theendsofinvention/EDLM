@@ -2,10 +2,11 @@
 """
 Gathers the media folders
 """
+import pprint
 
 import elib
 
-from ._context import Context
+from edlm.convert._context import Context
 
 
 def get_media_folders(ctx: Context):
@@ -31,5 +32,5 @@ def get_media_folders(ctx: Context):
     # if not media_folders:
     #     raise ConvertError('no media folder found', ctx)
 
-    ctx.info(f'media folders:\n{elib.pretty_format(media_folders)}')
+    ctx.info(f'media folders:\n{pprint.pformat(media_folders)}')
     ctx.media_folders = media_folders

@@ -4,8 +4,7 @@ from pathlib import Path
 
 import elib
 import pytest
-from hypothesis import given
-from hypothesis import strategies as st
+from hypothesis import given, strategies as st
 from mockito import mock, verify, when
 
 import edlm.convert._preprocessor._markdown._images as image

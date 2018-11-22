@@ -2,15 +2,14 @@
 """
 Gathers settings
 """
-
+import pprint
 from pathlib import Path
 
-import elib
 import yaml
 
-from ._context import Context
-from ._exc import ConvertError
-from ._settings import Settings
+from edlm.convert._context import Context
+from edlm.convert._exc import ConvertError
+from edlm.convert._settings import Settings
 
 
 def get_settings(ctx: Context):
@@ -41,9 +40,9 @@ def get_settings(ctx: Context):
         if not file.read_text(encoding='utf8'):
             raise ConvertError(f'empty "settings.yml": {file.absolute()}', ctx)
         with open(file) as stream:
-            these_settings = yaml.load(stream)
-            ctx.debug(f'content of "{file}": {elib.pretty_format(these_settings)}')
+            these_settings = yaml.safe_load(stream)
+            ctx.debug(f'content of "{file}": {pprint.pformat(these_settings)}')
         ctx.settings.update(these_settings)
 
-    ctx.debug(f'settings files:\n{elib.pretty_format(ctx.settings_files)}')
-    ctx.debug(f'settings:\n{elib.pretty_format(ctx.settings)}')
+    ctx.debug(f'settings files:\n{pprint.pformat(ctx.settings_files)}')
+    ctx.debug(f'settings:\n{pprint.pformat(ctx.settings)}')

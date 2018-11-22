@@ -5,7 +5,7 @@ Get templates folder
 
 from pathlib import Path
 
-from . import Context
+from edlm.convert._context import Context
 
 
 def get_template(ctx: Context):

@@ -2,25 +2,21 @@
 """
 Gather the includes that are use throughout the document
 """
-
+import pprint
 import typing
 from pathlib import Path
 
-import elib
-
-from . import Context
+from edlm.convert._context import Context
 
 
 def _gather_indices(folder: Path) -> typing.Iterator[Path]:
     for item in folder.iterdir():
-        assert isinstance(item, Path)
         if item.is_file() and not item.name == 'index.md' and item.name.endswith('.md'):
             yield item.absolute()
 
 
 def _gather_external_includes(ctx: Context) -> typing.Iterator[Path]:
     for item in ctx.source_folder.parent.iterdir():
-        assert isinstance(item, Path)
         if item.is_dir() and Path(item, 'index.md').exists():
             yield item.absolute()
 
@@ -50,4 +46,4 @@ def get_includes(ctx: Context):
     _process_own_includes(ctx)
     _process_external_includes(ctx)
     if ctx.includes:
-        ctx.info(f'includes:\n{elib.pretty_format(ctx.includes)}')
+        ctx.info(f'includes:\n{pprint.pformat(ctx.includes)}')

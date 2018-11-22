@@ -3,7 +3,7 @@
 Converts \ref into \\fullref
 """
 
-from . import Context
+from edlm.convert._context import Context
 
 
 def process_hyperlinks(ctx: Context):

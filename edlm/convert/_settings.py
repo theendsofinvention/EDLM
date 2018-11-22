@@ -2,10 +2,8 @@
 """
 Per-document settings
 """
-
 import collections
-
-import elib
+import pprint
 
 # noinspection SpellCheckingInspection
 DEFAULT = {
@@ -51,7 +49,6 @@ class _Val:
 
     # this is the new initializer:
     def __set_name__(self, owner, name):
-        assert owner
         self.name = name  # pylint: disable=attribute-defined-outside-init
 
 
@@ -59,10 +56,12 @@ class Settings:
     """
     Per-document settings
     """
-    papersize: list = _Val(list)
-    aliases: dict = _Val(dict)
-    references: dict = _Val(dict)
-    links: dict = _Val(dict)
+    font_size = _Val(int)
+    font_family = _Val(str)
+    papersize = _Val(list)
+    aliases = _Val(dict)
+    references = _Val(dict)
+    links = _Val(dict)
 
     def __init__(self):
         self.data = {}
@@ -99,4 +98,4 @@ class Settings:
         self.data = self._update_nested_dict(self.data, other_dict)
 
     def __repr__(self) -> str:
-        return "Settings:\n" + elib.pretty_format(self.data)
+        return "Settings:\n" + pprint.pformat(self.data)

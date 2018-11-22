@@ -3,13 +3,13 @@
 Global context
 """
 import copy
+import logging
+import pprint
 from pathlib import Path
 
-import elib
+from edlm.convert._settings import Settings
 
-from edlm import LOGGER
-
-from ._settings import Settings
+LOGGER = logging.getLogger('EDLM')
 
 DEFAULT = {
     'source_folder': None,
@@ -17,6 +17,7 @@ DEFAULT = {
     'title': None,
     'markdown_text': None,
     'regen': False,
+    'front_matter': {},
 
     'temp_dir': None,
     'keep_temp_dir': False,
@@ -71,7 +72,6 @@ class _Val:
 
     # this is the new initializer:
     def __set_name__(self, owner, name):
-        assert owner
         self.name = name  # pylint: disable=attribute-defined-outside-init
 
 
@@ -79,40 +79,42 @@ class Context:
     """
     Global context
     """
-    source_folder: Path = _Val(Path)
-    paper_size: str = _Val(str)
-    title: str = _Val(str)
-    markdown_text: str = _Val(str)
+    source_folder = _Val(Path)
+    paper_size = _Val(str)
+    title = _Val(str)
+    markdown_text = _Val(str)
 
-    regen: bool = _Val(bool)  # flake8: noqa
+    regen = _Val(bool)  # flake8: noqa
 
-    temp_dir: Path = _Val(Path)
-    keep_temp_dir: bool = _Val(bool)
-    media_folders: list = _Val(list)
-    index_file: Path = _Val(Path)
-    out_folder: Path = _Val(Path)
-    out_file: Path = _Val(Path)
-    source_file: Path = _Val(Path)
+    front_matter = _Val(dict)
 
-    settings: Settings = _Val(Settings)
-    settings_files: list = _Val(list)
+    temp_dir = _Val(Path)
+    keep_temp_dir = _Val(bool)
+    media_folders = _Val(list)
+    index_file = _Val(Path)
+    out_folder = _Val(Path)
+    out_file = _Val(Path)
+    source_file = _Val(Path)
 
-    template_source: Path = _Val(Path)
-    template_file: Path = _Val(Path)
+    settings = _Val(Settings)
+    settings_files = _Val(list)
 
-    image_caption: str = _Val(str)
-    image_current: str = _Val(str)
-    image_extras: str = _Val(str)
-    image_max_width: int = _Val(int)
-    image_width: int = _Val(int)
-    image_width_str: str = _Val(str)
-    images_used: set = _Val(set)
-    images_unused: set = _Val(set)
+    template_source = _Val(Path)
+    template_file = _Val(Path)
 
-    latex_refs: list = _Val(list)
+    image_caption = _Val(str)
+    image_current = _Val(str)
+    image_extras = _Val(str)
+    image_max_width = _Val(int)
+    image_width = _Val(int)
+    image_width_str = _Val(str)
+    images_used = _Val(set)
+    images_unused = _Val(set)
 
-    includes: list = _Val(list)
-    unprocessed_includes: list = _Val(list)
+    latex_refs = _Val(list)
+
+    includes = _Val(list)
+    unprocessed_includes = _Val(list)
 
     def __init__(self):
         self.data = {}
@@ -134,36 +136,36 @@ class Context:
         Convenient shortcut to main EDLM LOGGER
         """
         if self.index_file:
-            LOGGER.debug(f'"{self.index_file}": {text}')
+            LOGGER.debug('"%s": %s', self.index_file, text)
         else:
-            LOGGER.debug(f'"{self.source_folder}": {text}')
+            LOGGER.debug('"%s": %s', self.source_folder, text)
 
     def info(self, text):
         """
         Convenient shortcut to main EDLM LOGGER
         """
         if self.index_file:
-            LOGGER.info(f'"{self.index_file}": {text}')
+            LOGGER.info('"%s": %s', self.index_file, text)
         else:
-            LOGGER.info(f'"{self.source_folder}": {text}')
+            LOGGER.info('"%s": %s', self.source_folder, text)
 
     def error(self, text):
         """
         Convenient shortcut to main EDLM LOGGER
         """
         if self.index_file:
-            LOGGER.error(f'"{self.index_file}": {text}')
+            LOGGER.error('"%s": %s', self.index_file, text)
         else:
-            LOGGER.error(f'"{self.source_folder}": {text}')
+            LOGGER.error('"%s": %s', self.source_folder, text)
 
     def warning(self, text):
         """
         Convenient shortcut to main EDLM LOGGER
         """
         if self.index_file:
-            LOGGER.warning(f'"{self.index_file}": {text}')
+            LOGGER.warning('"%s": %s', self.index_file, text)
         else:
-            LOGGER.warning(f'"{self.source_folder}": {text}')
+            LOGGER.warning('"%s": %s', self.source_folder, text)
 
     def __repr__(self):  # pylint: disable=bad-continuation
-        return elib.pretty_format({k: v for k, v in self.data.items() if k not in self.skip_repr})
+        return pprint.pformat({k: v for k, v in self.data.items() if k not in self.skip_repr})

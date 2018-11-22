@@ -3,5 +3,7 @@
 Pre-processors
 """
 
-from ._markdown import process_markdown
-from ._latex import process_latex
+# noinspection PyProtectedMember
+from edlm.convert._preprocessor._latex import process_latex
+# noinspection PyProtectedMember
+from edlm.convert._preprocessor._markdown import process_markdown

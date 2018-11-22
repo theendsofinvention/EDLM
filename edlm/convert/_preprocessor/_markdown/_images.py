@@ -6,7 +6,7 @@ import re
 import typing
 from pathlib import Path
 
-from . import Context
+from edlm.convert._context import Context
 
 RE_PICTURE_LINE = re.compile(r'!\['
                              r'(?P<caption>.*)'

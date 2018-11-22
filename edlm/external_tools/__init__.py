@@ -4,9 +4,9 @@ EDLM external tools
 """
 
 # noinspection PyProtectedMember
-from .miktext._miktext import MikTex
+from edlm.external_tools.miktext._miktext import MikTex
 # noinspection PyProtectedMember
-from .pandoc._pandoc import Pandoc
+from edlm.external_tools.pandoc._pandoc import Pandoc
 
 MIKTEX = MikTex()
 PANDOC = Pandoc()

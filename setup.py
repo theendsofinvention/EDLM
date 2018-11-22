@@ -3,13 +3,28 @@
 EDLM setup file
 """
 
-from pip.req import parse_requirements
 from setuptools import find_packages, setup
 
-requirements = [str(r.req) for r in
-                parse_requirements('requirements.txt', session=False)]
-test_requirements = [str(r.req) for r in
-                     parse_requirements('requirements-dev.txt', session=False)]
+requirements = [
+    'certifi',
+    'chardet',
+    'click-log',
+    'click',
+    'idna',
+    'jinja2',
+    'markupsafe',
+    'requests',
+    'urllib3',
+    'elib',
+    'tqdm',
+    'pyunpack',
+    'patool',
+    'pdfrw',
+    'elib-run',
+]
+test_requirements = [
+    'epab',
+]
 
 CLASSIFIERS = filter(None, map(str.strip,
                                """
@@ -34,19 +49,17 @@ Topic :: Utilities
 
 entry_points = '''
 [console_scripts]
-edlm=edlm.cli:cli
+edlm=edlm.__main__:main
 '''
 
 setup(
-    name='edlm',
-    package_dir={'edlm': 'edlm'},
+    name='EDLM',
     use_scm_version=True,
     install_requires=requirements,
     tests_require=test_requirements,
     entry_points=entry_points,
     setup_requires=['setuptools_scm'],
-    test_suite='pytest',
-    packages=find_packages('.'),
+    packages=find_packages(),
     python_requires='>=3.6',
     license='MIT',
     classifiers=CLASSIFIERS,
