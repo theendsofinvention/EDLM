@@ -17,7 +17,7 @@ gtts-token==1.1.2
 gtts==2.0.1
 humanize==0.5.1
 idna==2.7
-jinja2==2.10
+jinja2==2.10.1
 markupsafe==1.1.0
 packaging==18.0
 pdfrw==0.4
@@ -25,11 +25,11 @@ pefile==2018.8.8
 pexpect==4.6.0
 ptyprocess==0.6.0
 pyparsing==2.3.0
-pyyaml==3.13
+pyyaml==4.2b1
 raven==6.9.0
 requests==2.20.1
 sarge==0.1.5.post0
 six==1.11.0
 smmap2==2.0.5
 tqdm==4.28.1
-urllib3==1.24.1
+urllib3==1.24.3
