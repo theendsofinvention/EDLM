@@ -28,11 +28,11 @@ pexpect==4.8.0
 ptyprocess==0.6.0
 pyparsing==2.4.7
 pyunpack==0.2.1
-pyyaml==5.3.1
+pyyaml==5.4
 raven==6.10.0
 requests==2.20.1
 six==1.15.0
 smmap==3.0.4
 soupsieve==2.0.1
 tqdm==4.28.1
-urllib3==1.24.3
+urllib3==1.25.9
