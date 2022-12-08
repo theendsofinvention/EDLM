@@ -1,7 +1,7 @@
 -i https://pypi.python.org/simple/
 argparse==1.4.0
 beautifulsoup4==4.9.1
-certifi==2018.10.15
+certifi==2022.12.7
 chardet==3.0.4
 click-log==0.3.2
 click==7.0
